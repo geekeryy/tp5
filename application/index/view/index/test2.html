@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>简单地图</title>
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/> -->
+<style type="text/css">
+html,body{
+    width:100%;
+    height:100%;
+}
+*{
+    margin:0px;
+    padding:0px;
+}
+body, button, input, select, textarea {
+    font: 12px/16px Verdana, Helvetica, Arial, sans-serif;
+}
+p{
+    width:603px;
+    padding-top:3px;
+    overflow:hidden;
+}
+.btn{
+    width:142px;
+}
+#container{
+    min-width:600px;
+    min-height:767px;
+}
+</style>
+<script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp"></script>
+<script type="text/javascript" src="https://3gimg.qq.com/lightmap/components/geolocation/geolocation.min.js"></script>
+<script>
+
+window.onload = function(){
+
+ geolocation.getLocation(showPosition, showErr, options);
+
+//直接加载地图
+
+
+    
+
+    //调用初始化函数地图
+    
+
+
+}
+</script>
+</head>
+<body>
+<!--   定义地图显示容器   -->
+<div id="container"></div>
+<div id="pos-area">
+        <p id="demo">点击下面的按钮，获得对应信息：<br /></p>
+    </div>
+
+ <script type="text/JavaScript">
+        var geolocation = new qq.maps.Geolocation("DHOBZ-N7AKS-O2XOY-6W5TK-AZT37-P4BL6", "myapp");
+ 
+        document.getElementById("pos-area").style.height = (document.body.clientHeight - 110) + 'px';
+ 
+        var positionNum = 0;
+        var options = {timeout: 8000};
+        function showPosition(position) {
+
+			positionNum ++;
+            document.getElementById("demo").innerHTML += "序号：" + positionNum;
+            document.getElementById("demo").appendChild(document.createElement('pre')).innerHTML = JSON.stringify(position, null, 4);
+            document.getElementById("pos-area").scrollTop = document.getElementById("pos-area").scrollHeight;
+
+		        	//初始化地图函数  自定义函数名init
+
+		        //定义map变量 调用 qq.maps.Map() 构造函数   获取地图显示容器
+		         var map = new qq.maps.Map(document.getElementById("container"), {
+		            center: new qq.maps.LatLng(30,116.397128),      // 地图的中心地理坐标。
+		            zoom:8                                                 // 地图的中心地理坐标。
+		        });
+init();
+
+
+            
+        };
+
+         function showErr() {
+            positionNum ++;
+            document.getElementById("demo").innerHTML += "序号：" + positionNum;
+            document.getElementById("demo").appendChild(document.createElement('p')).innerHTML = "定位失败！";
+            document.getElementById("pos-area").scrollTop = document.getElementById("pos-area").scrollHeight;
+        };
+
+        </script>
+</body>
+</html>
