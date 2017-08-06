@@ -25,18 +25,22 @@ class Index extends \think\Controller
     }
     public function test()
     {    	
-    	return view('index/test',['name'=>'thinkphp']);
+    	return view('index/test',['page'=>'test']);
     }
     public function test2()
     {    	
-    	return view('index/test2',['name'=>'thinkphp']);
+    	return view('index/test2',['page'=>'test2']);
     }
-    public function test3()
+    public function login()
     {       
-        return view('index/test3',['name'=>'thinkphp']);
+        return view('index/login',['page'=>'login']);
     }
-    public function test4()
+    public function register()
     {       
-        return view('index/test4',['name'=>'thinkphp']);
+        return view('index/register',['page'=>'register']);
+    }
+    public function bindphone()
+    {       
+        return view('index/bindphone',['page'=>'bindphone']);
     }
 }

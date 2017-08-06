@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:88:"H:\Git\phpproject\thinkphp_5.0.10_full\public/../application/index\view\index\index.html";i:1501666638;s:89:"H:\Git\phpproject\thinkphp_5.0.10_full\public/../application/index\view\include\head.html";i:1501660882;s:90:"H:\Git\phpproject\thinkphp_5.0.10_full\public/../application/index\view\include\aside.html";i:1501666607;s:91:"H:\Git\phpproject\thinkphp_5.0.10_full\public/../application/index\view\include\footer.html";i:1501660947;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:88:"H:\Git\phpproject\thinkphp_5.0.10_full\public/../application/index\view\index\index.html";i:1501666638;s:89:"H:\Git\phpproject\thinkphp_5.0.10_full\public/../application/index\view\include\head.html";i:1501667969;s:90:"H:\Git\phpproject\thinkphp_5.0.10_full\public/../application/index\view\include\aside.html";i:1501932673;s:91:"H:\Git\phpproject\thinkphp_5.0.10_full\public/../application/index\view\include\footer.html";i:1501660947;}*/ ?>
 
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -9,9 +9,9 @@
 	
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Blend &mdash; Free HTML5 Bootstrap Website Template by FreeHTML5.co</title>
+	<title>comeonjy</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="" />
+	<meta name="description" content="江杨" />
 	<meta name="keywords" content="" />
 	
 
@@ -64,24 +64,28 @@
 		<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
 		<aside id="fh5co-aside" role="complementary" class="border js-fullheight">
 
-			<h1 id="fh5co-logo"><a href="index.html"><img src="__static__/images/logo-colored.png" alt="Free HTML5 Bootstrap Website Template"></a></h1>
+			<h1 id="fh5co-logo"><a href="index.html"><img <?php echo logo(\think\Session::get('info.figureurl_qq_2')); ?> alt="Free HTML5 Bootstrap Website Template" style="border-radius:50px"></a></h1>
 			<nav id="fh5co-main-menu" role="navigation">
 				<ul>
-					<li <?php echo aside($page,'index'); ?> ><a href="<?php echo url('index/index'); ?>">主页</a></li>
+<!-- 					<li <?php echo aside($page,'index'); ?> ><a href="<?php echo url('index/index'); ?>">主页</a></li>
 					<li <?php echo aside($page,'portfolio'); ?> ><a href="<?php echo url('index/portfolio'); ?>">作品</a></li>
 					<li <?php echo aside($page,'about'); ?> ><a href="<?php echo url('index/about'); ?>">关于</a></li>
 					<li <?php echo aside($page,'contact'); ?> ><a href="<?php echo url('index/contact'); ?>">联系</a></li>
-					<li <?php echo aside($page,'test'); ?> ><a href="<?php echo url('index/test'); ?>">地图Demo</a></li>
+					<li <?php echo aside($page,'test'); ?> ><a href="<?php echo url('index/test'); ?>">地图Demo</a></li> -->
+					<li <?php echo aside($page,'session'); ?> ><a href="<?php echo url('main/session'); ?>">session</a></li>
+					<li <?php echo aside($page,'test2'); ?> ><a href="<?php echo url('index/test2'); ?>">test2</a></li>
+					<li <?php echo aside($page,'login'); ?> ><a href="<?php echo url('index/login'); ?>">login</a></li>
+					<li <?php echo aside($page,'register'); ?> ><a href="<?php echo url('index/register'); ?>">register</a></li>
+					<li <?php echo aside($page,'bindphone'); ?> ><a href="<?php echo url('index/bindphone'); ?>">bindphone</a></li>
 				</ul>
 			</nav>
 
 			<div class="fh5co-footer">
-				<p><span>您好，欢迎来到我的个人网站</span><small>&copy; 2016 Blend Free seHTML5. All Rights Rerved.</small></p>
+				<p><span>您好，欢迎来到我的个人网站</span><small>&copy; 2016 . All Rights Rerved.</small></p>
 				<ul>
-					<li><a href="#"><i class="icon-facebook"></i></a></li>
-					<li><a href="#"><i class="icon-twitter"></i></a></li>
-					<li><a href="#"><i class="icon-instagram"></i></a></li>
-					<li><a href="#"><i class="icon-linkedin"></i></a></li>
+					<li><a href="<?php echo url('Oauth/qq_login'); ?>"><i class="icon-qq"></i></a></li>
+					<li><a href="#"><i class="icon-weibo"></i></a></li>
+					<li><a href="#"><i class="icon-weixin"></i></a></li>
 				</ul>
 			</div>
 

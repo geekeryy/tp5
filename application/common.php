@@ -18,3 +18,13 @@ function aside($str,$fun){
 	}
 	
 }
+
+/*显示QQ登录对应用户头像*/
+function logo($logo){
+	if (isset($logo) && !empty($logo)) {
+		# code...
+		echo 'src="'.$logo.'"';
+	}else{
+		echo 'src="__static__/images/logo-colored.png"';
+	}
+}
