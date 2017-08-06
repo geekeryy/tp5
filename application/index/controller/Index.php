@@ -43,4 +43,17 @@ class Index extends \think\Controller
     {       
         return view('index/bindphone',['page'=>'bindphone']);
     }
+    public function bindmail()
+    {       
+        return view('index/bindmail',['page'=>'bindmail']);
+    }
+    public function wait()
+    {       
+        return view('index/wait',['page'=>'wait']);
+    }
+    public function phonereg()
+    {       
+        return view('index/phonereg',['page'=>'phonereg']);
+    }
+
 }
