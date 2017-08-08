@@ -24,5 +24,4 @@ class Count extends \think\Model{
 		$data['all']=$res3;
 		return $data;
 	}
-
 }

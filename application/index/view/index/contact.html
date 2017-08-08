@@ -61,7 +61,7 @@
 						<h1>Get In Touch</h1>
 					</div>
 				</div>
-				<form action="">
+				<form action="{:url('main/send_mail')}" method="post">
 					<div class="row">
 						<div class="col-md-12">
 							<div class="row">
@@ -70,7 +70,7 @@
 										<input type="text" class="form-control" placeholder="Name">
 									</div>
 									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Email">
+										<input type="text" class="form-control" name="email" placeholder="Email">
 									</div>
 									<div class="form-group">
 										<input type="text" class="form-control" placeholder="Phone">
@@ -78,7 +78,7 @@
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
-										<textarea name="" id="message" cols="30" rows="7" class="form-control" placeholder="Message"></textarea>
+										<textarea name="content" id="message" cols="30" rows="7" class="form-control" placeholder="Message"></textarea>
 									</div>
 									<div class="form-group">
 										<input type="submit" class="btn btn-primary btn-md" value="Send Message">

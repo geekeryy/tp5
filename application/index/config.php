@@ -26,17 +26,18 @@ return [
     // +----------------------------------------------------------------------
     // | smtp邮箱服务器
     // +----------------------------------------------------------------------
-    // 'reg_url'=>'http://localhost/thinkphp_5.0.10_full/public/index/user/bindMail',
+
+    //邮件中注册链接
     'reg_url'=>'http://www.jiangyang.me/index/user/bindMail',
-
-    'smtpserver' => 'smtp.exmail.qq.com', //SMTP服务器
-
-    'smtpserverport' => 25, //SMTP服务器端口
-
-    'smtpusermail' => 'jy@zhongyilove.com', //SMTP服务器的用户邮箱
-
-    'smtpuser' => 'jy@zhongyilove.com', //SMTP服务器的用户帐号
-
-    'smtppass' => 'Aa1126254578', //SMTP服务器的用户密码
+     //SMTP服务器
+    'smtpserver' => 'smtp.exmail.qq.com',
+    //SMTP服务器端口
+    'smtpserverport' => 25, 
+    //SMTP服务器的用户邮箱
+    'smtpusermail' => 'jy@zhongyilove.com', 
+    //SMTP服务器的用户帐号
+    'smtpuser' => 'jy@zhongyilove.com', 
+    //SMTP服务器的用户密码
+    'smtppass' => 'Aa1126254578', 
     
 ];

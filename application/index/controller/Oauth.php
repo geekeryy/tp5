@@ -21,9 +21,18 @@ class Oauth extends \think\Controller{
 		//将用户信息存入数据库
 		$data=array('info'=>$arr,'openid'=>$openid);
 		$user=model('UserInfo');
-		$user->qq_saveUser($data);
-		//登录成功，重定向到指定页面
-		$this->redirect('index/index');
+		$res=$user->qq_saveUser($data);
+		switch ($res) {
+				case 0:
+					$this->error('数据写入失败！');
+					break;
+				case 1:
+					$this->success('成功，正在返回首页！','index/index');
+					break;
+				default:
+					$this->error('未知错误!');
+					break;
+			}
 	}
 
 }

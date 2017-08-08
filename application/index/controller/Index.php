@@ -4,8 +4,11 @@ namespace app\index\controller;
 class Index extends \think\Controller
 {
     public function index()
-    {    	
-    	return view('index/index',['page'=>'index']);
+    {
+        $count=model('Count');
+        $data=$count->getCount();
+        $ip=request()->ip();
+    	return view('index/index',['page'=>'index','count'=>$data,'ip'=>$ip]);
     }
     public function about()
     {    	
@@ -35,10 +38,6 @@ class Index extends \think\Controller
     {       
         return view('index/login',['page'=>'login']);
     }
-    public function register()
-    {       
-        return view('index/register',['page'=>'register']);
-    }
     public function bindphone()
     {       
         return view('index/bindphone',['page'=>'bindphone']);
@@ -54,6 +53,14 @@ class Index extends \think\Controller
     public function phonereg()
     {       
         return view('index/phonereg',['page'=>'phonereg']);
+    }
+    public function mailreg()
+    {       
+        return view('index/mailreg',['page'=>'mailreg']);
+    }
+    public function register()
+    {       
+        return view('index/register',['page'=>'register']);
     }
 
 }
