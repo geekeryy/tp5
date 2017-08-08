@@ -1,3 +1,4 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:88:"H:\Git\phpproject\thinkphp_5.0.10_full\public/../application/index\view\index\test2.html";i:1502183799;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>

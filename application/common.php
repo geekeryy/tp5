@@ -19,14 +19,18 @@ function aside($str,$fun){
 	
 }
 
-/*显示QQ登录对应用户头像*/
+/*显示对应用户头像*/
 function logo($logo){
-	if (isset($logo) && !empty($logo)) {
-		# code...
-		echo 'src="'.$logo.'"';
-	}else{
-		echo 'src="__static__/images/logo-colored.png"';
+	$a=session('headimg');
+	if (isset($a) && !empty($a)) {
+		echo 'src="'.$a.'"';
 	}
+	$b=session('info.figureurl_qq_2');
+	if (isset($b) && !empty($b)) {
+		echo 'src="'.$b.'"';
+	}
+		echo 'src="__static__/images/logo-colored.png"';
+	
 }
 
 /**/

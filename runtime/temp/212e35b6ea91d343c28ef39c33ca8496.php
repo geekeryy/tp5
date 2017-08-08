@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:88:"H:\Git\phpproject\thinkphp_5.0.10_full\public/../application/index\view\index\index.html";i:1502170224;s:89:"H:\Git\phpproject\thinkphp_5.0.10_full\public/../application/index\view\include\head.html";i:1502170225;s:90:"H:\Git\phpproject\thinkphp_5.0.10_full\public/../application/index\view\include\aside.html";i:1502170226;s:91:"H:\Git\phpproject\thinkphp_5.0.10_full\public/../application/index\view\include\footer.html";i:1502170225;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:88:"H:\Git\phpproject\thinkphp_5.0.10_full\public/../application/index\view\index\index.html";i:1502170224;s:89:"H:\Git\phpproject\thinkphp_5.0.10_full\public/../application/index\view\include\head.html";i:1502179547;s:90:"H:\Git\phpproject\thinkphp_5.0.10_full\public/../application/index\view\include\aside.html";i:1502198461;s:91:"H:\Git\phpproject\thinkphp_5.0.10_full\public/../application/index\view\include\footer.html";i:1502179955;}*/ ?>
 
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -47,8 +47,7 @@
 	<!-- Theme style  -->
 	<link rel="stylesheet" href="__static__/css/style.css">
 	
-	<script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp"></script>
-	<script type="text/javascript" src="https://3gimg.qq.com/lightmap/components/geolocation/geolocation.min.js"></script>
+
 
 	<!-- Modernizr JS -->
 	<script src="__static__/js/modernizr-2.6.2.min.js"></script>
@@ -66,13 +65,13 @@
 		<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
 		<aside id="fh5co-aside" role="complementary" class="border js-fullheight">
 
-			<h1 id="fh5co-logo"><a href="index.html"><img <?php echo logo(\think\Session::get('info.figureurl_qq_2')); ?> alt="Free HTML5 Bootstrap Website Template" style="border-radius:50px"></a></h1>
+			<h1 id="fh5co-logo"><a href="index.html"><img <?php echo logo($page); ?> alt="Free HTML5 Bootstrap Website Template" style="border-radius:50px"></a></h1>
 			<nav id="fh5co-main-menu" role="navigation">
 				<ul>
 <!-- 					<li <?php echo aside($page,'index'); ?> ><a href="<?php echo url('index/index'); ?>">主页</a></li>
 					<li <?php echo aside($page,'portfolio'); ?> ><a href="<?php echo url('index/portfolio'); ?>">作品</a></li>
 					<li <?php echo aside($page,'about'); ?> ><a href="<?php echo url('index/about'); ?>">关于</a></li> -->
-					<li <?php echo aside($page,'contact'); ?> ><a href="<?php echo url('index/contact'); ?>">联系</a></li>
+					<!-- <li <?php echo aside($page,'contact'); ?> ><a href="<?php echo url('index/contact'); ?>">联系</a></li> -->
 					<li <?php echo aside($page,'test'); ?> ><a href="<?php echo url('index/test'); ?>">地图Demo</a></li>
 					<li <?php echo aside($page,'session'); ?> ><a href="<?php echo url('main/session'); ?>">session</a></li>
 					<li <?php echo aside($page,'test2'); ?> ><a href="<?php echo url('index/test2'); ?>">test2</a></li>
@@ -88,8 +87,8 @@
 				<p><span>您好，欢迎来到我的个人网站</span><small>&copy; 2016 . All Rights Rerved.</small></p>
 				<ul>
 					<li><a href="<?php echo url('Oauth/qq_login'); ?>"><i class="icon-qq"></i></a></li>
-					<li><a href="#"><i class="icon-weibo"></i></a></li>
-					<li><a href="#"><i class="icon-weixin"></i></a></li>
+					<li><a href="<?php echo url('Oauth/wb_login'); ?>"><i class="icon-weibo"></i></a></li>
+					<li><a href="<?php echo url('Oauth/wx_login'); ?>"><i class="icon-weixin"></i></a></li>
 				</ul>
 			</div>
 
@@ -229,7 +228,7 @@
 	<!-- Counters -->
 	<script src="__static__/js/jquery.countTo.js"></script>
 	
-	<script src="__static__/js/mymap.js"></script>
+
 	<!-- MAIN JS -->
 	<script src="__static__/js/main.js"></script>
 

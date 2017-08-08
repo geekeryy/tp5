@@ -1,18 +1,20 @@
 <aside id="fh5co-aside" role="complementary" class="border js-fullheight">
 
-			<h1 id="fh5co-logo"><a href="index.html"><img {$Think.session.info.figureurl_qq_2|logo} alt="Free HTML5 Bootstrap Website Template" style="border-radius:50px"></a></h1>
+			<h1 id="fh5co-logo"><a href="index.html"><img style="width: 100px;height: 100px;border-radius:50px" {$page|logo} alt="Free HTML5 Bootstrap Website Template" ></a></h1>
 			<nav id="fh5co-main-menu" role="navigation">
 				<ul>
 <!-- 					<li {$page|aside='index'} ><a href="{:url('index/index')}">主页</a></li>
 					<li {$page|aside='portfolio'} ><a href="{:url('index/portfolio')}">作品</a></li>
 					<li {$page|aside='about'} ><a href="{:url('index/about')}">关于</a></li> -->
-					<li {$page|aside='contact'} ><a href="{:url('index/contact')}">联系</a></li>
+					<!-- <li {$page|aside='contact'} ><a href="{:url('index/contact')}">联系</a></li> -->
 					<li {$page|aside='test'} ><a href="{:url('index/test')}">地图Demo</a></li>
 					<li {$page|aside='session'} ><a href="{:url('main/session')}">session</a></li>
-					<li {$page|aside='test2'} ><a href="{:url('index/test2')}">test2</a></li>
+					<!-- <li {$page|aside='test2'} ><a href="{:url('index/test2')}">test2</a></li> -->
 					<li {$page|aside='phonereg'} ><a href="{:url('index/phonereg')}">手机注册</a></li>
 					<li {$page|aside='mailreg'} ><a href="{:url('index/mailreg')}">邮箱注册</a></li>
 					<li {$page|aside='register'} ><a href="{:url('index/register')}">账号注册</a></li>
+					<li {$page|aside='qq_login'} ><a href="{:url('Oauth/qq_login')}">QQ登录</a></li>
+					<li {$page|aside='wx_login'} ><a href="{:url('Oauth/wx_login')}">微信登录</a></li>
 					<li {$page|aside='bindphone'} ><a href="{:url('index/bindphone')}">bindphone</a></li>
 					<li {$page|aside='bindmail'} ><a href="{:url('index/bindmail')}">bindmail</a></li>
 				</ul>
@@ -22,8 +24,8 @@
 				<p><span>您好，欢迎来到我的个人网站</span><small>&copy; 2016 . All Rights Rerved.</small></p>
 				<ul>
 					<li><a href="{:url('Oauth/qq_login')}"><i class="icon-qq"></i></a></li>
-					<li><a href="#"><i class="icon-weibo"></i></a></li>
-					<li><a href="#"><i class="icon-weixin"></i></a></li>
+					<li><a href="{:url('Oauth/wb_login')}"><i class="icon-weibo"></i></a></li>
+					<li><a href="{:url('Oauth/wx_login')}"><i class="icon-weixin"></i></a></li>
 				</ul>
 			</div>
 
