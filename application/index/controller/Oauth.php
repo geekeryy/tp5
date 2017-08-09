@@ -1,45 +1,54 @@
 <?php
 namespace app\index\controller;
 use QQ_Login_Api\myclass\QC;
+use WX\WX;
 class Oauth extends \think\Controller{
+
+
+	/**
+	 * 微信自动登录，无需用户授权
+	 * 只获取openid
+	 * @return [type] [description]
+	 */
+	function wxAutoLogin(){
+		$wx=new WX();
+		$url=$wx->wxAutoLogin();
+		$this->redirect($url);
+	}
 
 	/**
 	 * 微信登录授权
+	 * @return [type] [description]
 	 */
-	function wx_login(){
-		//1.请求code
-		$url='https://open.weixin.qq.com/connect/oauth2/authorize?';
-		$param='appid='.config("wx_appid").'&redirect_uri='.config("wx_callback").'&response_type=code&scope='.config("wx_scope").'&state=STATE#wechat_redirect';
-        $this->redirect($url.$param);
+	function wxLogin(){
+		$wx=new WX();
+		$url=$wx->wx_login();
+		$this->redirect($url);
 	}
+
 	/**
 	 * 微信授权回调函数
+	 * @return [type] [description]
 	 */
 	function wx_callback(){
-		//2.获取code，请求access_token和openid
 		$code=input('get.code');
-		$url='https://api.weixin.qq.com/sns/oauth2/access_token?';
-		$param='appid='.config("wx_appid").'&secret='.config("wx_appscript").'&code='.$code.'&grant_type=authorization_code ';
-
-		$ch = curl_init();
-        curl_setopt($ch, CURLOPT_HEADER, FALSE);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($ch, CURLOPT_URL,$url.$param);
-        $response =  curl_exec($ch);
-
-        //3.获得access_token和openid，请求用户信息
-        $res=json_decode($response,true);
-        $access_token=$res['access_token'];
-        $openid=$res['openid'];
-        $url='https://api.weixin.qq.com/sns/userinfo?access_token='.$access_token.'&openid='.$openid.'&lang=zh_CN ';
-        curl_setopt($ch, CURLOPT_URL,$url);
-        $response =  curl_exec($ch);
-        curl_close($ch);
-        //4.获得用户信息
-        $res=json_decode($response,true);
+		$wx=new WX();
+		$data=$wx->getAccessToken($code);
+		if (isset($data['scope']) && $data['scope']=='snsapi_base') {
+			//静默授权，获取openid
+			//
+			// return $data['openid'];
+		}else{
+			//不是静默授权，则更新数据库
+			//
+		}
+		$res=$wx->getUserInfo($data);
+		var_dump($res);
         session('headimg',$res['headimgurl']);
+        session('nickname',$res['nickname']);
+        session('wx_user_info',$res);
+
         $this->success('欢迎您：'.$res["nickname"],'index/index');
-        // return $response;
 	}
 	
 	/*唤起QQ授权*/

@@ -1,6 +1,6 @@
 <?php
 namespace app\index\controller;
-
+use WX\JSSDK;
 class Index extends \think\Controller
 {
     public function index()
@@ -61,6 +61,12 @@ class Index extends \think\Controller
     public function register()
     {       
         return view('index/register',['page'=>'register']);
+    }
+    public function wxjssdk()
+    {   
+        $jssdk = new JSSDK(config('wx_appid'), config('wx_appscript'));
+        $signPackage = $jssdk->GetSignPackage();
+        return view('index/wxjssdk',['page'=>'wxjssdk','signPackage'=>$signPackage]);
     }
 
 }

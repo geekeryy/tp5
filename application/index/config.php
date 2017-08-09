@@ -10,7 +10,7 @@ return [
     // 微信登录appid
     'wx_appid'             =>'wxba7464d31a8fd9b9',
     // 信登录appkey
-    'wx_appscript'            =>'ee85e8859022b23ff6139ce5d4912d20',
+    'wx_appscript'         =>'ee85e8859022b23ff6139ce5d4912d20',
     // wx_scope
     'wx_scope'             =>'snsapi_userinfo',
 
