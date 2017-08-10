@@ -1,30 +1,60 @@
 ThinkPHP 5.0
 ===============
 
-[![Total Downloads](https://poser.pugx.org/topthink/think/downloads)](https://packagist.org/packages/topthink/think)
-[![Latest Stable Version](https://poser.pugx.org/topthink/think/v/stable)](https://packagist.org/packages/topthink/think)
-[![Latest Unstable Version](https://poser.pugx.org/topthink/think/v/unstable)](https://packagist.org/packages/topthink/think)
-[![License](https://poser.pugx.org/topthink/think/license)](https://packagist.org/packages/topthink/think)
+功能完成情况：
+ + [普通账号注册](http://www.jiangyang.me/index/register)
+ + [邮箱注册](http://www.jiangyang.me/index/mailreg)
+   默认账号名为邮箱，验证码是用户的openid(需改进)
+ + [手机号注册](http://www.jiangyang.me/index/phonereg)
+   默认账号名为手机
 
-ThinkPHP5在保持快速开发和大道至简的核心理念不变的同时，PHP版本要求提升到5.4，对已有的CBD模式做了更深的强化，优化核心，减少依赖，基于全新的架构思想和命名空间实现，是ThinkPHP突破原有框架思路的颠覆之作，其主要特性包括：
+ + [普通账号登录](http://www.jiangyang.me/User/login)
+   账号可以是邮箱、手机号(需绑定,还未完成)
+ + [手机快捷登录](http://www.jiangyang.me/User/phonelogin)
+   填写手机，发送短信验证码
+ + [微信授权登录](http://www.jiangyang.me/Oauth/wxLogin)
+ + [QQ快捷登录](http://www.jiangyang.me/Oauth/qq_login)
 
- + 基于命名空间和众多PHP新特性
- + 核心功能组件化
- + 强化路由功能
- + 更灵活的控制器
- + 重构的模型和数据库类
- + 配置文件可分离
- + 重写的自动验证和完成
- + 简化扩展机制
- + API支持完善
- + 改进的Log类
- + 命令行访问支持
- + REST支持
- + 引导文件支持
- + 方便的自动生成定义
- + 真正惰性加载
- + 分布式环境支持
- + 更多的社交类库
+
+ + [绑定邮箱](http://www.jiangyang.me/index/bindmail) 
+   需要用户登录，一个邮箱仅允许绑定一个账号
+   验证码是用户的openid(需改进)
+ + [绑定手机](http://www.jiangyang.me/index/bindphone)
+   需要用户登录，一个手机仅允许绑定一个账号
+ + [微信JSSDK](http://www.jiangyang.me/index/wxjssdk)
+ + [文件上传与下载]
+ + [信息发布]
+ + [地图]
+
+
+用户注册方式
+ + 普通账号注册，status=0
+ + 邮箱注册
+ + 手机注册
+ + QQ注册
+ + 微信注册
+用户登录方式
+ + 普通账号，密码登录
+ + QQ快捷登录
+ + 手机，验证码登录
+ + 手机，密码登录(需要补充密码信息)
+ + 邮箱，验证码登录
+ + 邮箱，密码登录(需要补充密码信息)
+ + 微信快捷授权登录
+
+疑问：
+ - validate的length规则怎么用(已解决)
+ : 'length:6,10'
+ - 模型中如何使用事物
+
+
+
+
+
+
+
+
+
 
 
 ## 参与开发

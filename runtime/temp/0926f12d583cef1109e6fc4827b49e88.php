@@ -1,3 +1,4 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:91:"H:\Git\phpproject\thinkphp_5.0.10_full\public/../application/index\view\index\phonereg.html";i:1502351325;}*/ ?>
 <!doctype html>
 <html class="no-js">
 <head>
@@ -33,7 +34,8 @@ phone=document.getElementById('phone').value;
 	$.ajax({
 		type: "POST", //用POST方式传输
 		dataType: "JSON", //数据格式:JSON
-		url: "{:url('User/send_message')}", //目标地址
+		// url: "<?php echo url('main/test2'); ?>", //目标地址
+		url: "<?php echo url('User/send_message'); ?>", //目标地址
 		data: {"phone":phone},
 		error: function (XMLHttpRequest, textStatus, errorThrown) {
 			alter("验证码发送失败，请稍后再试！");
@@ -70,11 +72,19 @@ function SetRemainTime() {
 	</div>
 	<!-- 登陆框 -->
 	<div class="am-u-sm-11 am-u-sm-centered">
-	<form class="am-form" action="{:url('User/bindPhone')}" method="post">
+	<form class="am-form" action="<?php echo url('User/phoneReg'); ?>" method="post">
 	  <fieldset class="myapp-login-form am-form-set">
 		<div class="am-form-group am-form-icon ">
-
+			<i class="am-icon-user"></i>
 			<input type="text" class="myapp-login-input-text am-form-field" id="phone" name="phone"  placeholder="请输入您的手机号">
+		</div>
+		<div class="am-form-group am-form-icon">
+			<i class="am-icon-lock"></i>
+			<input type="text" class="myapp-login-input-text am-form-field" id="password" name="password" placeholder="请输入密码">
+		</div>
+		<div class="am-form-group am-form-icon">
+			<i class="am-icon-lock"></i>
+			<input type="text" class="myapp-login-input-text am-form-field" name="repassword" placeholder="请确认密码">
 		</div>
 		<div class="am-form-group am-form-icon" >
 		<input type="button" id="btnSendCode"	onClick="sendMessage()" class="myapp-login-form-submit am-btn am-btn-primary am-btn-block " value="获取验证码"></input>
@@ -96,7 +106,7 @@ function SetRemainTime() {
 	</div>
 
 		<div class="am-u-sm-12 am-text-center" >
-		 <a href="{:url('index/index')}">
+		 <a href="<?php echo url('index/index'); ?>">
 		 <i class="am-icon-btn am-primary am-icon-home"></i>
 		 </a>
 		 </div>

@@ -1,3 +1,4 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:93:"H:\Git\phpproject\thinkphp_5.0.10_full\public/../application/index\view\index\phonelogin.html";i:1502362903;}*/ ?>
 <!doctype html>
 <html class="no-js">
 <head>
@@ -33,7 +34,7 @@ phone=document.getElementById('phone').value;
 	$.ajax({
 		type: "POST", //用POST方式传输
 		dataType: "JSON", //数据格式:JSON
-		url: "{:url('User/send_message')}", //目标地址
+		url: "<?php echo url('User/send_message'); ?>", //目标地址
 		data: {"phone":phone},
 		error: function (XMLHttpRequest, textStatus, errorThrown) {
 			alter("验证码发送失败，请稍后再试！");
@@ -70,7 +71,7 @@ function SetRemainTime() {
 	</div>
 	<!-- 登陆框 -->
 	<div class="am-u-sm-11 am-u-sm-centered">
-	<form class="am-form" action="{:url('User/bindPhone')}" method="post">
+	<form class="am-form" action="<?php echo url('User/phoneLogin'); ?>" method="post">
 	  <fieldset class="myapp-login-form am-form-set">
 		<div class="am-form-group am-form-icon ">
 
@@ -96,7 +97,7 @@ function SetRemainTime() {
 	</div>
 
 		<div class="am-u-sm-12 am-text-center" >
-		 <a href="{:url('index/index')}">
+		 <a href="<?php echo url('index/index'); ?>">
 		 <i class="am-icon-btn am-primary am-icon-home"></i>
 		 </a>
 		 </div>

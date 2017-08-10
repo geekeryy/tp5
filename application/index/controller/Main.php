@@ -19,7 +19,10 @@ class Main extends \think\Controller{
 			// return "数据写入失败";
 		}
 	}
-	/*发送邮件*/
+	/**
+	 * 发送邮件
+	 * @return [type] [description]
+	 */
 	function send_mail(){
 		$email = trim(input('post.email'));	
 		$content = trim(input('post.content'));
@@ -28,9 +31,9 @@ class Main extends \think\Controller{
 		$arr['mailto']=$email;
 		$arr['tpl']="suggest";
 		$arr['content']=$content;
-		$mail=init_mail($mail,$arr);
+		$res=init_mail($mail,$arr);
 
-		if(!$mail->send()) {
+		if(!$res) {
 		    echo 'Message could not be sent.';
 		    echo 'Mailer Error: ' . $mail->ErrorInfo;
 		} else {
@@ -40,7 +43,10 @@ class Main extends \think\Controller{
 	}
 
 
-	/*发送短信验证码*/
+	/**
+	 * 发送短信验证码
+	 * @return [type] [description]
+	 */
 	function send_message(){
 		//
 		if (!empty(session('yunpian'))) {
@@ -61,7 +67,10 @@ class Main extends \think\Controller{
 	} 
 
 
-	/*用户手机号验证*/
+	/**
+	 * 用户手机号验证
+	 * @return [type] [description]
+	 */
 	function bindPhone(){
 
 		//判断验证码是否正确
@@ -78,7 +87,10 @@ class Main extends \think\Controller{
 		}
 	}
 
-	/*查看session的工具函数*/
+	/**
+	 * 查看session的工具函数
+	 * @return [type] [description]
+	 */
 	function session(){
 		var_dump(session(''));
 	}

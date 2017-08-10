@@ -10,9 +10,16 @@ return [
     // 微信登录appid
     'wx_appid'             =>'wxba7464d31a8fd9b9',
     // 信登录appkey
-    'wx_appscript'         =>'ee85e8859022b23ff6139ce5d4912d20',
+    'wx_appsecret'         =>'ee85e8859022b23ff6139ce5d4912d20',
     // wx_scope
     'wx_scope'             =>'snsapi_userinfo',
+
+    // +----------------------------------------------------------------------
+    // | 微信JSSDK配置
+    // +----------------------------------------------------------------------
+
+    // ticket路径
+    'ticket_path'          => APP_PATH.'../extend/WX/',
 
     // +----------------------------------------------------------------------
     // | QQ登录配置
@@ -41,7 +48,7 @@ return [
     // +----------------------------------------------------------------------
 
     //邮件中注册链接
-    'reg_url'=>'http://www.jiangyang.me/index/user/bindMail',
+    'reg_url'=>'http://www.jiangyang.me/index/user/verifyMail',
      //SMTP服务器
     'smtpserver' => 'smtp.exmail.qq.com',
     //SMTP服务器端口

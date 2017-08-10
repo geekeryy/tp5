@@ -1,3 +1,4 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:88:"H:\Git\phpproject\thinkphp_5.0.10_full\public/../application/index\view\index\login.html";i:1502344740;}*/ ?>
 <!doctype html>
 <html class="no-js">
 <head>
@@ -7,7 +8,7 @@
   <meta name="keywords" content="">
   <meta name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>comeonjy</title>
+  <title>Amaze UI Examples</title>
   <meta name="renderer" content="webkit">
   <meta http-equiv="Cache-Control" content="no-siteapp"/>
   <link rel="stylesheet" href="__static__/css/amazeui.min.css">
@@ -17,18 +18,22 @@
 <div class="am-g">
 	<!-- LOGO -->
 	<div class="am-u-sm-12 am-text-center" >
-		 <a href="{:url('index/index')}"><i class="am-icon-twitch myapp-login-logo"></i></a>
+		 <i class="am-icon-twitch myapp-login-logo"></i>
 	</div>
 	<!-- 登陆框 -->
 	<div class="am-u-sm-11 am-u-sm-centered">
-	<form class="am-form" action="{:url('user/bindMail')}" method="post">
+	<form class="am-form" method="post" action="<?php echo url('User/login'); ?>">
 	  <fieldset class="myapp-login-form am-form-set">
 		<div class="am-form-group am-form-icon">
 			<i class="am-icon-user"></i>
-			<input type="text" class="myapp-login-input-text am-form-field" name="email" placeholder="请输入您的邮箱">
+			<input type="text" class="myapp-login-input-text am-form-field" name="account" placeholder="请输入您的账号">
+		</div>
+	    <div class="am-form-group am-form-icon">
+			<i class="am-icon-lock"></i>
+			<input type="text" class="myapp-login-input-text am-form-field" name="password" placeholder="请输入密码">
 		</div>
 	  </fieldset>
-	  <button type="submit" class="myapp-login-form-submit am-btn am-btn-primary am-btn-block ">发送验证</button>
+	  <button type="submit" class="myapp-login-form-submit am-btn am-btn-primary am-btn-block ">登 陆</button>
 	</form>
 	</div>
 	<div class="am-text-center am-u-sm-11 am-u-sm-centered myapp-login-form-shortcut">
@@ -38,17 +43,17 @@
 
 	<div class="am-u-sm-12 am-text-center myapp-login-form-listico" >
 		 <div class="am-u-sm-4 am-text-center" >
-		 <a href="{:url('oauth/qq_login')}">
+		 <a href="<?php echo url('oauth/qq_login'); ?>">
 		 <i class="am-icon-btn am-primary am-icon-qq"></i>
 		 </a>
 		 </div>
 		 <div class="am-u-sm-4 am-text-center" >
-		 <a href="{:url('oauth/qq_login')}">
+		 <a href="<?php echo url('oauth/wxLogin'); ?>">
 		 <i class="am-icon-btn am-primary am-icon-weixin"></i>
 		 </a>
 		 </div>
 		 <div class="am-u-sm-4 am-text-center" >
-		 <a href="{:url('oauth/qq_login')}">
+		 <a href="<?php echo url('oauth/qq_login'); ?>">
 		 <i class="am-icon-btn am-primary am-icon-weibo"></i>
 		 </a>
 		 </div>
@@ -56,10 +61,12 @@
 
 	<div class="am-text-center am-u-sm-11 am-u-sm-centered myapp-login-form-shortcut">
 	</div>
-	<div class="am-u-sm-12 am-text-left">
-	<p ><a href="{:url('index/login')}">已有账号？立即登录</a></p>
+	<div class="am-u-sm-4 am-text-left">
+	<p ><a href="#">忘记密码？</a></p>
 	</div>
-
+	<div class="am-u-sm-4 am-text-right">
+	<p><a href="<?php echo url('index/register'); ?>}">立即注册</a></p>
+	</div>
 
 </div>
 

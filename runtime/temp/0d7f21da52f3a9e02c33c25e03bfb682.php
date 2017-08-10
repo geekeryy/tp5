@@ -1,3 +1,4 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:91:"H:\Git\phpproject\thinkphp_5.0.10_full\public/../application/index\view\index\bindmail.html";i:1502348590;}*/ ?>
 <!doctype html>
 <html class="no-js">
 <head>
@@ -17,11 +18,11 @@
 <div class="am-g">
 	<!-- LOGO -->
 	<div class="am-u-sm-12 am-text-center" >
-		 <a href="{:url('index/index')}"><i class="am-icon-twitch myapp-login-logo"></i></a>
+		 <a href="<?php echo url('index/index'); ?>"><i class="am-icon-twitch myapp-login-logo"></i></a>
 	</div>
 	<!-- 登陆框 -->
 	<div class="am-u-sm-11 am-u-sm-centered">
-	<form class="am-form" action="{:url('user/bindMail')}" method="post">
+	<form class="am-form" action="<?php echo url('user/bindMail'); ?>" method="post">
 	  <fieldset class="myapp-login-form am-form-set">
 		<div class="am-form-group am-form-icon">
 			<i class="am-icon-user"></i>
@@ -38,17 +39,17 @@
 
 	<div class="am-u-sm-12 am-text-center myapp-login-form-listico" >
 		 <div class="am-u-sm-4 am-text-center" >
-		 <a href="{:url('oauth/qq_login')}">
+		 <a href="<?php echo url('oauth/qq_login'); ?>">
 		 <i class="am-icon-btn am-primary am-icon-qq"></i>
 		 </a>
 		 </div>
 		 <div class="am-u-sm-4 am-text-center" >
-		 <a href="{:url('oauth/qq_login')}">
+		 <a href="<?php echo url('oauth/qq_login'); ?>">
 		 <i class="am-icon-btn am-primary am-icon-weixin"></i>
 		 </a>
 		 </div>
 		 <div class="am-u-sm-4 am-text-center" >
-		 <a href="{:url('oauth/qq_login')}">
+		 <a href="<?php echo url('oauth/qq_login'); ?>">
 		 <i class="am-icon-btn am-primary am-icon-weibo"></i>
 		 </a>
 		 </div>
@@ -57,7 +58,7 @@
 	<div class="am-text-center am-u-sm-11 am-u-sm-centered myapp-login-form-shortcut">
 	</div>
 	<div class="am-u-sm-12 am-text-left">
-	<p ><a href="{:url('index/login')}">已有账号？立即登录</a></p>
+	<p ><a href="<?php echo url('index/login'); ?>">已有账号？立即登录</a></p>
 	</div>
 
 

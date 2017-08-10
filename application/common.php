@@ -11,7 +11,12 @@
 
 // 应用公共文件
 
-/*使对应导航栏高亮*/
+/**
+ * 使对应导航栏高亮
+ * @param  [type] $str [description]
+ * @param  [type] $fun [description]
+ * @return [type]      [description]
+ */
 function aside($str,$fun){
 	if ($str==$fun) {
 		echo 'class="fh5co-active"';
@@ -19,21 +24,25 @@ function aside($str,$fun){
 	
 }
 
-/*显示对应用户头像*/
+/**
+ * 显示对应用户头像
+ * @param  [type] $logo [description]
+ * @return [type]       [description]
+ */
 function logo($logo){
-	$a=session('headimg');
-	if (isset($a) && !empty($a)) {
-		echo 'src="'.$a.'"';
-	}
-	$b=session('info.figureurl_qq_2');
-	if (isset($b) && !empty($b)) {
-		echo 'src="'.$b.'"';
-	}
+	if ($logo=session('img_url')) {
+		echo 'src="'.$logo.'"';
+	}else{
 		echo 'src="__static__/images/logo-colored.png"';
-	
+	}
 }
 
-/**/
+/**
+ * 初始化邮件发送函数
+ * @param  [type] $mail [description]
+ * @param  [type] $data [description]
+ * @return [type]       [description]
+ */
 function init_mail($mail,$data){
 
 		$mailto=$data['mailto'];
@@ -75,7 +84,5 @@ function init_mail($mail,$data){
 				# code...
 				break;
 		}
-		
-
 		return $mail;
 }

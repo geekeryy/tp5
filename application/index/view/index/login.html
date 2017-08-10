@@ -21,15 +21,15 @@
 	</div>
 	<!-- 登陆框 -->
 	<div class="am-u-sm-11 am-u-sm-centered">
-	<form class="am-form">
+	<form class="am-form" method="post" action="{:url('User/login')}">
 	  <fieldset class="myapp-login-form am-form-set">
 		<div class="am-form-group am-form-icon">
 			<i class="am-icon-user"></i>
-			<input type="text" class="myapp-login-input-text am-form-field" placeholder="请输入您的账号">
+			<input type="text" class="myapp-login-input-text am-form-field" name="account" placeholder="请输入您的账号">
 		</div>
 	    <div class="am-form-group am-form-icon">
 			<i class="am-icon-lock"></i>
-			<input type="text" class="myapp-login-input-text am-form-field" placeholder="请输入密码">
+			<input type="text" class="myapp-login-input-text am-form-field" name="password" placeholder="请输入密码">
 		</div>
 	  </fieldset>
 	  <button type="submit" class="myapp-login-form-submit am-btn am-btn-primary am-btn-block ">登 陆</button>
@@ -47,7 +47,7 @@
 		 </a>
 		 </div>
 		 <div class="am-u-sm-4 am-text-center" >
-		 <a href="{:url('oauth/qq_login')}">
+		 <a href="{:url('oauth/wxLogin')}">
 		 <i class="am-icon-btn am-primary am-icon-weixin"></i>
 		 </a>
 		 </div>

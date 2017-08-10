@@ -8,6 +8,9 @@ class Index extends \think\Controller
         $count=model('Count');
         $data=$count->getCount();
         $ip=request()->ip();
+        if (!session('wxAutoLogin')) {
+            action('Oauth/wxAutoLogin');
+        }
     	return view('index/index',['page'=>'index','count'=>$data,'ip'=>$ip]);
     }
     public function about()
@@ -62,9 +65,13 @@ class Index extends \think\Controller
     {       
         return view('index/register',['page'=>'register']);
     }
+    public function phonelogin()
+    {       
+        return view('index/phonelogin',['page'=>'phonelogin']);
+    }
     public function wxjssdk()
     {   
-        $jssdk = new JSSDK(config('wx_appid'), config('wx_appscript'));
+        $jssdk = new JSSDK(config('wx_appid'), config('wx_appsecret'));
         $signPackage = $jssdk->GetSignPackage();
         return view('index/wxjssdk',['page'=>'wxjssdk','signPackage'=>$signPackage]);
     }

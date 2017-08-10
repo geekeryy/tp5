@@ -35,20 +35,26 @@ class Oauth extends \think\Controller{
 		$wx=new WX();
 		$data=$wx->getAccessToken($code);
 		if (isset($data['scope']) && $data['scope']=='snsapi_base') {
-			//静默授权，获取openid
-			//
-			// return $data['openid'];
+			//通过openid获取用户信息
+			$user=model('UserInfo');
+			if ($res=$user->findUser(array('wx_openid'=>$data['openid']))) {
+				session('user_openid',$res['openid']);
+				session('img_url',$res['img_url']);
+			}
+			session('wxAutoLogin','1');
+			$this->redirect('index/index');
 		}else{
 			//不是静默授权，则更新数据库
-			//
+			$res=$wx->getUserInfo($data);
+	        session('img_url',$res['headimgurl']);
+			$user=model('UserInfo');
+			if ($user->wxSaveUser($res)) {
+				$this->success('欢迎您：'.$res["nickname"],'index/index');
+			}else{
+				$this->error('数据写入失败！');
+			}
 		}
-		$res=$wx->getUserInfo($data);
-		var_dump($res);
-        session('headimg',$res['headimgurl']);
-        session('nickname',$res['nickname']);
-        session('wx_user_info',$res);
 
-        $this->success('欢迎您：'.$res["nickname"],'index/index');
 	}
 	
 	/*唤起QQ授权*/
@@ -69,18 +75,11 @@ class Oauth extends \think\Controller{
 		//将用户信息存入数据库
 		$data=array('info'=>$arr,'openid'=>$openid);
 		$user=model('UserInfo');
-		$res=$user->qq_saveUser($data);
-		switch ($res) {
-				case 0:
-					$this->error('数据写入失败！');
-					break;
-				case 1:
-					$this->success('成功，正在返回首页！','index/index');
-					break;
-				default:
-					$this->error('未知错误!');
-					break;
-			}
+		if ($user->qqSaveUser($data)) {
+			$this->success('成功，正在返回首页！','index/index');
+		}else{
+			$this->error('数据写入失败！');
+		}
 	}
 
 }
