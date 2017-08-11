@@ -8,9 +8,13 @@ class Index extends \think\Controller
         $count=model('Count');
         $data=$count->getCount();
         $ip=request()->ip();
-        if (!session('wxAutoLogin')) {
-            action('Oauth/wxAutoLogin');
+        //如果是微信浏览器，则微信静默登录
+        if (strpos($_SERVER['HTTP_USER_AGENT'],'MicroMessenger')!==false) {
+            if (!session('wxAutoLogin')) {
+                action('Oauth/wxAutoLogin');
+            }
         }
+        
     	return view('index/index',['page'=>'index','count'=>$data,'ip'=>$ip]);
     }
     public function about()

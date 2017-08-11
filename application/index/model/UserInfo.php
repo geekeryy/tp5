@@ -66,8 +66,15 @@ class UserInfo extends \think\Model{
 	 * @param  [type] $data [description]
 	 * @return [type]       [description]
 	 */
-	function bindPhone($data){
+	function bindPhone($arr){
 		$user_openid=session('user_openid');
+		//如果不存在賬號名，則手機號作為默認賬號名，驗證碼作為默認密碼
+		if ($res=$this->where('openid',$user_openid)->find()) {
+			if (!$res['account']) {
+				$data['account']=$arr['mobile'];
+				$data['password']=$arr['code'];
+			}
+		}
 		//执行绑定操作，更新数据库
 		$this->where('openid',$user_openid)->update($data);
 		//状态值加一
@@ -83,6 +90,13 @@ class UserInfo extends \think\Model{
 	 */
 	function bindMail($data){
 		$user_openid=session('user_openid');
+		//如果不存在賬號名，則郵箱作為默認賬號名和密碼
+		if ($res=$this->where('openid',$user_openid)->find()) {
+			if (!$res['account']) {
+				$data['account']=$data['email'];
+				$data['password']=$data['email'];
+			}
+		}
 		$res=$this->where('openid',$user_openid)->update($data);
 		return $res;
 	}
@@ -97,7 +111,11 @@ class UserInfo extends \think\Model{
 		return $res;
 	}
 
-	/*邮箱注册*/
+	/**
+	 * 邮箱注册
+	 * @param  [type] $data [description]
+	 * @return [type]       [description]
+	 */
 	function mailReg($data){
 		$data['state']=0;
 		$data['account']=$data['email'];
@@ -108,50 +126,62 @@ class UserInfo extends \think\Model{
 	}
 
 	/**
-	 *1.判断用户是登录还是注册
-	 *2.实现用户每次登录，刷新一次信息
+	 * 綁定微信
+	 * @return [type] [description]
+	 */
+	function bindWX($data){
+		$user_openid=session('user_openid');
+		$res=$this->where('openid',$user_openid)->update($data);
+		$res=$this->where('openid',$user_openid)->setInc('state',1);
+		return $res;
+	}
+	/**
+	 * 判断用户是登录还是注册
 	 * @param  [type] $arr [description]
 	 * @return [type]      [description]
 	 */
 	function wxSaveUser($arr){
-		$data['wx_openid']=$arr['openid'];
-		$data['nickname']=$arr['nickname'];
-		$data['sex']=$arr['sex'];
-		$data['city']=$arr['city'];
-		$data['province']=$arr['province'];
-		$data['img_url']=$arr['headimgurl'];
-		$data['state']=1;
 		$data['last_time']=date('Y-m-d h:i:s',time());
-		$data['openid']=md5(time().rand(1000,9999));
 		$data['ip']=request()->ip();
 
-		//如果存在用户，者刷新用户信息，否则注册用户信息
+		//如果存在用户，刷新用户信息，否则注册用户信息
 		if ($res=$this->where('wx_openid',$arr['openid'])->find()) {
 			//微信登录，刷新用户信息
-			session('user_openid',$res['openid']);
-			session('img_url',$res['img_url']);
 			$res=$this->where('openid',$res['openid'])->update($data);
 			return $res;
 		}else{
-			//注册
+			//微信注册
+			$data['nickname']=$arr['nickname'];
+			$data['sex']=$arr['sex'];
+			$data['city']=$arr['city'];
+			$data['province']=$arr['province'];
+			$data['img_url']=$arr['headimgurl'];
+			$data['wx_openid']=$arr['openid'];
+			$data['state']=1;
+			$data['openid']=md5(time().rand(1000,9999));
 			$data['reg_time']=date('Y-m-d h:i:s',time());
 			$res=$this->save($data);
 			return $res;
 		}
 	}
 
-	/*1.判断用户是登录还是注册
-	 *2.实现用户每次登录，刷新一次信息
+	/**
+	 * 綁定QQ
+	 * @return [type] [description]
+	 */
+	function bindQQ($data){
+		$user_openid=session('user_openid');
+		$res=$this->where('openid',$user_openid)->update($data);
+		$res=$this->where('openid',$user_openid)->setInc('state',1);
+		return $res;
+	}
+
+	/**
+	 * 判断用户是登录还是注册
+	 * @param  [type] $arr [description]
+	 * @return [type]      [description]
 	 */
 	function qqSaveUser($arr){
-		//
-		$data['state']=1;
-		$data['qq_openid']=$arr['openid'];
-		$data['nickname']=$arr['info']['nickname'];
-		$data['sex']=$arr['info']['gender'];
-		$data['province']=$arr['info']['province'];
-		$data['city']=$arr['info']['city'];
-		$data['img_url']=$arr['info']['figureurl_qq_2'];
 		$data['ip']=request()->ip();
 		$data['last_time']=date('Y-m-d h:i:s',time());
 
@@ -164,6 +194,14 @@ class UserInfo extends \think\Model{
 			return $res;
 		}else{
 			//注册
+			$data['nickname']=$arr['info']['nickname'];
+			$data['sex']=$arr['info']['gender'];
+			$data['province']=$arr['info']['province'];
+			$data['city']=$arr['info']['city'];
+			$data['img_url']=$arr['info']['figureurl_qq_2'];
+			$data['openid']=md5(time().rand(1000,9999));
+			$data['state']=1;
+			$data['qq_openid']=$arr['openid'];
 			$data['reg_time']=date('Y-m-d h:i:s',time());
 			//执行save多个的时候，只执行最后一条
 			$res=$this->save($data);

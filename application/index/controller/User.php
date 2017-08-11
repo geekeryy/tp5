@@ -40,7 +40,7 @@ class User extends \think\Controller{
 		//判断验证码是否正确
 		if(input('post.code')==session('yunpian.code') && !empty(input('post.code'))){
 			//验证码超时判断
-			if (time()-session('yunpian.time')>60) {
+			if (time()-session('yunpian.time')>180) {
 				session('yunpian',null);
 				$this->error('验证码超时，请重新获取');
 			}
@@ -126,7 +126,7 @@ class User extends \think\Controller{
 		//判断验证码是否正确
 		if(input('post.code')==session('yunpian.code') && !empty(input('post.code'))){
 			//验证码超时判断
-			if (time()-session('yunpian.time')>60) {
+			if (time()-session('yunpian.time')>180) {
 				session('yunpian',null);
 				$this->error('验证码超时，请重新获取');
 			}
@@ -183,10 +183,13 @@ class User extends \think\Controller{
 				session('yunpian',null);
 				$this->error('验证码超时，请重新获取');
 			}
+
 			//验证成功，则清除手机验证码session
 			session('yunpian',null);
 			//将绑定信息写入数据库
 			$user=model('UserInfo');
+			//驗證碼作為默認密碼
+			$data['code']=input('post.code');
 			$data['mobile']=$phone;
 			if ($user->bindPhone($data)) {
 				$this->success('绑定成功，正在返回首页！','index/index');
