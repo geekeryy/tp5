@@ -67,6 +67,7 @@ ThinkPHP 5.0
  - validate的length规则怎么用(已解决)
  : 'length:6,10'
  - 模型中如何使用事务
+ - ThinkPHP钩子函数？
 
 
 

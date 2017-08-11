@@ -64,7 +64,7 @@ class Oauth extends \think\Controller{
 					$this->error('此微信已被綁定','index/index');
 				}
 				if (!session('user_openid')) {
-					$this->error('請先登錄');
+					$this->error('请先登录！');
 				}
 				if ($user->bindWX($wxarr)) {
 					$this->success('微信綁定成功！','index/index');
@@ -76,6 +76,7 @@ class Oauth extends \think\Controller{
 			//拉取授权登录或注册
 			$res=$wx->getUserInfo($data);
 			if ($user->wxSaveUser($res)) {
+				session('wxAutoLogin',null);
 				$this->success('欢迎您：'.$res["nickname"],'index/index');
 			}else{
 				$this->error('数据写入失败！');
@@ -116,6 +117,7 @@ class Oauth extends \think\Controller{
 				$this->error('請先登錄');
 			}
 			if ($user->bindQQ($qqarr)) {
+				session('wxAutoLogin',null);
 				$this->success('QQ綁定成功！','index/index');
 			}else{
 				$this->error('QQ綁定失敗!');
