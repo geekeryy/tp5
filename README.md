@@ -2,30 +2,40 @@ ThinkPHP 5.0
 ===============
 
 功能完成情况：
- + [普通账号注册](http://www.jiangyang.me/index/register)
- + [邮箱注册](http://www.jiangyang.me/index/mailreg)
+ + [普通账号注册](http://www.jiangyang.me/index/index/register)
+ + [邮箱注册](http://www.jiangyang.me/index/index/mailreg)
    默认账号名为邮箱，验证码是用户的openid(需改进)
- + [手机号注册](http://www.jiangyang.me/index/phonereg)
+ + [手机号注册](http://www.jiangyang.me/index/index/phonereg)
    默认账号名为手机
 
- + [普通账号登录](http://www.jiangyang.me/User/login)
+
+ + [普通账号登录](http://www.jiangyang.me/index/User/login)
    账号可以是邮箱、手机号(需绑定,还未完成)
- + [手机快捷登录](http://www.jiangyang.me/User/phonelogin)
+ + [手机快捷登录](http://www.jiangyang.me/index/User/phonelogin)
    填写手机，发送短信验证码
- + [微信授权登录](http://www.jiangyang.me/Oauth/wxLogin)
+ + [微信授权登录](http://www.jiangyang.me/index/Oauth/wxLogin)
    注册时将用户信息写入数据库，授权登录时不更新基本信息
- + [微信静默登录](http://www.jiangyang.me/Oauth/wxAutoLogin)
+ + [微信静默登录](http://www.jiangyang.me/index/Oauth/wxAutoLogin)
    如果是微信浏览器，则通过获取wx_openid，换取用户信息，不更新数据库
- + [QQ快捷登录](http://www.jiangyang.me/Oauth/qq_login)
+ + [QQ快捷登录](http://www.jiangyang.me/index/Oauth/qq_login)
    注册时将用户信息写入数据库，授权登录时不更新基本信息
 
 
- + [绑定邮箱](http://www.jiangyang.me/index/bindmail) 
+ + [绑定邮箱](http://www.jiangyang.me/index/index/bindmail) 
    需要用户登录，一个邮箱仅允许绑定一个账号
    验证码是用户的openid(需改进)
- + [绑定手机](http://www.jiangyang.me/index/bindphone)
+ + [绑定手机](http://www.jiangyang.me/index/index/bindphone)
    需要用户登录，一个手机仅允许绑定一个账号
- + [微信JSSDK](http://www.jiangyang.me/index/wxjssdk)
+ + [绑定微信](http://www.jiangyang.me/index/Oauth/bindWX) 
+   需要用户登录，一个微信仅允许绑定一个账号
+   验证码是用户的openid(需改进)
+ + [绑定QQ](http://www.jiangyang.me/index/Oauth/bindQQ)
+   需要用户登录，一个QQ仅允许绑定一个账号
+
+
+ + [微信JSSDK](http://www.jiangyang.me/index/index/wxjssdk)
+
+
  + [文件上传与下载]
  + [信息发布]
  + [地图]
@@ -38,6 +48,7 @@ ThinkPHP 5.0
 3.綁定手機必須是沒有註冊過的手機，如果不存在賬號名，則手機號作為默認賬號名，驗證碼作為默認密碼
 4.手機註冊，郵箱註冊，作為默認賬號
 5.绑定QQ、微信只插入对应openid，不更新数据
+6.微信QQ首次登录便是注册
 
 用户注册方式
  + 普通账号注册，status=0

@@ -28,7 +28,16 @@ class UserInfo extends \think\Model{
 	 */
 	function login($data){
 		$res=$this->where($data)->find();
+		if ($res) {
+			session('user_openid',$res['openid']);
+			$arr['ip']=request()->ip();
+			$arr['last_time']=date('Y-m-d h:i:s',time());
+			$this->where($data)->update($arr);
+		}
 		return $res;
+		
+		
+		
 	}
 	/**
 	 * 普通账号注册
@@ -75,6 +84,7 @@ class UserInfo extends \think\Model{
 				$data['password']=$arr['code'];
 			}
 		}
+		$data['mobile']=$arr['mobile'];
 		//执行绑定操作，更新数据库
 		$this->where('openid',$user_openid)->update($data);
 		//状态值加一
@@ -132,7 +142,7 @@ class UserInfo extends \think\Model{
 	function bindWX($data){
 		$user_openid=session('user_openid');
 		$res=$this->where('openid',$user_openid)->update($data);
-		$res=$this->where('openid',$user_openid)->setInc('state',1);
+		$res=$this->where('openid',$user_openid)->setInc('state',1);			
 		return $res;
 	}
 	/**
@@ -185,11 +195,15 @@ class UserInfo extends \think\Model{
 		$data['ip']=request()->ip();
 		$data['last_time']=date('Y-m-d h:i:s',time());
 
+		//不管登录注册都会存储头像信息
+		session('img_url',$arr['info']['figureurl_qq_2']);
+
 		//如果存在用户，者刷新用户信息，否则注册用户信息
 		if ($res=$this->where('qq_openid',$arr['openid'])->find()) {
 			//QQ登录，刷新用户信息
+			//登录则在数据库取user_openid
 			session('user_openid',$res['openid']);
-			session('img_url',$data['img_url']);
+
 			$res=$this->where('openid',$res['openid'])->update($data);
 			return $res;
 		}else{
@@ -203,6 +217,9 @@ class UserInfo extends \think\Model{
 			$data['state']=1;
 			$data['qq_openid']=$arr['openid'];
 			$data['reg_time']=date('Y-m-d h:i:s',time());
+			//注册则创建user_openid并存储
+			session('user_openid',$data['openid']);
+
 			//执行save多个的时候，只执行最后一条
 			$res=$this->save($data);
 			return $res;

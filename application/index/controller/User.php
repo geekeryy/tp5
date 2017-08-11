@@ -247,7 +247,8 @@ class User extends \think\Controller{
 	function bindMail(){
 		$email=input('post.email');
 		//确认用户已经登录，获取openid
-		if (session($user_openid)) {
+		$user_openid=session('user_openid');
+		if (!$user_openid) {
 			$this->error('请先登录');
 		}
 

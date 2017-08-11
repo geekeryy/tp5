@@ -42,6 +42,7 @@ class Oauth extends \think\Controller{
 		$wx=new WX();
 		$data=$wx->getAccessToken($code);
 		$user=model('UserInfo');
+		//微信静默登录
 		if (isset($data['scope']) && $data['scope']=='snsapi_base') {
 			//通过openid获取用户信息
 			
@@ -72,7 +73,7 @@ class Oauth extends \think\Controller{
 				}
 			}
 
-			//不是静默授权，则更新数据库
+			//拉取授权登录或注册
 			$res=$wx->getUserInfo($data);
 			if ($user->wxSaveUser($res)) {
 				$this->success('欢迎您：'.$res["nickname"],'index/index');
