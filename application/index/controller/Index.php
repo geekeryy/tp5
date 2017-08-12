@@ -1,7 +1,6 @@
 <?php
 namespace app\index\controller;
 use WX\JSSDK;
-use WxpayAPI\example\Jsapi;
 class Index extends \think\Controller
 {
     public function index()
@@ -82,8 +81,7 @@ class Index extends \think\Controller
     }
     public function wxpay()
     {   
-        $jsapi=new Jsapi();
-        $res=$jsapi->test();
+        $res=action('Wxpay/pay');
         return view('index/wxpay',['page'=>'wxpay','jsApiParameters'=>$res['jsApiParameters'],'editAddress'=>$res['editAddress']]);
     }
 

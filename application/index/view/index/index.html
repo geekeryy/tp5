@@ -165,7 +165,7 @@
 			dataType: "JSON", //数据格式:JSON
 			url: "{:url('Main/viewCount')}", //目标地址
 			error: function (XMLHttpRequest, textStatus, errorThrown) {
-				alter("验证码发送失败，请稍后再试！");
+				alter("error!");
 			 },
 			success: function (msg){ 
 					if (msg) {

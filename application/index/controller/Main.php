@@ -92,6 +92,16 @@ class Main extends \think\Controller{
 	 * @return [type] [description]
 	 */
 	function session(){
+		$test=model('Test');
+		$res=$test->show();
+		echo "<pre>";
+		foreach ($res as $key1 => $value1) {
+			echo $value1['state'].':'.$value1['tag'].':'.$value1['time'];
+			echo '<br>';
+		}
 		var_dump(session(''));
+		echo "</pre>";
+		
+
 	}
 }

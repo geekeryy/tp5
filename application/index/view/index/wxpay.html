@@ -12,7 +12,17 @@
 			{$jsApiParameters},
 			function(res){
 				WeixinJSBridge.log(res.err_msg);
-				alert(res.err_code+res.err_desc+res.err_msg);
+				// alert('code:'+res.err_code+'desc:'+res.err_desc+'msg:'+res.err_msg+'这是1号');
+				if (res.err_msg=='get_brand_wcpay_request:ok') {
+					alert('支付成功');
+					window.location="http://www.jiangyang.me/index/main/session";
+				}else if(res.err_msg=='get_brand_wcpay_request:cancel'){
+					alert('支付取消');
+				}else if(res.err_msg=='get_brand_wcpay_request:fail'){
+					alert('支付失败');
+				}else{
+					alert('未知错误，请截图联系管理员！');
+				}
 			}
 		);
 	}
@@ -45,7 +55,7 @@
 				var value4 = res.addressDetailInfo;
 				var tel = res.telNumber;
 				
-				alert(value1 + value2 + value3 + value4 + ":" + tel);
+				// alert(value1 + value2 + value3 + value4 + ":" + tel+'这是支付前的alert');
 			}
 		);
 	}
@@ -67,7 +77,7 @@
 </head>
 <body>
     <br/>
-    <font color="#9ACD32"><b>快来给宝宝支付<span style="color:#f00;font-size:50px">1毛</span>钱</b></font><br/><br/>
+    <font color="#9ACD32"><b>快来给宝宝支付<span style="color:#f00;font-size:50px">1分</span>钱</b></font><br/><br/>
 	<div align="center">
 		<button style="width:210px; height:50px; border-radius: 15px;background-color:#FE6714; border:0px #FE6714 solid; cursor: pointer;  color:white;  font-size:16px;" type="button" onclick="callpay()" >立即支付</button>
 	</div>
