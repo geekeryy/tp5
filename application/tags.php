@@ -25,4 +25,10 @@ return [
     'log_write'    => [],
     // 应用结束
     'app_end'      => [],
+    // 测试
+    'test'         => ['app\\index\\behavior\\Test','app\\index\\behavior\\Demo'],
+    // 保存支付信息
+    'payinfo'      => ['app\\index\\behavior\\PayInfo'],
+    // 访问统计
+    'statistics'   => ['app\\index\\behavior\\Statistics'],
 ];

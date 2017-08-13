@@ -1,10 +1,26 @@
 <?php
 namespace app\index\controller;
+/**
+ * 所有能够直接访问的页面，并对每个页面进行访问统计
+ */
 use WX\JSSDK;
 class Index extends \think\Controller
 {
+    /**
+     * 初始化函数，用户访问统计
+     * @return [type] [description]
+     */
+    public function _initialize(){
+        $params=request()->action();
+        if ($res=\think\Hook::listen('statistics',$params)  ) {
+            if (!$res['0']) {
+                //数据库写入失败
+            }
+        }
+    }
     public function index()
-    {
+    {   
+        //获取访问数
         $count=model('Count');
         $data=$count->getCount();
         $ip=request()->ip();
@@ -15,7 +31,7 @@ class Index extends \think\Controller
             }
         }
         
-    	return view('index/index',['page'=>'index','count'=>$data,'ip'=>$ip]);
+    	return view('index/index',['page'=>'index','count'=>$data,'ip'=>$ip ]);
     }
     public function about()
     {    	
@@ -54,7 +70,10 @@ class Index extends \think\Controller
         return view('index/bindmail',['page'=>'bindmail']);
     }
     public function wait()
-    {       
+    {   
+        $arr=array('state'=>9,'tag'=>'behavior');
+        $res=\think\Hook::listen('test',$arr);
+        var_dump($res);
         return view('index/wait',['page'=>'wait']);
     }
     public function phonereg()
@@ -73,6 +92,10 @@ class Index extends \think\Controller
     {       
         return view('index/phonelogin',['page'=>'phonelogin']);
     }
+    public function car()
+    {       
+        return view('index/car',['page'=>'car']);
+    }
     public function wxjssdk()
     {   
         $jssdk = new JSSDK(config('wx_appid'), config('wx_appsecret'));
@@ -81,7 +104,7 @@ class Index extends \think\Controller
     }
     public function wxpay()
     {   
-        $res=action('Wxpay/pay');
+        $res=action('Wxpay/pay'); 
         return view('index/wxpay',['page'=>'wxpay','jsApiParameters'=>$res['jsApiParameters'],'editAddress'=>$res['editAddress']]);
     }
 

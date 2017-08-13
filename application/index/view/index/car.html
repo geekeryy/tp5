@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html class="no-js"> 
+    <head>
+    {include file='include/head'}
+    <!-- <script type="text/javascript" src="__static__/js/jquery-1.7.2.min.js"></script> -->
+    </head>
+    <body onload="viewCount()">
+    <div id="fh5co-page">
+        <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
+        {include file="include/aside"}
+      
+        <div id="fh5co-main">
+        
+            <div class="fh5co-narrow-content">
+                <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">Is me</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="fh5co-feature animate-box" data-animate-effect="fadeInLeft">
+                            <div class="fh5co-icon">
+                                <!-- <i class="icon-strategy"></i> -->
+                            </div>
+                            <div class="fh5co-text">
+                                <h3>接口</h3>
+                                <p>
+                                <form action="{:url('Wxpay/pay')}" method="post">
+                                    商品ID：<input type="text" name="attach" ><br>
+                                    商品名：<input type="text" name="body" ><br>
+                                    购买数：<input type="text" name="num" ><br>
+                                    <input type="submit" name="send" value="send" ><br>
+                                </form>
+                    <!-- <li ><a href="{:url('Wxpay/pay')}">car</a></li> -->
+
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+ 
+
+
+{include file='include/footer'}
+
+
+    </body>
+</html>
+

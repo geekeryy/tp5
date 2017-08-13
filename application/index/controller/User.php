@@ -87,7 +87,7 @@ class User extends \think\Controller{
 	}
 
 	/**
-	 * 发送手机验证码
+	 * 发送手机验证码，ajax请求
 	 * @return [type] [description]
 	 */
 	function send_message(){
