@@ -10,21 +10,78 @@ use WxpayAPI\lib\JsApiPay;
 use WxpayAPI\lib\WxPayResults;
 use WxpayAPI\lib\WxPayException;
 class Wxpay extends \think\Controller{
-	
+	/**
+	 * 用户点击结算下单
+	 * @return [type] [description]
+	 */
+	function order(){
+		if (!session('user_openid')) {
+			$this->error('请先登录');
+		}
+
+		//生成订单ID
+		$order_id=time().session('user_openid');
+
+		//获取订单信息
+		$input=input('post.');
+		$i=0;
+		foreach ($input['num'] as $key1 => $value1) {
+			$data[$i]['product_id']=$key1;
+			$data[$i]['product_num']=$value1;
+			$data[$i]['order_id']=$order_id;
+			$i++;
+		}
+		//生成body，商品描述
+		$body=$i."件商品";
+		//计算total_fee
+		$product=model('ProductInfo');
+		$total_fee=$product->countTotalFee($data);
+		//记录order表
+		$order_data['order_id']=$order_id;
+		$order_data['user_openid']=session('user_openid');
+		$order_data['total_fee']=$total_fee;
+		$order_data['body']=$body;
+		$order_data['time']=date('Y-m-d h:i:s',time());
+		$order=model('Order');
+		if (!$order->saveOrder($order_data)) {
+			$this->error('order表写入失败');
+		}
+		//保存订单信息order_info
+		$order=model('OrderInfo');
+		if ($order->saveOrderInfo($data)) {
+			//订单信息保存成功，调取订单模板
+			session('order_id',$order_id);
+			$this->redirect('index/wxpay');
+		}else{
+			//订单保存失败，写入日志
+			$this->error('订单保存失败');
+		}		
+	}
+
 	/**
 	 * 微信支付
-	 * 生成订单
+	 * 生成支付页面
 	 * @return [type] [description]
 	 */
 	function pay(){
 
-		// $data['attach']=input('post.attach');
-		// $data['body']=input('post.body');
-		// $data['total_fee']=input('post.num');
-		$data['attach']='123456';
-		$data['body']='测试商品';
-		$data['total_fee']='1';
-		// return var_dump($data);
+		if (!session('order_id')) {
+			$this->error('订单已经被取消，请重新下单');
+		}
+		//获取用户订单信息
+		$order=model('Order');
+		$res=$order->show(array('order_id'=>session('order_id')));
+		
+		if (!$res) {
+			$this->error('订单数据库查询失败');
+		}
+		if ($res['state'] && $res['time']) {
+			$this->error('订单已支付，请勿重复付款！');
+		}
+		$data['attach']=$res['order_id'];
+		$data['body']=$res['body'];
+		$data['total_fee']=$res['total_fee'];
+
 		$logHandler= new CLogFileHandler(config('wxpay_path')."logs/".date('Y-m-d').'.log');
 		$log = Log::Init($logHandler, 15);
 
@@ -53,11 +110,10 @@ class Wxpay extends \think\Controller{
 		$editAddress = $tools->GetEditAddressParameters();
 
 		$res=array('jsApiParameters'=>$jsApiParameters,'editAddress'=>$editAddress);
-		// $this->redirect('index/wxpay')
-		// return view('index/wxpay',['page'=>'wxpay','jsApiParameters'=>$res['jsApiParameters'],'editAddress'=>$res['editAddress']]);
 
 		return $res;
 	}
+
 	/**
 	 *  异步通知功能
 	 * @return [type] [description]

@@ -102,6 +102,11 @@ class Index extends \think\Controller
         $signPackage = $jssdk->GetSignPackage();
         return view('index/wxjssdk',['page'=>'wxjssdk','signPackage'=>$signPackage]);
     }
+    
+    /**
+     * 支付模板
+     * @return [type] [description]
+     */
     public function wxpay()
     {   
         $res=action('Wxpay/pay'); 

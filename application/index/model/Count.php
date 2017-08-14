@@ -28,8 +28,8 @@ class Count extends \think\Model{
 	 * @return [type] [description]
 	 */
 	function getCount(){
-		$res1=$this->where('time',date('Y-m-d',time()))->find();
-		$data['today']=$res1['view'];
+		$res1=$this->where('time',date('Y-m-d',time()))->sum('view');
+		$data['today']=$res1;
 		$res2=$this->where('time','>',date('Y-m-d',time()-604800))->sum('view');
 		$data['week']=$res2;
 		$res3=$this->sum('view');
