@@ -13,7 +13,11 @@ class UserInfo extends \think\Model{
 		$res=$this->where($data)->find();
 		return $res;
 	}
-
+	/**
+	 * 更新登录信息
+	 * @param  [type] $data [description]
+	 * @return [type]       [description]
+	 */
 	function upLoginInfo($data){
 		$arr['ip']=request()->ip();
 		$arr['last_time']=date('Y-m-d h:i:s',time());
@@ -154,13 +158,13 @@ class UserInfo extends \think\Model{
 		$data['last_time']=date('Y-m-d h:i:s',time());
 		$data['ip']=request()->ip();
 
-		//如果存在用户，刷新用户信息，否则注册用户信息
+		//如果存在用户，则为登录，刷新用户信息，否则注册用户信息
 		if ($res=$this->where('wx_openid',$arr['openid'])->find()) {
-			//微信登录，刷新用户信息
+			//微信登录，刷新用户数据
 			$res=$this->where('openid',$res['openid'])->update($data);
 			return $res;
 		}else{
-			//微信注册
+			//微信注册，注册后再次授权登录将不改变用户信息
 			$data['nickname']=$arr['nickname'];
 			$data['sex']=$arr['sex'];
 			$data['city']=$arr['city'];

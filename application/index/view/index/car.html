@@ -10,8 +10,8 @@
 .cfs { width: 40%; }
 .cfs a { cursor: pointer; }
 #cxsdd{text-align:center;}
-#cxsdd td{  height:55px;}
-#xianss{ height:40px; line-height:40px;}
+#cxsdd td{  height:25px;}
+#xianss{ height:20px; line-height:20px;}
 #in_num, #sp_num{ color:red; font-weight:bold;font-size:20px; padding:0 5px;}
 .lskdo{ width:30px; text-align:center; }
 </style>
@@ -41,7 +41,7 @@
         </tr>
         <tr>
             
-            <td>产品1</td>
+            <td>产品1 </td>
             <td><input class="choo" type="checkbox" name="checkbox[101]" value="101"  />
             选择</td>
             <td class="cfs"><a class="jian">-</a>
@@ -69,7 +69,7 @@
             <td><input class="choo" type="checkbox" name="checkbox[]" value="104"  />
             选择</td>
             <td class="cfs"><a class="jian">-</a>
-            <input class="lskdo" disabled="disabled" type="text" name="num[104]" value="2" />
+            <input class="lskdo" disabled="disabled" type="text" name="num[104]" value="1" />
             <a class="jia">+</a></td>
         </tr>
         <tr>
@@ -82,7 +82,9 @@
         </tr>
     </table>
     </fieldset>
-    <div id="xianss">您选择了<span id="in_num">0</span>种商品，共有<span id="sp_num">0</span>个商品</div>
+    <div id="xianss">您选择了<span id="in_num">0</span>种商品
+    <!-- ，共有<span id="sp_num">0</span>个商品 -->
+    </div>
     <button type="submit" class="myapp-login-form-submit am-btn am-btn-primary am-btn-block ">购  买</button>
  </form>   
  </div>

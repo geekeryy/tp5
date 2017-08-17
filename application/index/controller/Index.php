@@ -11,27 +11,39 @@ class Index extends \think\Controller
      * @return [type] [description]
      */
     public function _initialize(){
-        $params=request()->action();
-        if ($res=\think\Hook::listen('statistics',$params)  ) {
-            if (!$res['0']) {
-                //数据库写入失败
+
+        //如果是微信浏览器，则微信静默登录
+        if (strpos($_SERVER['HTTP_USER_AGENT'],'MicroMessenger')!==false) {
+            $params['wx_openid']='0';
+            //控制每次会话只静默登录一次
+            if (!session('wxAutoLogin')) {
+                action('Oauth/wxAutoLogin');
+                //获取用户的wx_openid
             }
+            if (session('wx_openid') && session('wxAutoLogin')) {
+                $params['wx_openid']=session('wx_openid');
+                session('wx_openid',null);
+            }
+            //获取当前链接将要访问的页面
+            $params['page']=request()->action();
+            //访问计数钩子函数
+            if ($res=\think\Hook::listen('statistics',$params)) {
+                if (!$res['0']) {
+                    //数据库写入失败，日志记录
+                }
+            }
+        }else{
+            $this->error('请使用微信打开链接');
         }
     }
+    
     public function index()
     {   
         //获取访问数
         $count=model('Count');
         $data=$count->getCount();
         $ip=request()->ip();
-        //如果是微信浏览器，则微信静默登录
-        if (strpos($_SERVER['HTTP_USER_AGENT'],'MicroMessenger')!==false) {
-            if (!session('wxAutoLogin')) {
-                action('Oauth/wxAutoLogin');
-            }
-        }
-        
-    	return view('index/index',['page'=>'index','count'=>$data,'ip'=>$ip ]);
+    	return view('index/index',['page'=>'index','count'=>$data,'ip'=>$ip]);
     }
     public function about()
     {    	
@@ -71,7 +83,7 @@ class Index extends \think\Controller
     }
     public function wait()
     {   
-        $arr=array('state'=>9,'tag'=>'behavior');
+        $arr=array('state'=>9,'tag'=>'behavior',);
         $res=\think\Hook::listen('test',$arr);
         var_dump($res);
         return view('index/wait',['page'=>'wait']);
@@ -102,7 +114,11 @@ class Index extends \think\Controller
         $signPackage = $jssdk->GetSignPackage();
         return view('index/wxjssdk',['page'=>'wxjssdk','signPackage'=>$signPackage]);
     }
-    
+    public function jstest(){
+        $jssdk = new JSSDK(config('wx_appid'), config('wx_appsecret'));
+        $signPackage = $jssdk->GetSignPackage();
+        return view('index/jstest',['page'=>'jstest','signPackage'=>$signPackage]);
+    }
     /**
      * 支付模板
      * @return [type] [description]
@@ -110,7 +126,13 @@ class Index extends \think\Controller
     public function wxpay()
     {   
         $res=action('Wxpay/pay'); 
-        return view('index/wxpay',['page'=>'wxpay','jsApiParameters'=>$res['jsApiParameters'],'editAddress'=>$res['editAddress']]);
+        
+        $total_fee=session('total_fee');
+        $unit=100;
+        $total_fee=$total_fee/$unit;
+        session('total_fee',null);
+        
+        return view('index/wxpay',['page'=>'wxpay','total_fee'=>$total_fee,'jsApiParameters'=>$res['jsApiParameters'],'editAddress'=>$res['editAddress']]);
     }
 
 }

@@ -1,6 +1,8 @@
 <?php
 namespace app\index\behavior;
-
+/**
+ * 检查订单是否和回调参数一致
+ */
 class CheckOrder{
 	function run(&$params){
 		$where['order_id']=$params['attach'];

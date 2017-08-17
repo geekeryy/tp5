@@ -10,38 +10,54 @@ use WxpayAPI\lib\JsApiPay;
 use WxpayAPI\lib\WxPayResults;
 use WxpayAPI\lib\WxPayException;
 class Wxpay extends \think\Controller{
+
 	/**
 	 * 用户点击结算下单
 	 * @return [type] [description]
 	 */
 	function order(){
+
 		if (!session('user_openid')) {
 			$this->error('请先登录');
 		}
-
+		
 		//生成订单ID
-		$order_id=time().session('user_openid');
+		$order_id=md5(time().session('user_openid'));
 
 		//获取订单信息
 		$input=input('post.');
-		$i=0;
-		foreach ($input['num'] as $key1 => $value1) {
-			$data[$i]['product_id']=$key1;
-			$data[$i]['product_num']=$value1;
-			$data[$i]['order_id']=$order_id;
-			$i++;
+		$data=array();
+		if (isset($input['num']) && !empty($input['num'])) {
+			$i=0;
+			//校验数据
+			$validate=validate('OrderValidate');
+			foreach ($input['num'] as $key1 => $value1) {
+				$data[$i]['product_id']=$key1;
+				$data[$i]['product_num']=$value1;
+				$data[$i]['order_id']=$order_id;
+
+				if (!$validate->scene('order')->check($data[$i])) {
+					$this->error('数据有误');
+				}
+				$i++;
+			}
+
+		}else{
+			$this->error('没有数据');
 		}
 		//生成body，商品描述
 		$body=$i."件商品";
 		//计算total_fee
 		$product=model('ProductInfo');
 		$total_fee=$product->countTotalFee($data);
+		if (!$total_fee) {
+			$this->error('订单金额有误！','index/index');
+		}
 		//记录order表
 		$order_data['order_id']=$order_id;
 		$order_data['user_openid']=session('user_openid');
 		$order_data['total_fee']=$total_fee;
 		$order_data['body']=$body;
-		$order_data['time']=date('Y-m-d h:i:s',time());
 		$order=model('Order');
 		if (!$order->saveOrder($order_data)) {
 			$this->error('order表写入失败');
@@ -51,6 +67,7 @@ class Wxpay extends \think\Controller{
 		if ($order->saveOrderInfo($data)) {
 			//订单信息保存成功，调取订单模板
 			session('order_id',$order_id);
+			session('total_fee',$total_fee);
 			$this->redirect('index/wxpay');
 		}else{
 			//订单保存失败，写入日志

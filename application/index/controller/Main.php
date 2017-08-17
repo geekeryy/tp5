@@ -5,6 +5,13 @@ use PHPMailer\PHPMailer;
 class Main extends \think\Controller{
 	
 
+
+	function getLocation(){
+		$data=input('post.location');
+		return $data;
+	}
+
+
 	/**
 	 * 发送邮件
 	 * @return [type] [description]
@@ -38,12 +45,16 @@ class Main extends \think\Controller{
 		$res=$test->show();
 		echo "<pre>";
 		foreach ($res as $key1 => $value1) {
-			echo $value1['state'].':'.$value1['tag'].':'.$value1['time'];
+			echo $value1['state'].':'.$value1['data'].':'.$value1['tag'].':'.$value1['time'];
 			echo '<br>';
 		}
 		var_dump(session(''));
 		echo "</pre>";
-		
-
+	
+	}
+	function info($data){
+		echo "<pre>";
+		var_dump($data);
+		echo "</pre>";
 	}
 }

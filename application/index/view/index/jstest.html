@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <title>微信JS-SDK Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0"> 
+  <link rel="stylesheet" href="__static__/css/wxstyle.css">
+
+  <script type="text/javascript" src="https://3gimg.qq.com/lightmap/components/geolocation/geolocation.min.js"></script>
+</head>
+<!-- ontouchstart="a();" -->
+<body>
+<div class="wxapi_container">
+    
+    <div class="lbox_close wxapi_form">
+      <h3 id="menu-basic">基础接口</h3>
+      <span class="desc">判断当前客户端是否支持指定JS接口</span>
+      <button class="btn btn_primary" id="checkJsApi">checkJsApi</button>
+
+      <h3 id="menu-location">地理位置接口</h3>
+      <span class="desc">使用微信内置地图查看位置接口</span>
+      <button class="btn btn_primary" id="openLocation">openLocation</button>
+      <span class="desc">获取地理位置接口</span>
+      <button class="btn btn_primary" id="getLocation">getLocation</button>
+<button class="btn btn_primary" onClick="geolocation.getLocation(get_position_callback, showErr, options)" id="get_position">get_position()</button>
+
+    </div>
+  </div>
+
+
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+  /*
+   * 注意：
+   * 1. 所有的JS接口只能在公众号绑定的域名下调用，公众号开发者需要先登录微信公众平台进入“公众号设置”的“功能设置”里填写“JS接口安全域名”。
+   * 2. 如果发现在 Android 不能分享自定义内容，请到官网下载最新的包覆盖安装，Android 自定义分享接口需升级至 6.0.2.58 版本及以上。
+   * 3. 常见问题及完整 JS-SDK 文档地址：http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html
+   *
+   * 开发中遇到问题详见文档“附录5-常见错误及解决办法”解决，如仍未能解决可通过以下渠道反馈：
+   * 邮箱地址：weixin-open@qq.com
+   * 邮件主题：【微信JS-SDK反馈】具体问题
+   * 邮件内容说明：用简明的语言描述问题所在，并交代清楚遇到该问题的场景，可附上截屏图片，微信团队会尽快处理你的反馈。
+   */
+  wx.config({
+      debug: false,
+      appId: '{$signPackage['appId']}',
+      timestamp: '{$signPackage['timestamp']}',
+      nonceStr: '{$signPackage['nonceStr']}',
+      signature: '{$signPackage['signature']}',
+      jsApiList: [
+        'checkJsApi',
+        'onMenuShareTimeline',
+        'onMenuShareAppMessage',
+        'onMenuShareQQ',
+        'onMenuShareWeibo',
+        'onMenuShareQZone',
+        'hideMenuItems',
+        'showMenuItems',
+        'hideAllNonBaseMenuItem',
+        'showAllNonBaseMenuItem',
+        'translateVoice',
+        'startRecord',
+        'stopRecord',
+        'onVoiceRecordEnd',
+        'playVoice',
+        'onVoicePlayEnd',
+        'pauseVoice',
+        'stopVoice',
+        'uploadVoice',
+        'downloadVoice',
+        'chooseImage',
+        'previewImage',
+        'uploadImage',
+        'downloadImage',
+        'getNetworkType',
+        'openLocation',
+        'getLocation',
+        'hideOptionMenu',
+        'showOptionMenu',
+        'closeWindow',
+        'scanQRCode',
+        'chooseWXPay',
+        'openProductSpecificView',
+        'addCard',
+        'chooseCard',
+        'openCard'
+      ]
+  });
+
+
+  /*
+ * 注意：
+ * 1. 所有的JS接口只能在公众号绑定的域名下调用，公众号开发者需要先登录微信公众平台进入“公众号设置”的“功能设置”里填写“JS接口安全域名”。
+ * 2. 如果发现在 Android 不能分享自定义内容，请到官网下载最新的包覆盖安装，Android 自定义分享接口需升级至 6.0.2.58 版本及以上。
+ * 3. 完整 JS-SDK 文档地址：http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html
+ *
+ * 如有问题请通过以下渠道反馈：
+ * 邮箱地址：weixin-open@qq.com
+ * 邮件主题：【微信JS-SDK反馈】具体问题
+ * 邮件内容说明：用简明的语言描述问题所在，并交代清楚遇到该问题的场景，可附上截屏图片，微信团队会尽快处理你的反馈。
+ */
+    var lat;
+    var lng;
+    var add;
+    var geolocation = new qq.maps.Geolocation("DHOBZ-N7AKS-O2XOY-6W5TK-AZT37-P4BL6", "myapp");
+    var options = {timeout: 8000,failTipFlag:true};
+    //获取定位信息
+    function get_position(){
+      geolocation.getLocation(get_position_callback, showErr, options);
+    };
+    //获取地理位置成功时的回调函数
+    function get_position_callback(position){
+      var str=JSON.stringify(position,null,4);
+      alert(str);
+      lat=position.latitude;
+      lng=position.longitude;
+      add=position.addr;
+          wx.openLocation({
+          latitude: lat,
+          longitude: lng,
+          name: 'TIT 创意园',
+          address: add,
+          scale: 14,
+          infoUrl: 'http://weixin.qq.com'
+        });
+      };
+  
+    function showErr(){
+      alert('get error');
+    };
+
+wx.ready(function () {
+  // 1 判断当前版本是否支持指定 JS 接口，支持批量判断
+  document.querySelector('#checkJsApi').onclick = function () {
+    wx.checkJsApi({
+      jsApiList: [
+        'getNetworkType',
+        'previewImage'
+      ],
+      success: function (res) {
+        alert(JSON.stringify(res));
+      }
+    });
+  };
+
+
+  // 7 地理位置接口
+  // 7.1 查看地理位置
+  document.querySelector('#openLocation').onclick = function () {
+    wx.openLocation({
+      latitude: lat,
+      longitude: lng,
+      name: 'TIT 创意园',
+      address: add,
+      scale: 14,
+      infoUrl: 'http://weixin.qq.com'
+    });
+  };
+
+  // 7.2 获取当前地理位置
+  // document.querySelector('#getLocation').onclick = 
+
+
+
+
+});
+
+wx.error(function (res) {
+  alert(res.errMsg);
+});
+
+  function a() {
+    wx.getLocation({
+      success: function (res) {
+        alert(res.latitude);
+        //   $.ajax({
+        //   type: "POST", //用POST方式传输
+        //   dataType: "JSON", //数据格式:JSON
+        //   url: "{:url('User/send_message')}", //目标地址
+        //   data: {"location":JSON.stringify(res)},
+        //   error: function (XMLHttpRequest, textStatus, errorThrown) {
+        //     alter("验证码发送失败，请稍后再试！");
+        //    },
+        //   success: function (msg){ 
+        //     if (msg==null) {
+        //       alert('验证码发送成功，请注意查收！');
+        //     }else{
+        //       alert('验证码发送失败，请稍后再试！'+msg);
+        //     }
+            
+        //   }
+        // });
+
+      },
+      cancel: function (res) {
+        alert('用户拒绝授权获取地理位置');
+      }
+    });
+  };
+</script>
+<script src="__static__/js/zepto.min.js"></script>
+
+<div id="test" style="width:100px; height:100px;"></div>
+<div id="cli_dialog_div"></div></body></html>

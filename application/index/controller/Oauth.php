@@ -52,10 +52,11 @@ class Oauth extends \think\Controller{
 			}
 			//证明已经被微信自动登录过一次，不会再次登录
 			session('wxAutoLogin',1);
+			session('wx_openid',$data['openid']);
 			$this->redirect('index/index');
 		}else{
 
-			//綁定微信
+			//如果是綁定微信
 			if (session('bindWX')) {
 				session('bindWX',null);
 				//檢查微信是否被綁定
@@ -79,6 +80,7 @@ class Oauth extends \think\Controller{
 				session('wxAutoLogin',null);
 				$this->success('欢迎您：'.$res["nickname"],'index/index');
 			}else{
+				//登录刷新数据失败，或者注册插入数据失败
 				$this->error('数据写入失败！');
 			}
 		}

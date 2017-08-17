@@ -12,6 +12,15 @@ class Order extends \think\Model{
 		return $res;
 	}
 	/**
+	 * 查询用户所有订单
+	 * @param  [type] $where [description]
+	 * @return [type]        [description]
+	 */
+	function showAll($where){
+		$res=$this->where($where)->select();
+		return $res;
+	}
+	/**
 	 * 保存订单
 	 * @param  [type] $data [description]
 	 * @return [type]       [description]
