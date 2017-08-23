@@ -1,5 +1,5 @@
 <?php
-namespace app\index\model;
+namespace app\admin\model;
 
 class ViewInfo extends \think\Model{
 
@@ -16,7 +16,6 @@ class ViewInfo extends \think\Model{
 			$data['location']='保留';
 			$data['time']=date("Y-m-d h:i:s",time());
 			$res=$this->save($data);
-			return $res;	
 		}
 		
 	}

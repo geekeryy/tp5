@@ -6,9 +6,10 @@ class Main extends \think\Controller{
 	
 
 
-	function getLocation(){
-		$data=input('post.location');
-		return $data;
+	function test(){
+		$arr=json_decode(input('post.location'),true);
+		session('b',$arr);
+		return $arr['latitude'];
 	}
 
 

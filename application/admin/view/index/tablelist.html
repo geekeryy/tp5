@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+{include file="include/head"}
+</head>
+
+<body data-type="widgets">
+    <script src="__static__/assets/js/theme.js"></script>
+    <div class="am-g tpl-g">
+        <!-- 头部 -->
+        {include file="include/header"}
+        <!-- 侧边导航栏 -->
+        {include file="include/sidebar"}
+
+        <!-- 内容区域 -->
+        <div class="tpl-content-wrapper">
+            <div class="row-content am-cf">
+                <div class="row">
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title  am-cf">学生列表</div>
+
+
+                            </div>
+                            <div class="widget-body  am-fr">
+
+                                <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                                    <div class="am-form-group">
+                                        <div class="am-btn-toolbar">
+                                            <div class="am-btn-group am-btn-group-xs">
+                                                <a href="{:url('main/clear')}" type="button" class="am-btn am-btn-default am-btn-success"><span class="am-icon-plus"></span> 查看全部</a>
+                                                <button type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-save"></span> 保存</button>
+                                                <button type="button" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-archive"></span> 审核</button>
+                                                <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-trash-o"></span> 删除</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <form method="get" action="{:url('index/tablelist')}" id="search_form">
+                                <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
+                                    <div class="am-form-group tpl-table-list-select">
+                                        <select name="select" data-am-selected="{btnSize: 'sm'}">
+                                          <option value="option1">所有类别</option>
+                                          <option value="option2">汇东校区</option>
+                                          <option value="option3">营盘校区</option>
+                                          <option value="option4">男生</option>
+                                          <option value="option5">女生</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                </form>
+
+                                <form action="{:url('index/tablelist')}" method="get">
+                                <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+                                    <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
+                                    
+                                        <input type="text" name="content" class="am-form-field ">
+                                        <span class="am-input-group-btn">
+                                            <button id="search" class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="button"  onclick="this.form.submit()"></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                </form>
+
+                                <div class="am-u-sm-12">
+                                    <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
+                                        <thead>
+                                            <tr>
+                                                <th>编号</th>
+                                                <th>校区</th>
+                                                <th>考号</th>
+                                                <th>名字</th>
+                                                <th>性别</th>
+                                                <th>学院</th>
+                                                <th>专业</th>
+                                                <th>学号</th>
+                                                <th>班级</th>
+                                                <th>寝室</th>
+                                                <!-- <th>操作</th> -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {volist name="list" id="vo" }
+                                            <tr class="gradeX">
+                                                <td>{$i}</td>
+                                                <td>{$vo['campus']}</td>
+                                                <td>{$vo['number']}</td>
+                                                <td>{$vo['name']}</td>
+                                                <td>{$vo['sex']}</td>
+                                                <td>{$vo['college']}</td>
+                                                <td>{$vo['major']}</td>
+                                                <td>{$vo['student_id']}</td>
+                                                <td>{$vo['classes']}</td>
+                                                <td>{$vo['dorm']}</td>
+                                                <!-- <td>
+                                                    <div class="tpl-table-black-operation">
+                                                        <a href="javascript:;">
+                                                            <i class="am-icon-pencil"></i> 编辑
+                                                        </a>
+                                                        <a href="javascript:;" class="tpl-table-black-operation-del">
+                                                            <i class="am-icon-trash"></i> 删除
+                                                        </a>
+                                                    </div>
+                                                </td> -->
+                                            </tr>
+                                            {/volist}
+                                            <!-- more data -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="am-u-lg-12 am-cf">
+
+                                    <div class="am-fr">
+                                        <ul class="am-pagination tpl-pagination" >
+                                            {if condition='$pn eq 1'}
+                                            <li class="am-disabled"><a href="{:url('index/tablelist')}?pn={$pn-1}">上一页</a></li>
+                                            {else/}
+                                            <li><a href="{:url('index/tablelist')}?pn={$pn-1}">上一页</a></li>
+                                            {/if}
+
+                                            {if condition='$pn eq 1'}
+                                            <li class="am-active"><a href="{:url('index/tablelist')}?pn={$pn}">1</a></li>
+                                            <li><a href="{:url('index/tablelist')}?pn={$pn+1}">2</a></li>
+                                            <li><a href="{:url('index/tablelist')}?pn={$pn+2}">3</a></li>
+                                            <li><a href="{:url('index/tablelist')}?pn={$pn+3}">4</a></li>
+                                            <li><a href="{:url('index/tablelist')}?pn={$pn+4}">5</a></li>
+                                            {/if}
+
+                                            {if condition='$pn eq 2 and $pn lt $total'}
+                                            
+                                            <li ><a href="{:url('index/tablelist')}?pn={$pn-1}">1</a></li>
+                                            <li class="am-active"><a href="{:url('index/tablelist')}?pn={$pn}">2</a></li>
+                                            <li><a href="{:url('index/tablelist')}?pn={$pn+1}">3</a></li>
+                                            <li><a href="{:url('index/tablelist')}?pn={$pn+2}">4</a></li>
+                                            <li><a href="{:url('index/tablelist')}?pn={$pn+3}">5</a></li>
+                                            {/if}
+
+                                            {if condition='$pn egt 3 and $pn elt $total-2'}
+                                            <li ><a href="{:url('index/tablelist')}?pn={$pn-2}">{$pn-2}</a></li>
+                                            <li ><a href="{:url('index/tablelist')}?pn={$pn-1}">{$pn-1}</a></li>
+                                            <li class="am-active"><a href="{:url('index/tablelist')}?pn={$pn}">{$pn}</a></li>
+                                            <li><a href="{:url('index/tablelist')}?pn={$pn+1}">{$pn+1}</a></li>
+                                            <li><a href="{:url('index/tablelist')}?pn={$pn+2}">{$pn+2}</a></li>
+                                            {/if}
+
+                                            {if condition='$pn eq $total-1 and $total gt 3'}
+                                            <li ><a href="{:url('index/tablelist')}?pn={$pn-3}">{$pn-3}</a></li>
+                                            <li ><a href="{:url('index/tablelist')}?pn={$pn-2}">{$pn-2}</a></li>
+                                            <li><a href="{:url('index/tablelist')}?pn={$pn-1}">{$pn-1}</a></li>
+                                            <li class="am-active"><a href="{:url('index/tablelist')}?pn={$pn}">{$pn}</a></li>
+                                            <li><a href="{:url('index/tablelist')}?pn={$pn+1}">{$pn+1}</a></li>
+                                            {/if}
+
+                                            {if condition='$pn eq $total and $total gt 4'}
+                                            <li><a href="{:url('index/tablelist')}?pn={$pn-4}">{$pn-4}</a></li>
+                                            <li ><a href="{:url('index/tablelist')}?pn={$pn-3}">{$pn-3}</a></li>
+                                            <li ><a href="{:url('index/tablelist')}?pn={$pn-2}">{$pn-2}</a></li>
+                                            <li><a href="{:url('index/tablelist')}?pn={$pn-1}">{$pn-1}</a></li>
+                                            
+                                            <li class="am-active"><a href="{:url('index/tablelist')}?pn={$pn}">{$pn}</a></li>
+                                            {/if}
+
+                                            {if condition='$pn egt $total'}
+                                            <li class="am-disabled"><a href="#">下一页</a></li>
+                                            {else/}
+                                            <li ><a href="{:url('index/tablelist')}?pn={$pn+1}">下一页</a></li>
+                                            {/if}
+
+                                            <li>共{$total}页</li>
+                                            
+                                            <li><input type="text" id='pn' name="pn" size="4"  ></li>
+                                            <li><a  onclick='page();'>跳转</a></li>
+                                            <script type="text/javascript">
+                                                function page(){
+
+                                                    var input=document.getElementById('pn').value;
+                                                    window.location.href="{:url('index/tablelist')}?pn="+input;
+                                                }
+                                            </script>
+                                            {if condition='$per eq 20'}
+                                            <li class="am-active am-disabled"><a href="#">每页20</a></li>
+                                            <li><a href="{:url('main/per')}?per=50">每页50</a></li>
+                                            <li><a href="{:url('main/per')}?per=100">每页100</a></li>
+                                            {/if}
+
+                                            {if condition='$per eq 50'}
+                                            <li><a href="{:url('main/per')}?per=20">每页20</a></li>
+                                            <li class="am-active am-disabled"><a href="{:url('main/per')}?per=50">每页50</a></li>
+                                            <li><a href="{:url('main/per')}?per=100">每页100</a></li>
+                                            {/if}
+
+                                            {if condition='$per eq 100'}
+                                            <li><a href="{:url('main/per')}?per=20">每页20</a></li>
+                                            <li><a href="{:url('main/per')}?per=50">每页50</a></li>
+                                            <li class="am-active am-disabled"><a href="{:url('main/per')}?per=100">每页100</a></li>
+                                            {/if}
+                                            
+                                            <!-- <li><a href="#">»</a></li> -->
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="__static__/assets/js/amazeui.min.js"></script>
+    <script src="__static__/assets/js/amazeui.datatables.min.js"></script>
+    <script src="__static__/assets/js/dataTables.responsive.min.js"></script>
+    <script src="__static__/assets/js/app.js"></script>
+
+</body>
+
+</html>

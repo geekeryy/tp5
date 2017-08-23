@@ -11,6 +11,9 @@
 
 // 应用公共文件
 
+
+
+
 /**
  * 使对应导航栏高亮
  * @param  [type] $str [description]
@@ -22,6 +25,12 @@ function aside($str,$fun){
 		echo 'class="fh5co-active"';
 	}
 	
+}
+
+function admin_aside($str,$fun){
+	if ($str==$fun) {
+		echo 'class="active"';
+	}
 }
 
 /**

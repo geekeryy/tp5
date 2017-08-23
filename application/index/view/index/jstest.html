@@ -7,11 +7,9 @@
   <meta http-equiv="cache-control" content="no-cache">
   <meta http-equiv="expires" content="0"> 
   <link rel="stylesheet" href="__static__/css/wxstyle.css">
-
-  <script type="text/javascript" src="https://3gimg.qq.com/lightmap/components/geolocation/geolocation.min.js"></script>
 </head>
 <!-- ontouchstart="a();" -->
-<body>
+<body onload="c();">
 <div class="wxapi_container">
     
     <div class="lbox_close wxapi_form">
@@ -24,10 +22,10 @@
       <button class="btn btn_primary" id="openLocation">openLocation</button>
       <span class="desc">获取地理位置接口</span>
       <button class="btn btn_primary" id="getLocation">getLocation</button>
-<button class="btn btn_primary" onClick="geolocation.getLocation(get_position_callback, showErr, options)" id="get_position">get_position()</button>
 
     </div>
   </div>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 
 
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
@@ -101,35 +99,57 @@
  * 邮件主题：【微信JS-SDK反馈】具体问题
  * 邮件内容说明：用简明的语言描述问题所在，并交代清楚遇到该问题的场景，可附上截屏图片，微信团队会尽快处理你的反馈。
  */
-    var lat;
-    var lng;
-    var add;
-    var geolocation = new qq.maps.Geolocation("DHOBZ-N7AKS-O2XOY-6W5TK-AZT37-P4BL6", "myapp");
-    var options = {timeout: 8000,failTipFlag:true};
-    //获取定位信息
-    function get_position(){
-      geolocation.getLocation(get_position_callback, showErr, options);
-    };
-    //获取地理位置成功时的回调函数
-    function get_position_callback(position){
-      var str=JSON.stringify(position,null,4);
-      alert(str);
-      lat=position.latitude;
-      lng=position.longitude;
-      add=position.addr;
-          wx.openLocation({
-          latitude: lat,
-          longitude: lng,
-          name: 'TIT 创意园',
-          address: add,
-          scale: 14,
-          infoUrl: 'http://weixin.qq.com'
-        });
-      };
-  
-    function showErr(){
-      alert('get error');
-    };
+function c(){
+  alert('c');
+  $('#getLocation').trigger('click'); 
+}
+
+var lat;
+var lng;
+  // 7.2 获取当前地理位置
+  document.querySelector('#getLocation').onclick =function  () {
+    wx.getLocation({
+      success: function (res) {
+        var str=JSON.stringify(res,null,4);
+        alert(str);
+        lat=res.latitude;
+        lng=res.longitude;
+
+          // $.ajax({
+          //     type:"POST",
+          //     dataType:"JSON",
+          //     url:"{:url('Main/test')}",
+          //     data:{'location':str},
+          //     error : function (XMLHttpRequest, textStatus, errorThrown){
+          //       alert('errro');
+          //     },
+          //     success : function (msg){
+          //       alert('msg:'+msg);
+          //     }
+          //   });
+
+      },
+      cancel: function (res) {
+        alert('用户拒绝授权获取地理位置');
+      }
+    });
+  };
+
+
+  // 7.1 查看地理位置
+  document.querySelector('#openLocation').onclick = function () {
+     // a();
+    wx.openLocation({
+
+      latitude: lat,
+      longitude: lng,
+      name: '我的位置',
+      address: "add",
+      scale: 16,
+      infoUrl: 'http://weixin.qq.com'
+    });
+  };
+
 
 wx.ready(function () {
   // 1 判断当前版本是否支持指定 JS 接口，支持批量判断
@@ -147,58 +167,15 @@ wx.ready(function () {
 
 
   // 7 地理位置接口
-  // 7.1 查看地理位置
-  document.querySelector('#openLocation').onclick = function () {
-    wx.openLocation({
-      latitude: lat,
-      longitude: lng,
-      name: 'TIT 创意园',
-      address: add,
-      scale: 14,
-      infoUrl: 'http://weixin.qq.com'
-    });
-  };
 
-  // 7.2 获取当前地理位置
-  // document.querySelector('#getLocation').onclick = 
-
-
-
-
+  //ready结束
 });
+
 
 wx.error(function (res) {
   alert(res.errMsg);
 });
 
-  function a() {
-    wx.getLocation({
-      success: function (res) {
-        alert(res.latitude);
-        //   $.ajax({
-        //   type: "POST", //用POST方式传输
-        //   dataType: "JSON", //数据格式:JSON
-        //   url: "{:url('User/send_message')}", //目标地址
-        //   data: {"location":JSON.stringify(res)},
-        //   error: function (XMLHttpRequest, textStatus, errorThrown) {
-        //     alter("验证码发送失败，请稍后再试！");
-        //    },
-        //   success: function (msg){ 
-        //     if (msg==null) {
-        //       alert('验证码发送成功，请注意查收！');
-        //     }else{
-        //       alert('验证码发送失败，请稍后再试！'+msg);
-        //     }
-            
-        //   }
-        // });
-
-      },
-      cancel: function (res) {
-        alert('用户拒绝授权获取地理位置');
-      }
-    });
-  };
 </script>
 <script src="__static__/js/zepto.min.js"></script>
 

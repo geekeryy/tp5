@@ -1,7 +1,23 @@
 ThinkPHP 5.0
 ===============
+admin功能完成情况
+ + [用户账号管理]
+ + [访问记录查询]
+ + [用户订单查询]
+ + [支付信息详情]
+ + 
+ 注：
+1.admin为pc端
 
-功能完成情况：
+
+
+
+
+
+
+
+
+index功能完成情况：
  + [普通账号注册](http://www.jiangyang.me/index/index/register)
  + [邮箱注册](http://www.jiangyang.me/index/index/mailreg)
    默认账号名为邮箱，验证码是用户的openid(需改进)

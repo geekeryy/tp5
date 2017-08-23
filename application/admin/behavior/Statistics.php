@@ -3,7 +3,7 @@
  * 访问统计行为类
  * 访问记录，计数
  */
-namespace app\index\behavior;
+namespace app\admin\behavior;
 
 class Statistics {
 	function run (&$params){
@@ -12,13 +12,12 @@ class Statistics {
 		if ($ip=='123.151.43.110') {
 			return true;
 		}
-		//访问记录
-		$viewinfo = new \app\index\model\ViewInfo();
-		$res=$viewinfo->view();
 		//访问计数
-		$count = new \app\index\model\Count();
+		$count = new \app\admin\model\Count();
 		$res=$count->view($params['page']);
-		
+		//访问记录
+		$viewinfo = new \app\admin\model\ViewInfo();
+		$res=$viewinfo->view($params['wx_openid']);
 		return $res;
 	}
 }
