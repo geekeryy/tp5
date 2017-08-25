@@ -3,6 +3,9 @@ namespace app\admin\controller;
 use Yunpian\YunpianApi;
 use PHPMailer\PHPMailer;
 class Main extends \think\Controller{
+	function test(){
+		return 'ok';
+	}
 
 	function studentList(){
 		//若不存在页码，则默认为1

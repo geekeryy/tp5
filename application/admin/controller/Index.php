@@ -39,6 +39,9 @@ class Index extends \think\Controller
         $data=action('main/studentList');
         return view('index/tablelist',['page'=>'tablelist','list'=>$data['list'],'pn'=>$data['pn'],'total'=>$data['total'],'per'=>$data['per']]);
     }
+    function test(){
+        return view('index/test',['page'=>'test']);
+    }
     function session(){
         var_dump(session(''));
     }

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>this  is  test</title>
+	<style type="text/css">
+		#div1{
+			width: 200px;
+			height: 200px;
+			background: blue;
+		}
+	</style>
+</head>
+<body>
+<script type="text/javascript">
+	window.onload=function (){
+		// alert('onload');
+	}
+	window.onkeydown=function (){
+		// alert('onkeydown');
+	}
+	window.onkeyup=function (){
+		// alert('onkeyup');
+	}
+	window.onmouseover=function (){
+		document.getElementById('div1').style.background='red';
+	}
+	window.onmouseout=function (){
+		document.getElementById('div1').style.background='blue';
+	}
+	window.onchange=function (){
+		document.getElementById('div1').innerHTML='1';
+	}
+	window.onclick=function (){
+		// document.getElementById('div1').innerHTML='2';
+		document.getElementById('div1').display='display';
+	}
+
+</script>
+
+<div id="div1"></div>
+</body>
+</html>
