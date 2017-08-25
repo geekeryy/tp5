@@ -2,5 +2,5 @@
 composer.lock
 *.log
 thinkphp
-.yml
+*.yml
 application/config.php
