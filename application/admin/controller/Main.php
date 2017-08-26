@@ -2,9 +2,53 @@
 namespace app\admin\controller;
 use Yunpian\YunpianApi;
 use PHPMailer\PHPMailer;
+use think\Cache;
+use think\cache\driver\Redis;
 class Main extends \think\Controller{
 	function test(){
-		return 'ok';
+			//
+	}
+	function test3(){
+		$redis=new Redis();
+		$redis_name='miaosha';
+		$num=10;
+		for ($i=0; $i < 20 ; $i++) {
+			$uid=rand(1000,9999); 
+			if ($redis->lLen($redis_name)<$num) {
+				$redis->rPush($redis_name,$uid."%".time());
+				echo $i;
+			}else{
+				echo "0";
+			}
+		}
+		$redis->close();
+	}
+
+	function test2(){
+		$redis=new Redis();
+		$redis_name='miaosha';
+		while (1) {
+			$user=$redis->lPop($redis_name);
+			if (!$user || $user=='nil') {
+				sleep(2);
+				continue;
+			}
+			$test=model('Test');
+			$res=$test->test(array('data'=>$user,'time'=>date('Y-m-d H:i:s')));
+			if (!$res) {
+				$redis->rPush($redis_name,$user);
+			}
+			sleep(2);
+		}
+	}
+	function test1(){
+		$data=array(
+			'state'=>1,
+			'data'=>'test',
+			'time'=>date('Y-m-d H:i:s',time()),
+			);
+		$test=model('Test');
+		$res=$test->test($data);
 	}
 
 	function studentList(){
