@@ -2,7 +2,6 @@
 namespace app\admin\controller;
 use Yunpian\YunpianApi;
 use PHPMailer\PHPMailer;
-use think\Cache;
 use think\cache\driver\Redis;
 class Main extends \think\Controller{
 	function test(){
