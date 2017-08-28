@@ -32,60 +32,40 @@ class Reptile{
 	function test(){
 		// 新建一个Dom实例
 		$hdp = new htmlDomParser();
-		 
-
-		// $url['index']='http://www.suse.edu.cn/p/59/';
-		// 
-		// $url['1']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636388310213262804';//自动化与信息学院
-		// $url['2']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387607302420548';//法学院
-		// $url['3']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387607269451011';//高端技术技能型
-		// $url['4']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387607242888431';//管理学院
-		// $url['5']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387607219450899';//化学工程学院
-		// $url['6']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387607194920470';//化学与环境工程
-		// $url['7']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387607173513751';//机械工程
-		// $url['8']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387607152888654';//计算机学院
-
-		// $url['9']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387607131794945';//教育与心理科学学院
-		// $url['10']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387607111169848';//经济学院
-		// $url['11']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387607088044854';//马克思主义学院
-		// $url['12']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387607066482280';//美术学院
-		// $url['13']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387607043670188';//人文学院
-		// $url['14']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387607020856857';//生物工程学院
-		// $url['15']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387606999138277';//数学与统计学院
-		// $url['16']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387606974294619';//体育学院
-		// $url['17']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387606923356977';//土木工程学院
-		// $url['18']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387606891481510';//外语学院
-		// $url['1']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387606867887747';//物理与电子工程学院
-		// $url['0']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387606835543924';//音乐学院
-		
-
-		foreach ($url as $key => $value) {
+		$url='http://zigong.ganji.com/shouji/?original=%E6%89%8B%E6%9C%BA&websearchkw=%E4%BA%8C%E6%89%8B%E6%89%8B%E6%9C%BA';
+		$url='http://www.doumi.com/zigong/';
+		$url='http://www.ebrun.com/20170828/244333.shtml';
+		$url='http://news.mydrivers.com/1/546/546136.htm';
 				$Curl=curl_init();//实例化cURL
-				curl_setopt($Curl, CURLOPT_URL, $value);//初始化路径
+				curl_setopt($Curl, CURLOPT_URL, $url);//初始化路径
 				curl_setopt($Curl, CURLOPT_RETURNTRANSFER, 1);//0获取后直接打印出来
 				curl_setopt($Curl, CURLOPT_HEADER, 0);//0关闭打印相应头,直接打印需为1,
 				$result=curl_exec($Curl);//执行一个cURL会话
 				curl_close($Curl);//关闭cURL会话
 				$html=$hdp->str_get_html($result);//创建DOM
-					$i=0;
-					$data=array();
-					foreach ($html->find('.div_content tr') as $tr) {
-						$data[$i]['campus']=$tr->find('td span',0)->innertext();
-						$data[$i]['number']=$tr->find('td span',1)->innertext();
-						$data[$i]['name']=$tr->find('td span',2)->innertext();
-						$data[$i]['sex']=$tr->find('td span',3)->innertext();
-						$data[$i]['college']=$tr->find('td span',4)->innertext();
-						$data[$i]['major']=$tr->find('td span',5)->innertext();
-						$data[$i]['student_id']=$tr->find('td span',6)->innertext();
-						$data[$i]['classes']=$tr->find('td span',7)->innertext();
-						$data[$i]['dorm']=$tr->find('td span',8)->innertext();
-						$i++;
-					}
+				$item=$html->find('.cmsDiv');
+				foreach ($item as $value) {
+					echo '1';
+					echo $value->innertext();
+				}
+				// echo $result;
+					// $i=0;
+					// $data=array();
+					// foreach ($html->find('.div_content tr') as $tr) {
+					// 	$data[$i]['campus']=$tr->find('td span',0)->innertext();
+					// 	$data[$i]['number']=$tr->find('td span',1)->innertext();
+					// 	$data[$i]['name']=$tr->find('td span',2)->innertext();
+					// 	$data[$i]['sex']=$tr->find('td span',3)->innertext();
+					// 	$data[$i]['college']=$tr->find('td span',4)->innertext();
+					// 	$data[$i]['major']=$tr->find('td span',5)->innertext();
+					// 	$data[$i]['student_id']=$tr->find('td span',6)->innertext();
+					// 	$data[$i]['classes']=$tr->find('td span',7)->innertext();
+					// 	$data[$i]['dorm']=$tr->find('td span',8)->innertext();
+					// 	$i++;
+					// }
 				$html->clear(); 
 				unset($html);
-				$student_info=model('StudentInfo');
-				$res=$student_info->saveInfo($data);
-		}
+		
 	}
 
 
@@ -153,4 +133,38 @@ class Reptile{
 
 		// var_dump($res);
 	}
+
+
+
+
+			// $url['index']='http://www.suse.edu.cn/p/59/';
+		// 
+		// $url['1']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636388310213262804';//自动化与信息学院
+		// $url['2']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387607302420548';//法学院
+		// $url['3']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387607269451011';//高端技术技能型
+		// $url['4']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387607242888431';//管理学院
+		// $url['5']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387607219450899';//化学工程学院
+		// $url['6']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387607194920470';//化学与环境工程
+		// $url['7']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387607173513751';//机械工程
+		// $url['8']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387607152888654';//计算机学院
+
+		// $url['9']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387607131794945';//教育与心理科学学院
+		// $url['10']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387607111169848';//经济学院
+		// $url['11']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387607088044854';//马克思主义学院
+		// $url['12']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387607066482280';//美术学院
+		// $url['13']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387607043670188';//人文学院
+		// $url['14']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387607020856857';//生物工程学院
+		// $url['15']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387606999138277';//数学与统计学院
+		// $url['16']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387606974294619';//体育学院
+		// $url['17']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387606923356977';//土木工程学院
+		// $url['18']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387606891481510';//外语学院
+		// $url['1']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387606867887747';//物理与电子工程学院
+		// $url['0']='http://www.suse.edu.cn/p/10/?StId=st_app_news_i_x636387606835543924';//音乐学院
+		// 
+		// 
+		// 
+		// 
+		// 
+		// 
+		// 
 }

@@ -687,7 +687,13 @@ class simpleHtmlDomNode
             }
             else
             {
-                $converted_text = iconv($sourceCharset, $targetCharset, $text);
+                // if (!iconv($sourceCharset, $targetCharset, $text)) {
+                    // $converted_text = mb_convert_encoding($text,"UTF-8");
+                // }else{
+                    $converted_text = iconv($sourceCharset, $targetCharset.'//IGNORE', $text);
+                // }
+
+                
             }
         }
 

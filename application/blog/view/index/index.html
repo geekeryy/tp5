@@ -1,9 +1,19 @@
 <!DOCTYPE HTML>
 <html lang="zh-tw">
 
+    
+    
+
 <head>
+    <title>码字 md</title>
     {include file="include/head"}
-</head>
+    <!-- <link  rel ="stylesheet"  href = "https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css" > -->
+    <link rel="stylesheet" href="http://cdn.mazimd.com/vendor/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://cdn.mazimd.com/vendor/simplemde-theme-base-0.2.1/dist/simplemde-theme-base.min.css">
+
+    <script  src = "https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js" > </script>
+    <script async="" src="https://www.google-analytics.com/analytics.js"></script>
+  </head>
 
 <body>
     <div class="book" data-level="0" data-chapter-title="Introduction" data-filepath="README.md" data-basepath="." data-revision="Wed Feb 10 2016 08:30:20 GMT+0000 (UTC)" data-innerlanguage="">
@@ -56,20 +66,32 @@
                     <!-- Title -->
                     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="index.html" >book</a>
+        <a href="{:url('index/index')}" >book</a>
     </h1>
                 </div>
                 <div class="page-wrapper" tabindex="-1" role="main">
                     <div class="page-inner">
                         <section class="normal" id="section-">
                             <h1>标题</h1>
-                            <p>这是段落 this is p</p>
+                            <p>这是段落 this is p订单最低的消费就是</p>
                         </section>
+                        <div class="form-group">
+                            <textarea name="field" id="fieldTest" cols="30" rows="10"></textarea>
+                        </div>
+                        <script >
+                         var simplemde = new SimpleMDE({
+                            element: document.getElementById("fieldTest"),
+                            autoDownloadFontAwesome: false,
+                            status: true
+                        });
+
+                        
+                        </script>
                     </div>
                 </div>
             </div>
             <a href="what_is_npm.html"  class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
- <!--文章首尾用 class="navigation navigation-next navigation-unique" -->
+            <!--文章首尾用 class="navigation navigation-next navigation-unique" -->
             <a href="what_is_npm.html"  class="navigation navigation-next" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
         </div>
     </div>

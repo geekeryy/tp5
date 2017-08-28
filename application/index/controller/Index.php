@@ -12,39 +12,39 @@ class Index extends \think\Controller
      */
     public function _initialize(){
             //获取当前链接将要访问的页面
-            // $params['page']=request()->action();
-            // //访问计数钩子函数
-            // if ($res=\think\Hook::listen('statistics',$params)) {
-            //     if (!$res['0']) {
-            //         //数据库写入失败，日志记录
-            //         //
-            //         $this->error('写入数据库失败'.var_dump($res));
-            //     }
-            // }
-
-        //如果是微信浏览器，则微信静默登录
-        if (strpos($_SERVER['HTTP_USER_AGENT'],'MicroMessenger')!==false) {
-            $params['wx_openid']='0';
-            //控制每次会话只静默登录一次
-            if (!session('wxAutoLogin')) {
-                action('Oauth/wxAutoLogin');
-                //获取用户的wx_openid
-            }
-            if (session('wx_openid') && session('wxAutoLogin')) {
-                $params['wx_openid']=session('wx_openid');
-                session('wx_openid',null);
-            }
-            //获取当前链接将要访问的页面
             $params['page']=request()->action();
             //访问计数钩子函数
             if ($res=\think\Hook::listen('statistics',$params)) {
                 if (!$res['0']) {
                     //数据库写入失败，日志记录
+                    //
+                    $this->error('写入数据库失败'.var_dump($res));
                 }
             }
-        }else{
-            $this->error('请使用微信打开链接');
-        }
+
+        //如果是微信浏览器，则微信静默登录
+        // if (strpos($_SERVER['HTTP_USER_AGENT'],'MicroMessenger')!==false) {
+        //     $params['wx_openid']='0';
+        //     //控制每次会话只静默登录一次
+        //     if (!session('wxAutoLogin')) {
+        //         action('Oauth/wxAutoLogin');
+        //         //获取用户的wx_openid
+        //     }
+        //     if (session('wx_openid') && session('wxAutoLogin')) {
+        //         $params['wx_openid']=session('wx_openid');
+        //         session('wx_openid',null);
+        //     }
+        //     //获取当前链接将要访问的页面
+        //     $params['page']=request()->action();
+        //     //访问计数钩子函数
+        //     if ($res=\think\Hook::listen('statistics',$params)) {
+        //         if (!$res['0']) {
+        //             //数据库写入失败，日志记录
+        //         }
+        //     }
+        // }else{
+        //     $this->error('请使用微信打开链接');
+        // }
     }
     
     public function index()
