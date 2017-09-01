@@ -1,8 +1,133 @@
 <?php
 namespace app\index\controller;
 use Reptile\htmlDomParser;
+use Reptile\Suse;
 class Reptile{
-	function showInfo(){
+
+
+
+	function info(){
+		$act='';
+		if (input('param.act')) {
+		   $act = input('param.act');
+		}
+		// var_dump($act);exit();
+		$user = '14101070205';//用户名
+		$password = 'a1126254578';//密码
+		$suse=new Suse($user,$password);
+		switch($act)
+		{
+		  case 'login':
+			  $suse->curlLogin();
+		      $content = $suse->getInfo();
+
+		      echo $content;
+
+				$hdp = new htmlDomParser();
+				$html=$hdp->str_get_html($content);//创建DOM
+				// session('5',$html->find('.trbg1')->innertext());
+				// session('6',$html->find('#Label6')->innertext());
+				// session('7',$html->find('#Label7')->innertext());
+				// session('8',$html->find('#Label8')->innertext());
+				// session('9',$html->find('#Label9')->innertext());
+				$item=$html->find('#Table2 tr');
+				foreach ($item as $value) {
+					echo '<br>';
+					echo $value->innertext();
+				}
+
+		      break;
+		   case 'authcode':
+		      // Content-Type 验证码的图片类型
+		      header('Content-Type:image/png charset=gb2312');
+		      $suse->showAuthcode();
+		      exit;
+		     break;
+		}
+
+
+	}
+
+	function test6(){
+		$student_info=model('StudentInfo');
+		$res=$student_info->showClasses();
+		// $res=json_decode(json_encode($res),true);
+		var_dump($res);
+	}
+
+	function test5(){
+			header("Content-Type:text/html;charset=utf-8");
+			$url='nose.wyysdsa.cn/act/getFudaoyuanResult.html';
+			$student_info=model('StudentInfo');
+			
+			// 17763-6396
+			$end=17763;
+			$start=6396;
+			$j=0;
+			$arr=array();
+			$res=array();
+			// for ($i=6396; $i < $end; $i+=51) { 
+			// 	if ($arr=$student_info->show(array('id'=>$i))) {
+			// 		// $res[$j]=$arr['0'];
+				
+			// 		$arr=json_decode(json_encode($arr),true);
+			// 		// var_dump($arr[0]);
+			// 		$res[$j]=$arr[0];
+			// 		// $res[$j]=json_decode(json_encode($res[$j]),true);
+
+			// 		$j++;
+			// 	}
+
+			// }
+			// var_dump($res);
+			// exit();
+			
+			// $list=$res;
+			$list=$student_info->showClasses();
+			$data=array();
+			foreach ($list as $key => $value) {
+
+					$number=$value['number'];
+					$post='zkzh='.$number;
+				    $curl = curl_init();//初始化curl模块 
+				    curl_setopt($curl, CURLOPT_URL, $url);//登录提交的地址 
+				    curl_setopt($curl, CURLOPT_HEADER, 0);//是否显示头信息 
+				    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);//是否自动显示返回的信息 
+				    // curl_setopt($curl, CURLOPT_COOKIEJAR, $cookie); //设置Cookie信息保存在指定的文件中 
+				    curl_setopt($curl, CURLOPT_POST, 1);//post方式提交 
+				    curl_setopt($curl, CURLOPT_POSTFIELDS,$post);//要提交的信息 
+				    curl_exec($curl);//执行cURL 
+				    $rs = curl_exec($curl); //执行cURL抓取页面内容 
+				    curl_close($curl);//关闭cURL资源，并且释放系统资源 
+				    $arr=json_decode($rs,true);
+				    if ($arr) {
+				    	// echo $number;
+					    // var_dump($arr);
+					    $arr1['number']=$number;
+					    
+					    $text1=explode('辅导员名字：', $arr['text']);
+
+					    $text2=explode('辅导员电话：', $text1['1']);
+
+					    // $arr1['name']=$text2['0'];
+					    $arr1['phone']=$text2['1'];
+					    $arr1['classes']=$value['classes'];
+					    $data[$key]=$arr1;
+				    }else{
+				    	echo $number.'error<br>';
+				    }
+				    
+				}
+				// var_dump($data);
+				$teacher_info_copy=model('TeacherInfoCopy');
+				$teacher_info_copy->saveInfo($data);
+				echo 'ok';
+			    // echo mb_convert_encoding($rs, "utf-8");
+			    // echo iconv('utf-8','UCS-2BE',$rs);
+			    // var_dump();
+	}
+
+	function test4(){
 		header("Content-Type:text/html;charset=utf-8");
 		$student_info=model('StudentInfo');
 		$res=$student_info->show();
@@ -29,7 +154,7 @@ class Reptile{
         var_dump($result);
 		// var_dump($data);
 	}
-	function test(){
+	function test3(){
 		// 新建一个Dom实例
 		$hdp = new htmlDomParser();
 		$url='http://zigong.ganji.com/shouji/?original=%E6%89%8B%E6%9C%BA&websearchkw=%E4%BA%8C%E6%89%8B%E6%89%8B%E6%9C%BA';

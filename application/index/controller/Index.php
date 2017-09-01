@@ -11,6 +11,8 @@ class Index extends \think\Controller
      * @return [type] [description]
      */
     public function _initialize(){
+
+
             //获取当前链接将要访问的页面
             $params['page']=request()->action();
             //访问计数钩子函数
@@ -49,6 +51,9 @@ class Index extends \think\Controller
     
     public function index()
     {   
+        if (!session('user_openid')) {
+            // $this->error('请先登录','index/login');
+        }
         //获取访问数
         $count=model('Count');
         $data=$count->getCount();
@@ -118,6 +123,10 @@ class Index extends \think\Controller
     public function car()
     {       
         return view('index/car',['page'=>'car']);
+    }
+    public function info()
+    {       
+        return view('index/info',['page'=>'info']);
     }
     public function wxjssdk()
     {   
