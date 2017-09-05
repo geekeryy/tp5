@@ -2,6 +2,10 @@
 namespace app\index\model;
 
 class CourseInfo extends \think\Model{
+	function showCourse($student_id){
+		$res=$this->where('student_id',$student_id)->select();
+		return $res;
+	}
 	function saveCourseInfo($info2,$info1){
 		if (!$this->where('student_id',$info1['student_id'])->find()) {
 		$data['student_id']=$info1['student_id'];

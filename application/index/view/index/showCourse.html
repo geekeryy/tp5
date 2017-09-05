@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>课表</title>
+</head>
+<body>
+姓名：
+{$vo1.name}
+<br>
+学院专业：
+{$vo1.college}
+{$vo1.major}
+<br>
+学号
+{$vo1.student_id}
+<br>
+班级
+{$vo1.classes}
+<br>
+<br>
+	
+
+{volist id='vo' name='list'}
+{$vo.year}学年，
+第
+{$vo.semester}学期
+<br>
+{$vo.id}
+:
+
+{$vo.course}
+<br>
+{$vo.type}
+<br>
+
+{$vo.time}
+<br>
+{$vo.classroom}
+<br>
+{$vo.teacher}
+<br>
+<br>
+
+
+{/volist}
+</body>
+</html>

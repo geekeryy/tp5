@@ -21,6 +21,10 @@ class StudentInfo extends \think\Model{
 		$res=$this->where($where)->select();
 		return $res;
 	}
+	function showStudent($student_id){
+		$res=$this->where('student_id',$student_id)->find();
+		return $res;
+	}
 
 	function showClasses(){
 		// $res=$this->distinct(true)->field('classes')->count('distinct(classes)');

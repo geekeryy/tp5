@@ -11,15 +11,17 @@ class Reptile{
 	}
 
 	function test7(){
+		// header('Content-Type:html/text;charset:utf-8');
 		$url='http://61.139.105.138/default2.aspx';
 		$ch = curl_init($url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);//0获取后直接打印出来
 	    $content =curl_exec($ch);
+	    $content =mb_convert_encoding( $content ,'utf-8', array('Unicode','ASCII','GB2312','GBK','UTF-8'));
 	    curl_close($ch);
 	    $hdp = new htmlDomParser();	
 		$html=$hdp->str_get_html($content);//创建DOM
-		$e=$html->find('input',0);
-		var_dump($e->value);
+		$e=$html->find('a',0);
+		var_dump($e->innertext());
 	}
 
 

@@ -101,6 +101,7 @@ class Suse{
 				}
 			}
 		}
+		// var_dump($info);exit();
 		return $info;
 	}
 
@@ -110,23 +111,28 @@ class Suse{
 			$info['year']=$xnd->value;
 
 			$xqd=$html->find('#xqd option[selected=selected]',0);
-			$info['semester']=$xqd->value;
+			$info['semester']=$xqd->value ;
 
 			$xh=$html->find('#Label5',0);
-			$info['student_id']=$xh->innertext();
+			$arr=explode('：', $xh->innertext());
+			$info['student_id']=$arr[1];
 
 			$xm=$html->find('#Label6',0);
-			$info['name']=$xm->innertext();
+			$arr=explode('：', $xm->innertext());
+			$info['name']=$arr[1];
 
 			$xy=$html->find('#Label7',0);
-			$info['college']=$xy->innertext();
+			$arr=explode('：', $xy->innertext());
+			$info['college']=$arr[1];
 
 			$zy=$html->find('#Label8',0);
-			$info['major']=$zy->innertext();
+			$arr=explode('：', $zy->innertext());
+			$info['major']=$arr[1];
 
 			$bj=$html->find('#Label9',0);
-			$info['classes']=$bj->innertext();
-
+			$arr=explode('：', $bj->innertext());
+			$info['classes']=$arr[1];
+// var_dump($info);exit();
 			return $info;
 	}
 

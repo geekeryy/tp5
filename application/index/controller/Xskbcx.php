@@ -2,7 +2,7 @@
 namespace app\index\controller;
 use Reptile\htmlDomParser;
 use Reptile\Suse;
-class Xskbcx{
+class Xskbcx extends \think\Controller{
 	function studentLogin(){
 		$act='';
 		if (input('param.act')) {
@@ -49,16 +49,18 @@ class Xskbcx{
 
 			//获取学生信息
 			$res1=$suse->getSomeInfo($html);
-			var_dump($res1);	
+
 			$student_info=model('StudentInfo');
 			$student_info->saveStudent($res1);
 
 			//获取所有课程信息
-			$res2=$suse->getAllCourse($html);
-			var_dump($res2);
+			$res2=$suse->getAllCourse($html);	
+
 			$course_info=model('CourseInfo');
 			$course_info->saveCourseInfo($res2,$res1);
-
+			
+			session('student_id',input('post.user'));
+			$this->redirect('index/showCourse');
 		      break;
 		   case 'authcode':
 		      // Content-Type 验证码的图片类型

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:87:"H:\Git\phpproject\thinkphp_5.0.10_full\public/../application/index\view\index\info.html";i:1504602170;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:87:"H:\Git\phpproject\thinkphp_5.0.10_full\public/../application/index\view\index\info.html";i:1504614512;}*/ ?>
 <!doctype html>
 <html class="no-js">
 <head>
@@ -30,7 +30,7 @@
 		</div>
 	    <div class="am-form-group am-form-icon">
 			<i class="am-icon-lock"></i>
-			<input type="text" class="myapp-login-input-text am-form-field" name="password" placeholder="请输入密码">
+			<input type="password" class="myapp-login-input-text am-form-field" name="password" placeholder="请输入密码">
 		</div>
 		<iframe src="<?php echo url('Xskbcx/studentLogin',['act'=>'authcode']); ?>" style='width: 200px; height:30px ' frameborder=0 ></iframe>
 		<div class="am-form-group am-form-icon">

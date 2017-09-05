@@ -128,6 +128,18 @@ class Index extends \think\Controller
     {       
         return view('index/info',['page'=>'info']);
     }
+    public function showCourse()
+    {   
+        $course=model('CourseInfo');
+        $list=$course->showCourse(session('student_id'));
+        $list=json_decode(json_encode($list),true);
+
+        $student_info=model('StudentInfo');
+        $student=$student_info->showStudent(session('student_id'));
+        $student=json_decode(json_encode($student),true);
+
+        return view('index/showCourse',['page'=>'showCourse','list'=>$list,'vo1'=>$student]);
+    }
     public function wxjssdk()
     {   
         $jssdk = new JSSDK(config('wx_appid'), config('wx_appsecret'));
