@@ -8,18 +8,28 @@ class Suse{
 	private $user;
 	private $password;
 	private $code;
+	private $viewstate;
 	function __construct($user,$password){
 		$this->user=$user;
 		$this->password=$password;
 		$this->cookieFile=APP_PATH.'../runtime/cookie.tmp';
-		// echo $this->cookieFile;exit();
+	}
+	function getViewstate(){
+		$ch = curl_init($this->url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);//0获取后直接打印出来
+	    $content =curl_exec($ch);
+	    curl_close($ch);
+	    $hdp = new htmlDomParser();	
+		$html=$hdp->str_get_html($content);//创建DOM
+		$e=$html->find('input',0);
+		$this->viewstate=$e->value;
 	}
 	function curlLogin()
 	{    
 		$code = trim(input('param.code')); 
 
 		// $loginParams为curl模拟登录时post的参数
-		$this->loginParams['__VIEWSTATE'] = 'dDwyODE2NTM0OTg7Oz4s0OD31RwGEqedIELaT9OgHaAHlQ==';
+		$this->loginParams['__VIEWSTATE'] = $this->viewstate;
 		$this->loginParams['RadioButtonList1'] = '学生';
 		$this->loginParams['TextBox2'] = $this->password;
 		$this->loginParams['txtUserName'] = $this->user;
@@ -39,10 +49,9 @@ class Suse{
 	    curl_exec($ch);//返回结果
 	    curl_close($ch); //关闭
 
-
 	}
 
-	function getInfo(){
+	function getContent(){
 		$curl2=curl_init();
 	    curl_setopt ($curl2,CURLOPT_REFERER,'http://61.139.105.138/xs_main.aspx?xh='.$this->user);//.'#a'
 	    curl_setopt($curl2, CURLOPT_COOKIEFILE, $this->cookieFile); 
@@ -78,6 +87,47 @@ class Suse{
 	    $content =curl_exec($ch);
 	    var_dump($this->cookieFile);
 	    curl_close($ch);
+	}
+
+	function getAllCourse($html){
+		$i=0;
+		$info=array();
+		$item=$html->find('#Table1 tr');
+		foreach ($item as $value1) {
+			foreach ($value1->find('td') as $value2) {
+				if (strstr($value2->innertext(),'<br>')) {
+					$info[$i]=explode('<br>',$value2->innertext());
+					$i++;
+				}
+			}
+		}
+		return $info;
+	}
+
+	function getSomeInfo($html){
+			$info=array();
+			$xnd=$html->find('#xnd option[selected=selected]',0);
+			$info['year']=$xnd->value;
+
+			$xqd=$html->find('#xqd option[selected=selected]',0);
+			$info['semester']=$xqd->value;
+
+			$xh=$html->find('#Label5',0);
+			$info['student_id']=$xh->innertext();
+
+			$xm=$html->find('#Label6',0);
+			$info['name']=$xm->innertext();
+
+			$xy=$html->find('#Label7',0);
+			$info['college']=$xy->innertext();
+
+			$zy=$html->find('#Label8',0);
+			$info['major']=$zy->innertext();
+
+			$bj=$html->find('#Label9',0);
+			$info['classes']=$bj->innertext();
+
+			return $info;
 	}
 
 }

@@ -6,6 +6,17 @@ class StudentInfo extends \think\Model{
 		$res=$this->insertAll($data);
 		return $res;
 	}
+	function saveStudent($info){
+		if (!$this->where('name',$info['name'])->find()) {
+			$data['name']=$info['name'];
+			$data['student_id']=$info['student_id'];
+			$data['college']=$info['college'];
+			$data['major']=$info['major'];
+			$data['classes']=$info['classes'];
+
+			$this->insert($data);		
+		}
+	}
 	function show($where){
 		$res=$this->where($where)->select();
 		return $res;

@@ -1,3 +1,4 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:87:"H:\Git\phpproject\thinkphp_5.0.10_full\public/../application/index\view\index\info.html";i:1504602170;}*/ ?>
 <!doctype html>
 <html class="no-js">
 <head>
@@ -21,7 +22,7 @@
 	</div>
 	<!-- 登陆框 -->
 	<div class="am-u-sm-11 am-u-sm-centered">
-	<form class="am-form" method="post" action="{:url('Xskbcx/studentLogin')}">
+	<form class="am-form" method="post" action="<?php echo url('Xskbcx/studentLogin'); ?>">
 	  <fieldset class="myapp-login-form am-form-set">
 		<div class="am-form-group am-form-icon">
 			<i class="am-icon-user"></i>
@@ -31,7 +32,7 @@
 			<i class="am-icon-lock"></i>
 			<input type="text" class="myapp-login-input-text am-form-field" name="password" placeholder="请输入密码">
 		</div>
-		<iframe src="{:url('Xskbcx/studentLogin',['act'=>'authcode'])}" style='width: 200px; height:30px ' frameborder=0 ></iframe>
+		<iframe src="<?php echo url('Xskbcx/studentLogin',['act'=>'authcode']); ?>" style='width: 200px; height:30px ' frameborder=0 ></iframe>
 		<div class="am-form-group am-form-icon">
 			<i class="am-icon-lock"></i>
 			<input type="text" class="myapp-login-input-text am-form-field" name="code" placeholder="请输入验证码">
@@ -49,17 +50,17 @@
 
 	<div class="am-u-sm-12 am-text-center myapp-login-form-listico" >
 		 <div class="am-u-sm-4 am-text-center" >
-		 <a href="{:url('oauth/qq_login')}">
+		 <a href="<?php echo url('oauth/qq_login'); ?>">
 		 <i class="am-icon-btn am-primary am-icon-qq"></i>
 		 </a>
 		 </div>
 		 <div class="am-u-sm-4 am-text-center" >
-		 <a href="{:url('oauth/wxLogin')}">
+		 <a href="<?php echo url('oauth/wxLogin'); ?>">
 		 <i class="am-icon-btn am-primary am-icon-weixin"></i>
 		 </a>
 		 </div>
 		 <div class="am-u-sm-4 am-text-center" >
-		 <a href="{:url('oauth/qq_login')}">
+		 <a href="<?php echo url('oauth/qq_login'); ?>">
 		 <i class="am-icon-btn am-primary am-icon-weibo"></i>
 		 </a>
 		 </div>
@@ -71,7 +72,7 @@
 	<p ><a href="#">忘记密码？</a></p>
 	</div>
 	<div class="am-u-sm-4 am-text-right">
-	<p><a href="{:url('index/register')}}">立即注册</a></p>
+	<p><a href="<?php echo url('index/register'); ?>}">立即注册</a></p>
 	</div>
 
 </div>

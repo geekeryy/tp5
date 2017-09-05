@@ -4,6 +4,24 @@ use Reptile\htmlDomParser;
 use Reptile\Suse;
 class Reptile{
 
+	function test(){
+		$session=session('');
+		
+		var_dump($session);
+	}
+
+	function test7(){
+		$url='http://61.139.105.138/default2.aspx';
+		$ch = curl_init($url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);//0获取后直接打印出来
+	    $content =curl_exec($ch);
+	    curl_close($ch);
+	    $hdp = new htmlDomParser();	
+		$html=$hdp->str_get_html($content);//创建DOM
+		$e=$html->find('input',0);
+		var_dump($e->value);
+	}
+
 
 
 	function info(){
@@ -12,12 +30,33 @@ class Reptile{
 		   $act = input('param.act');
 		}
 		// var_dump($act);exit();
-		$user = '14101070205';//用户名
-		$password = 'a1126254578';//密码
+	// 15111040122
+	// shenxin19971211
+	// 
+	// 15111040116
+	// aspire1998
+	// 
+	// 15111040134
+	// 526982371bx
+	
+		// $user = '14101070205';//用户名
+		// $password = 'a1126254578';//密码
+		
+		// $user = '15111040122';//用户名
+		// $password = 'shenxin19971211';//密码
+		
+		// $user = '15111040116';//用户名
+		// $password = 'aspire1998';//密码
+
+		$user = '15111040134';//用户名
+		$password = '526982371bx';//密码
+
 		$suse=new Suse($user,$password);
+
 		switch($act)
 		{
 		  case 'login':
+		  	  $suse->getViewstate();
 			  $suse->curlLogin();
 		      $content = $suse->getInfo();
 
@@ -25,17 +64,28 @@ class Reptile{
 
 				$hdp = new htmlDomParser();
 				$html=$hdp->str_get_html($content);//创建DOM
-				// session('5',$html->find('.trbg1')->innertext());
-				// session('6',$html->find('#Label6')->innertext());
-				// session('7',$html->find('#Label7')->innertext());
-				// session('8',$html->find('#Label8')->innertext());
-				// session('9',$html->find('#Label9')->innertext());
-				$item=$html->find('#Table2 tr');
-				foreach ($item as $value) {
-					echo '<br>';
-					echo $value->innertext();
+
+				// $item2=$html->find('#Table2',0);
+					// echo $item2->innertext();
+					// selected="selected"
+					// 
+				
+
+				
+				$i=0;
+				$item1=$html->find('#Table1 tr');
+				foreach ($item1 as $value) {
+					foreach ($value->find('td') as $value2) {
+						if (strstr($value2->innertext(),'<br>')) {
+							echo $value2->innertext();
+							$i++;
+							session($i,$value2->innertext());
+						}
+					}
 				}
 
+echo $i;
+var_dump(session(''));
 		      break;
 		   case 'authcode':
 		      // Content-Type 验证码的图片类型
