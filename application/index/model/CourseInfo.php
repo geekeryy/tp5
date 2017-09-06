@@ -6,8 +6,8 @@ class CourseInfo extends \think\Model{
 		$res=$this->where('student_id',$student_id)->select();
 		return $res;
 	}
-	function saveCourseInfo($info2,$info1){
-		if (!$this->where('student_id',$info1['student_id'])->find()) {
+	function saveCourseInfo($info1,$info2){
+		if (!$this->where('student_id',$info2['student_id'])->find()) {
 		$data['student_id']=$info1['student_id'];
 		$data['year']=$info1['year'];
 		$data['semester']=$info1['semester'];

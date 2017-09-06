@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>学生成绩</title>
+</head>
+<body>
+{volist id='vo' name='list'}
+{$vo.year}学年，第{$vo.semester}学期
+<br>
+{$vo.course_id}
+:
+{$vo.course_name}
+<br>
+成绩：{$vo.achievement}
+<br>
+
+
+
+
+{/volist}
+</body>
+</html>

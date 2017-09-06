@@ -2,18 +2,31 @@
 namespace Reptile;
 class Suse{
 	private $url='http://61.139.105.138/default2.aspx';
-	private $xm='江杨';
 	private $authcode_url='http://61.139.105.138/CheckCode.aspx';
+	private $xm;
 	private $cookieFile;
 	private $user;
 	private $password;
 	private $code;
 	private $viewstate;
-	function __construct($user,$password){
+	private $param;
+	function __construct($user='',$password='',$code=''){
+		if (!$user) {
+			$this->user=session('user');
+		}
 		$this->user=$user;
 		$this->password=$password;
-		$this->cookieFile=APP_PATH.'../runtime/cookie.tmp';
+		$this->code=$code;
+		if (session('name')) {
+			$this->xm=session('name');
+		}
+		$this->cookieFile=APP_PATH.'../runtime/cookie'.session_id().'.tmp';
 	}
+
+	/**
+	 * 获取登陆所需的viewstate
+	 * @return [type] [description]
+	 */
 	function getViewstate(){
 		$ch = curl_init($this->url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);//0获取后直接打印出来
@@ -24,10 +37,15 @@ class Suse{
 		$e=$html->find('input',0);
 		$this->viewstate=$e->value;
 	}
+	/**
+	 * 执行模拟登陆，保存名字信息
+	 * @return [type] [description]
+	 */
 	function curlLogin()
 	{    
-		$code = trim(input('param.code')); 
 
+		//获取隐藏字段
+		$this->getViewstate();
 		// $loginParams为curl模拟登录时post的参数
 		$this->loginParams['__VIEWSTATE'] = $this->viewstate;
 		$this->loginParams['RadioButtonList1'] = '学生';
@@ -37,7 +55,7 @@ class Suse{
 		$this->loginParams['lbLanguage'] = '';
 		$this->loginParams['hidPdrs'] = '';
 		$this->loginParams['hidsc'] = '';
-		$this->loginParams['txtSecretCode'] = $code; 
+		$this->loginParams['txtSecretCode'] = $this->code; 
 	    $ch = curl_init($this->url);
 	    curl_setopt($ch,CURLOPT_COOKIEFILE, $this->cookieFile); //同时发送Cookie
 	    curl_setopt($ch,CURLOPT_RETURNTRANSFER, 1);//设定返回的数据是否自动显示
@@ -46,12 +64,22 @@ class Suse{
 	    curl_setopt($ch,CURLOPT_POST, 1);
 	    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 	    curl_setopt($ch,CURLOPT_POSTFIELDS, $this->loginParams); //提交查询信息
-	    curl_exec($ch);//返回结果
+	    $content=curl_exec($ch);//返回结果
 	    curl_close($ch); //关闭
-
+	    // xhxm
+	    $hdp = new htmlDomParser();	
+		$html=$hdp->str_get_html($content);//创建DOM
+		$e=$html->find('#xhxm',0);
+		$name=substr($e->innertext(), 0,-4);
+		$this->xm=$name;
+	    session('name',$name);
+	    return $name;
 	}
-
-	function getContent(){
+	/**
+	 * 学生课表查询，获取课表页面
+	 * @return [type] [description]
+	 */
+	function getCourseInfo(){
 		$curl2=curl_init();
 	    curl_setopt ($curl2,CURLOPT_REFERER,'http://61.139.105.138/xs_main.aspx?xh='.$this->user);//.'#a'
 	    curl_setopt($curl2, CURLOPT_COOKIEFILE, $this->cookieFile); 
@@ -60,19 +88,133 @@ class Suse{
 	    curl_setopt($curl2, CURLOPT_TIMEOUT, 20); 
 	    curl_setopt($curl2, CURLOPT_AUTOREFERER, true); 
 	    curl_setopt($curl2, CURLOPT_FOLLOWLOCATION, true); 
+
 	    curl_setopt($curl2, CURLOPT_URL, 'http://61.139.105.138/xskbcx.aspx?xh='.$this->user.'&xm='.$this->xm.'&gnmkdm=N121603');
 	     //登陆后要从哪个页面获取信息
 
 	     //http://61.139.105.138/xskbcx.aspx?xh=14101070205&xm=%BD%AD%D1%EE&gnmkdm=N121603
 
 	     $en_contents=mb_convert_encoding( curl_exec($curl2),'utf-8', array('Unicode','ASCII','GB2312','GBK','UTF-8'));
-	     // $res=curl_exec($curl2); 
+
 	     curl_close($curl2);
-	     // echo $res;
-	     // header('Location:http://61.139.105.138/xs_main.aspx?xh='.$user);
-	     // header("Content-Type:text/html;charset=gb2312");
+
 	     return $en_contents;
 	}
+
+	/**
+	 * 获取xs_main.aspx的Viewstate，废弃
+	 * @return [type] [description]
+	 */
+	function getViewstate2(){
+		$curl2=curl_init();
+	    curl_setopt ($curl2,CURLOPT_REFERER,'http://61.139.105.138/xs_main.aspx?xh='.$this->user);//.'#a'
+	    curl_setopt($curl2, CURLOPT_COOKIEFILE, $this->cookieFile); 
+	    curl_setopt($curl2, CURLOPT_HEADER, false); 
+	    curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true); 
+	    curl_setopt($curl2, CURLOPT_TIMEOUT, 20); 
+	    curl_setopt($curl2, CURLOPT_AUTOREFERER, true); 
+	    curl_setopt($curl2, CURLOPT_FOLLOWLOCATION, true); 
+	    curl_setopt($curl2, CURLOPT_URL, 'http://61.139.105.138/content.aspx');
+	    $content =curl_exec($curl2);
+	    curl_close($curl2);
+	    $hdp = new htmlDomParser();	
+		$html=$hdp->str_get_html($content);//创建DOM
+		// $e=$html->find('input[name=__VIEWSTATE]',2);
+		$e=$html->find('input[type=hidden]',0);
+
+		return $e->value;
+		// $this->viewstate=$e->value;
+	}
+
+	/**
+	 * 构造获取成绩信息所需的参数
+	 * @return [type] [description]
+	 */
+	function getAchViewstate($ddlxn){
+		// http://61.139.105.138/xscjcx_dq.aspx?xh=14101070205&xm=%BD%AD%D1%EE&gnmkdm=N121605
+		$curl2=curl_init();
+	    curl_setopt ($curl2,CURLOPT_REFERER,'http://61.139.105.138/xs_main.aspx?xh='.$this->user);//.'#a'
+	    curl_setopt($curl2, CURLOPT_COOKIEFILE, $this->cookieFile); 
+	    curl_setopt($curl2, CURLOPT_HEADER, false); 
+	    curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true); 
+	    curl_setopt($curl2, CURLOPT_TIMEOUT, 20); 
+	    curl_setopt($curl2, CURLOPT_AUTOREFERER, true); 
+	    curl_setopt($curl2, CURLOPT_FOLLOWLOCATION, true); 
+	    curl_setopt($curl2, CURLOPT_URL, 'http://61.139.105.138/xscjcx_dq.aspx?xh='.$this->user.'&xm='.$this->xm.'&gnmkdm=N121605');
+	     //登陆后要从哪个页面获取信息
+		$content=curl_exec($curl2);
+	    curl_close($curl2);
+
+	    $hdp = new htmlDomParser();	
+		$html=$hdp->str_get_html($content);//创建DOM
+		$e=$html->find('#Form1 input[type=hidden]',2);
+
+		$this->param['__EVENTTARGET']='';
+		$this->param['__EVENTARGUMENT']='';
+		$this->param['__VIEWSTATE']=$e->value;
+		$this->param['btnCx']='查询';
+		// $this->param['ddlxn']=$xn->value;
+		// $this->param['ddlxq']=$xq->value;
+		$this->param['ddlxn']=$ddlxn;
+		$this->param['ddlxq']='全部';
+
+	    return $this->param;
+	}
+
+	/**
+	 * 获取学生成绩
+	 * 返回成绩数组
+	 * @return [type] [description]
+	 */
+	function getAchievement($ddlxn){
+		// http://61.139.105.138/xscjcx_dq.aspx?xh=14101070205&xm=%BD%AD%D1%EE&gnmkdm=N121605
+		$curl2=curl_init();
+	    curl_setopt ($curl2,CURLOPT_REFERER,'http://61.139.105.138/xs_main.aspx?xh='.$this->user);//.'#a'
+	    curl_setopt($curl2, CURLOPT_COOKIEFILE, $this->cookieFile); 
+	    curl_setopt($curl2, CURLOPT_HEADER, false); 
+	    curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true); 
+	    curl_setopt($curl2, CURLOPT_TIMEOUT, 20); 
+	    curl_setopt($curl2, CURLOPT_AUTOREFERER, true); 
+	    curl_setopt($curl2, CURLOPT_FOLLOWLOCATION, true); 
+	    curl_setopt($curl2,CURLOPT_POSTFIELDS, $this->getAchViewstate($ddlxn)); //提交查询信息
+	    curl_setopt($curl2, CURLOPT_URL, 'http://61.139.105.138/xscjcx_dq.aspx?xh='.$this->user.'&xm='.$this->xm.'&gnmkdm=N121605');
+	     //登陆后要从哪个页面获取信息
+
+	     $content=mb_convert_encoding( curl_exec($curl2),'utf-8', array('Unicode','ASCII','GB2312','GBK','UTF-8'));
+		// $content=curl_exec($curl2);
+	     curl_close($curl2);
+
+	    $hdp = new htmlDomParser();	
+		$html=$hdp->str_get_html($content);//创建DOM
+		$e=$html->find('#DataGrid1 tr');
+		$arr=array();
+		array_shift($e);
+		$i=0;
+		foreach ($e as $value1) {
+			$arr[$i]['student_id']=$this->user;
+			$arr[$i]['year'] = $value1->find('td',0)->innertext();
+			$arr[$i]['semester'] = $value1->find('td',1)->innertext();
+			$arr[$i]['course_id'] = $value1->find('td',2)->innertext();
+			$arr[$i]['course_name'] = $value1->find('td',3)->innertext();
+			$arr[$i]['course_type'] = $value1->find('td',4)->innertext();
+			$arr[$i]['course_ascription'] = $value1->find('td',5)->innertext();
+			$arr[$i]['credit'] = $value1->find('td',6)->innertext();
+			$arr[$i]['peacetime_ach'] = $value1->find('td',7)->innertext();
+			$arr[$i]['midterm_ach'] = $value1->find('td',8)->innertext();
+			$arr[$i]['final_ach'] = $value1->find('td',9)->innertext();
+			$arr[$i]['experiment_ach'] = $value1->find('td',10)->innertext();
+			$arr[$i]['achievement'] = $value1->find('td',11)->innertext();
+			$arr[$i]['makeup_ach'] = $value1->find('td',12)->innertext();
+			$arr[$i]['repair'] = $value1->find('td',13)->innertext();
+			$arr[$i]['college'] = $value1->find('td',14)->innertext();
+			$arr[$i]['remarks'] = $value1->find('td',15)->innertext();
+			$arr[$i]['makeup_remarks'] = $value1->find('td',16)->innertext();
+			$i++;
+		}
+
+	     return $arr;
+	}
+
 
 	/**
 	 * 加载目标网站图片验证码
@@ -89,23 +231,33 @@ class Suse{
 	    curl_close($ch);
 	}
 
-	function getAllCourse($html){
+	/**
+	 * 返回所有课程信息以及其它信息
+	 * @param  [type] $html [description]
+	 * @return [type]       [description]
+	 */
+	function getAllCourse($content){
+
+		$hdp = new htmlDomParser();
+		$html=$hdp->str_get_html($content);//创建DOM
+
+
+		$data=array();
 		$i=0;
-		$info=array();
+		$arr=array();
 		$item=$html->find('#Table1 tr');
 		foreach ($item as $value1) {
 			foreach ($value1->find('td') as $value2) {
 				if (strstr($value2->innertext(),'<br>')) {
-					$info[$i]=explode('<br>',$value2->innertext());
+					$arr[$i]=explode('<br>',$value2->innertext());
 					$i++;
 				}
 			}
 		}
-		// var_dump($info);exit();
-		return $info;
-	}
 
-	function getSomeInfo($html){
+		$data['res1']=$arr;
+
+
 			$info=array();
 			$xnd=$html->find('#xnd option[selected=selected]',0);
 			$info['year']=$xnd->value;
@@ -132,8 +284,11 @@ class Suse{
 			$bj=$html->find('#Label9',0);
 			$arr=explode('：', $bj->innertext());
 			$info['classes']=$arr[1];
-// var_dump($info);exit();
-			return $info;
+
+		$data['res2']=$info;
+
+		return $data;
 	}
+
 
 }

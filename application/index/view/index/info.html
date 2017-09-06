@@ -7,7 +7,7 @@
   <meta name="keywords" content="">
   <meta name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>Amaze UI Examples</title>
+  <title>学生课表查询系统</title>
   <meta name="renderer" content="webkit">
   <meta http-equiv="Cache-Control" content="no-siteapp"/>
   <link rel="stylesheet" href="__static__/css/amazeui.min.css">
@@ -31,9 +31,11 @@
 			<i class="am-icon-lock"></i>
 			<input type="password" class="myapp-login-input-text am-form-field" name="password" placeholder="请输入密码">
 		</div>
-		<iframe src="{:url('Xskbcx/studentLogin',['act'=>'authcode'])}" style='width: 200px; height:30px ' frameborder=0 ></iframe>
 		<div class="am-form-group am-form-icon">
-			<i class="am-icon-lock"></i>
+		<img src="{:url('Xskbcx/studentLogin',['act'=>'authcode'])}">
+		</div>
+		<div class="am-form-group am-form-icon">
+			<i class="am-icon-angellist"></i>
 			<input type="text" class="myapp-login-input-text am-form-field" name="code" placeholder="请输入验证码">
 		</div>
 	  </fieldset>
@@ -65,14 +67,7 @@
 		 </div>
 	</div>
 
-	<div class="am-text-center am-u-sm-11 am-u-sm-centered myapp-login-form-shortcut">
-	</div>
-	<div class="am-u-sm-4 am-text-left">
-	<p ><a href="#">忘记密码？</a></p>
-	</div>
-	<div class="am-u-sm-4 am-text-right">
-	<p><a href="{:url('index/register')}}">立即注册</a></p>
-	</div>
+
 
 </div>
 

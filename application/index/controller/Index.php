@@ -51,8 +51,8 @@ class Index extends \think\Controller
     
     public function index()
     {   
-        if (!session('user_openid')) {
-            // $this->error('请先登录','index/login');
+        if (!session('student_id')) {
+            $this->error('请先登录','index/info');
         }
         //获取访问数
         $count=model('Count');
@@ -131,14 +131,30 @@ class Index extends \think\Controller
     public function showCourse()
     {   
         $course=model('CourseInfo');
-        $list=$course->showCourse(session('student_id'));
+        $list=$course->showCourse(session('user'));
         $list=json_decode(json_encode($list),true);
 
         $student_info=model('StudentInfo');
-        $student=$student_info->showStudent(session('student_id'));
+        $student=$student_info->showStudent(session('user'));
         $student=json_decode(json_encode($student),true);
 
         return view('index/showCourse',['page'=>'showCourse','list'=>$list,'vo1'=>$student]);
+    }
+    public function showAchievement()
+    {   
+        $achievement=model('Achievement');
+        $list=$achievement->showAchievement(session('user'));
+        $list=json_decode(json_encode($list),true);
+
+        // $student_info=model('StudentInfo');
+        // $student=$student_info->showStudent(session('user'));
+        // $student=json_decode(json_encode($student),true);
+
+        return view('index/showAchievement',['page'=>'showAchievement','list'=>$list]);
+    }
+    public function suse()
+    {       
+        return view('index/suse',['page'=>'suse']);
     }
     public function wxjssdk()
     {   
