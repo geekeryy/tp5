@@ -68,7 +68,7 @@ class Xsxxcx extends \think\Controller{
 	 */
 	function getCourseInfo(){
 		$suse = unserialize(session('suse'));
-		
+
 		//获取所有课程信息
 		$data=$suse->getCourseInfo();
 
@@ -84,6 +84,22 @@ class Xsxxcx extends \think\Controller{
 		$course_info->saveCourseInfo($res1,$res2);
 					
 		$this->redirect('index/showCourse');
+	}
+
+	function achievementCount(){
+		$suse = unserialize(session('suse'));
+		$data=$suse->achievementCount();
+
+		$credit_points=$data['res1'];
+		$credit=$data['res2'];
+
+		$credit_points_info=model('CreditPoints');
+		$credit_points_info->saveCreditPointsInfo($credit_points);
+
+		$credit_info=model('Credit');
+		$credit_info->saveCreditInfo($credit);
+
+		$this->redirect('index/showCredit');
 	}
 
 

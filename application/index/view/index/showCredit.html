@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>学分绩点信息</title>
+	<style type="text/css">
+		td{
+			width: 30%;
+		}
+	</style>
+</head>
+<body>
+学号：{$list1.student_id}<br>
+所选学分：{$list1.credit_select}<br>
+获得学分：{$list1.credit_all_get}<br>
+重修学分：{$list1.credit_repair}<br>
+正考未通过学分：{$list1.credit_all_fail}<br>
+平均学分绩点：{$list1.gpa}<br><br>
+
+
+<table>
+<th>课程性质</th>
+<th>获得学分</th>
+<th>未通过学分</th>
+
+{volist id="vo" name="list2"}
+<tr>
+<td>{$vo.course_type}</td>
+<td>{$vo.credit_get}</td>
+<td>{$vo.credit_fail}</td>
+
+</tr>
+{/volist}
+</table>
+
+</body>
+</html>

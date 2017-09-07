@@ -146,12 +146,22 @@ class Index extends \think\Controller
         $list=$achievement->showAchievement(session('user'));
         $list=json_decode(json_encode($list),true);
 
-        // $student_info=model('StudentInfo');
-        // $student=$student_info->showStudent(session('user'));
-        // $student=json_decode(json_encode($student),true);
-
         return view('index/showAchievement',['page'=>'showAchievement','list'=>$list]);
     }
+
+    public function showCredit()
+    {   
+        $credit=model('Credit');
+        $list2=$credit->showCredit(session('user'));
+        $list2=json_decode(json_encode($list2),true);
+
+        $credit_info=model('CreditPoints');
+        $list1=$credit_info->showCreditPoints(session('user'));
+        $list1=json_decode(json_encode($list1),true);
+
+        return view('index/showCredit',['page'=>'showCredit','list1'=>$list1,'list2'=>$list2]);
+    }
+
     public function suse()
     {       
         return view('index/suse',['page'=>'suse']);
