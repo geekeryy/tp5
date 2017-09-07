@@ -8,11 +8,11 @@ class CourseInfo extends \think\Model{
 	}
 	function saveCourseInfo($info1,$info2){
 		if (!$this->where('student_id',$info2['student_id'])->find()) {
-		$data['student_id']=$info1['student_id'];
-		$data['year']=$info1['year'];
-		$data['semester']=$info1['semester'];
+		$data['student_id']=$info2['student_id'];
+		$data['year']=$info2['year'];
+		$data['semester']=$info2['semester'];
 
-			foreach ($info2 as $key => $value) {
+			foreach ($info1 as $key => $value) {
 				$data['course']=$value['0'];
 				$data['type']=$value['1'];
 				$data['time']=$value['2'];

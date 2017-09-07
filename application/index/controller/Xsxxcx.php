@@ -44,9 +44,6 @@ class Xsxxcx extends \think\Controller{
 		  }else{
 		  	echo "no param";
 		  }
-		   
-
-
 	}
 
 

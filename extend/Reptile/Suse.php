@@ -25,15 +25,15 @@ class Suse{
 
 
 	function __construct($user='',$password='',$code=''){
-		if (!$user) {
-			$this->user=session('user');
-		}
+		// if (!$user) {
+		// 	$this->user=session('user');
+		// }
 		$this->user=$user;
 		$this->password=$password;
 		$this->code=$code;
-		if (session('name')) {
-			$this->xm=session('name');
-		}
+		// if (session('name')) {
+		// 	$this->xm=session('name');
+		// }
 		$this->cookieFile=APP_PATH.'../runtime/cookie'.session_id().'.tmp';
 	}
 
@@ -88,7 +88,7 @@ class Suse{
 		$e=$html->find('#xhxm',0);
 		$name=substr($e->innertext(), 0,-4);
 		$this->xm=$name;
-	    session('name',$name);
+	    // session('name',$name);
 	    return $name;
 	}
 
