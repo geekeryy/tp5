@@ -2,7 +2,7 @@
 namespace app\index\controller;
 use Reptile\htmlDomParser;
 use Reptile\Suse;
-class Xskbcx extends \think\Controller{
+class Xsxxcx extends \think\Controller{
 	function studentLogin(){
 		$act='';
 		if (input('param.act')) {
@@ -57,8 +57,7 @@ class Xskbcx extends \think\Controller{
 	function getAchievement(){
 		$suse = unserialize(session('suse'));
 		//获取成绩页面信息，返回成绩数组
-		$xn=input('param.xn');
-		$arr = $suse->getAchievement($xn);
+		$arr = $suse->getAchievement();
 		//保存成绩信息
 		$achievement=model('Achievement');
 		$achievement->saveAchievement($arr);
@@ -72,11 +71,9 @@ class Xskbcx extends \think\Controller{
 	 */
 	function getCourseInfo(){
 		$suse = unserialize(session('suse'));
-
-		$content=$suse->getCourseInfo();
-
+		
 		//获取所有课程信息
-		$data=$suse->getAllCourse($content);	
+		$data=$suse->getCourseInfo();
 
 		//课程信息
 		$res1=$data['res1'];
