@@ -30,7 +30,7 @@ class Suse{
 	}
 
 	/**
-	 * 执行模拟登陆，保存名字信息
+	 * 执行模拟登陆教务管理系统，保存名字信息
 	 * @return [type] [description]
 	 */
 	function curlLogin()
@@ -75,6 +75,8 @@ class Suse{
 		$this->xm=$name;
 	    return $name;
 	}
+
+
 
 	/**
 	 * 返回所有课表信息以及其它信息
@@ -530,6 +532,11 @@ class Suse{
 	
 	}
 
+	/**
+	 * 获取学生地址
+	 * @param  [type] $idnum [description]
+	 * @return [type]        [description]
+	 */
 	function getAddress($idnum){
 		// $idnum='17510699121390';
 		$curl2=curl_init();
@@ -560,5 +567,6 @@ class Suse{
 		$data['address']=$arr[0];
 		return $data;
 	}
+
 
 }

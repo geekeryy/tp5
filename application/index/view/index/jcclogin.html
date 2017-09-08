@@ -7,11 +7,15 @@
   <meta name="keywords" content="">
   <meta name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>学生课表查询系统</title>
+  <title>四川理工学院计财处</title>
   <meta name="renderer" content="webkit">
   <meta http-equiv="Cache-Control" content="no-siteapp"/>
   <link rel="stylesheet" href="__static__/css/amazeui.min.css">
   <link rel="stylesheet" href="__static__/css/app.css">
+  <script src="http://61.139.105.105:8088/Scripts/jquery-1.5.1.js" type="text/javascript" ></script>
+  <script src="http://61.139.105.105:8088/Scripts/jquery.validate.min.js" type="text/javascript" ></script>
+  <script src="http://61.139.105.105:8088/Scripts/jquery.validate.unobtrusive.min.js" type="text/javascript" ></script>
+
 </head>
 <body>
 <div class="am-g">
@@ -21,7 +25,7 @@
 	</div>
 	<!-- 登陆框 -->
 	<div class="am-u-sm-11 am-u-sm-centered">
-	<form class="am-form" method="post" action="{:url('Xsxxcx/studentLogin')}">
+	<form class="am-form" method="post" action="{:url('Xsxxcx/jccLogin')}">
 	  <fieldset class="myapp-login-form am-form-set">
 		<div class="am-form-group am-form-icon">
 			<i class="am-icon-user"></i>
@@ -32,11 +36,11 @@
 			<input type="password" class="myapp-login-input-text am-form-field" name="password" placeholder="请输入密码">
 		</div>
 		<div class="am-form-group am-form-icon">
-		<img src="{:url('Xsxxcx/studentLogin',['act'=>'authcode'])}">
+		<img src="{:url('Xsxxcx/jccLogin',['act'=>'authcode'])}">
 		</div>
 		<div class="am-form-group am-form-icon">
 			<i class="am-icon-angellist"></i>
-			<input type="text" class="myapp-login-input-text am-form-field" name="code" placeholder="请输入验证码">
+			<input type="text" class="myapp-login-input-text am-form-field" id="imgValidateCode" name="ValidateCode" placeholder="请输入验证码">
 		</div>
 	  </fieldset>
 	  
@@ -71,10 +75,10 @@
 	</div>
 	<div class="am-u-sm-4 am-text-left">
 	<p ><a href="{:url('index/studentIdAnalysis')}">学号分析</a></p>
-	<p><a href="{:url('index/jcclogin')}">计财处</a></p>
+	<p><a href="{:url('index/info')}">教务管理系统</a></p>
 	</div>
 	<div class="am-u-sm-4 am-text-right">
-	<!-- <p><a href="{:url('index/jcclogin')}">计财处</a></p> -->
+	<!-- <p><a href="{:url('Xsxxcx/getAddress')}">获取地址</a></p> -->
 	</div>
 
 </div>

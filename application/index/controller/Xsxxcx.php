@@ -2,6 +2,7 @@
 namespace app\index\controller;
 use Reptile\htmlDomParser;
 use Reptile\Suse;
+use Reptile\Jcc;
 class Xsxxcx extends \think\Controller{
 	function studentLogin(){
 		$act='';
@@ -205,6 +206,41 @@ class Xsxxcx extends \think\Controller{
 			$student_info->updateStudentInfo($data);
 		}
 
+	}
+
+	/**
+	 * 模拟登陆计财处
+	 * @return [type] [description]
+	 */
+	function jccLogin(){
+		$act='';
+		if (input('param.act')) {
+		   $act = input('param.act');
+		}
+
+		$username = input('post.user');//用户名
+		$password = input('post.password');//密码
+		$code = input('post.ValidateCode');//验证码
+		$jcc=new Jcc($username,$password,$code);
+			
+
+
+		if ($act=='login'){
+			$content=$jcc->jccLogin();
+			// session('suse',serialize($suse));
+			$content=$jcc->getjccInfo();
+
+			echo  $content;exit();
+			// $this->redirect('index/suse');
+
+		  }elseif ($act=='authcode') {
+		      // Content-Type 验证码的图片类型
+		      header('Content-Type:image/png charset=gb2312');
+		      $jcc->showAuthcode();
+		      exit;
+		  }else{
+		  	echo "no param";
+		  }
 	}
 
 
