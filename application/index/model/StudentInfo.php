@@ -39,5 +39,11 @@ class StudentInfo extends \think\Model{
 		// exit();
 		return $res3;
 	}
+
+	function studentIdAnalysis($data){
+		$sql='select college,major,classes from tp5_student_info where student_id like __1010702% limit 1';
+		$res=$this->field('college,major,classes')->where('student_id','like','__'.$data.'__')->find();
+		return $res;
+	}
 	
 }

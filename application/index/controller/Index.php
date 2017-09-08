@@ -128,6 +128,10 @@ class Index extends \think\Controller
     {       
         return view('index/info',['page'=>'info']);
     }
+    public function studentIdAnalysis()
+    {       
+        return view('index/studentIdAnalysis',['page'=>'studentIdAnalysis']);
+    }
     public function showCourse()
     {   
         $course=model('CourseInfo');

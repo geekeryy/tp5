@@ -102,5 +102,44 @@ class Xsxxcx extends \think\Controller{
 		$this->redirect('index/showCredit');
 	}
 
+	/**
+	 * 学号分析
+	 * 通过输入学号信息，分析出专业班级，学院年级
+	 * @return [type] [description]
+	 */
+	function studentIdAnalysis(){
+		// $student_id='14101070205';
+		$student_id=input('get.student_id');
+		$grade=substr($student_id,0,2);
+		switch ($grade) {
+			case '14':
+				$grade='大四老油条';
+				break;
+			case '15':
+				$grade='大三';
+				break;
+			case '16':
+				$grade='大二';
+				break;
+			case '17':
+				$grade='大一小鲜肉';
+				break;
+			default:
+				$grade='您已经毕业啦！';
+				break;
+		}
+		$info=substr($student_id,2,7);
+		$sql='select college,major,classes from tp5_student_info where student_id like __1010702__ limit 1';
+		$student_info=model('StudentInfo');
+		$res=$student_info->studentIdAnalysis($info);
+		$res=json_decode(json_encode($res),true);
+		$res['grade']=$grade;
+		//拆分出班级号
+		$arr=explode('2017', $res['classes']);
+		$res['classes']=$arr['1'];
+		$res=json_encode($res);
+		return $res;
+	}
+
 
 }
