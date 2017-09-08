@@ -40,9 +40,27 @@ class StudentInfo extends \think\Model{
 		return $res3;
 	}
 
+	/**
+	 * 学号分析
+	 * @param  [type] $data [description]
+	 * @return [type]       [description]
+	 */
 	function studentIdAnalysis($data){
 		$sql='select college,major,classes from tp5_student_info where student_id like __1010702% limit 1';
 		$res=$this->field('college,major,classes')->where('student_id','like','__'.$data.'__')->find();
+		return $res;
+	}
+
+	function updateStudentInfo($data){
+		$info['address']=$data['address'];
+		$where['number']=$data['number'];
+		$res=$this->where($where)->update($info);
+		return $res;
+	}
+
+
+	function getStudentId(){
+		$res=$this->field('number')->where('address is null')->limit(100)->select();
 		return $res;
 	}
 	

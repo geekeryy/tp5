@@ -34,6 +34,10 @@ class Xsxxcx extends \think\Controller{
 			//保存学生账号信息
 			$suse_info=model('SuseInfo');
 			$suse_info->saveSuse(array('student_id'=>$user,'password'=>$password));
+
+			//查询用户个人信息
+			action('Xsxxcx/getPersonalInfo');
+
 			$this->redirect('index/suse');
 
 		  }elseif ($act=='authcode') {
@@ -86,6 +90,10 @@ class Xsxxcx extends \think\Controller{
 		$this->redirect('index/showCourse');
 	}
 
+	/**
+	 * 成绩统计
+	 * @return [type] [description]
+	 */
 	function achievementCount(){
 		$suse = unserialize(session('suse'));
 		$data=$suse->achievementCount();
@@ -139,6 +147,58 @@ class Xsxxcx extends \think\Controller{
 		$res['classes']=$arr['1'];
 		$res=json_encode($res);
 		return $res;
+	}
+
+	/**
+	 * 获取个人信息
+	 * @return [type] [description]
+	 */
+	function getPersonalInfo(){
+		$suse = unserialize(session('suse'));
+
+		$data=$suse->getPersonalInfo();
+
+		$personal_info=model('PersonalInfo');
+		$personal_info->savePersonalInfo($data);
+
+
+		// var_dump($data);
+	}
+
+	/**
+	 * 等级考试成绩查询
+	 * @return [type] [description]
+	 */
+	function getExaminationInfo(){
+		$suse = unserialize(session('suse'));
+
+		$data=$suse->getExaminationInfo();
+
+		// $personal_info=model('PersonalInfo');
+		// $personal_info->savePersonalInfo($data);
+
+
+		var_dump($data);
+	}
+
+	/**
+	 * 获取考生地址
+	 * @return [type] [description]
+	 */
+	function getAddress(){
+		$suse=new Suse();
+		
+		$student_info=model('StudentInfo');
+		$res=$student_info->getStudentId();		
+
+		$res=json_decode(json_encode($res),true);
+
+		foreach ($res as $key => $value) {
+			$data=$suse->getAddress($value['number']);
+			$student_info=model('StudentInfo');
+			$student_info->updateStudentInfo($data);
+		}
+
 	}
 
 

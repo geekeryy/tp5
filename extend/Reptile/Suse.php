@@ -22,8 +22,8 @@ class Suse{
 
 	const XSMAIN='http://61.139.105.138/xs_main.aspx?';
 	const XSKBCX='http://61.139.105.138/xskbcx.aspx?';
-
-
+	const XSGRXX='http://61.139.105.138/xsgrxx.aspx?';
+	const XSDJKSCX='http://61.139.105.138/xsdjkscx.aspx?';
 	function __construct($user='',$password='',$code=''){
 		$this->user=$user;
 		$this->password=$password;
@@ -428,8 +428,146 @@ class Suse{
 	    curl_close($ch);
 	}
 
+	/**
+	 * 学生个人信息查询
+	 * @return [type] [description]
+	 */
+	function getPersonalInfo(){
+		$curl2=curl_init();
+	    curl_setopt ($curl2,CURLOPT_REFERER,self::XSMAIN.'xh='.$this->user);//.'#a'
+	    curl_setopt($curl2, CURLOPT_COOKIEFILE, $this->cookieFile); 
+	    curl_setopt($curl2, CURLOPT_HEADER, false); 
+	    curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true); 
+	    curl_setopt($curl2, CURLOPT_TIMEOUT, 20); 
+	    curl_setopt($curl2, CURLOPT_AUTOREFERER, true); 
+	    curl_setopt($curl2, CURLOPT_FOLLOWLOCATION, true); 
+
+	    curl_setopt($curl2, CURLOPT_URL, self::XSGRXX.'xh='.$this->user.'&xm='.$this->xm.'&gnmkdm=N121601');
+	    //登陆后要从哪个页面获取信息
+
+	    //http://61.139.105.138/xsgrxx.aspx?xh=14101070205&xm=%BD%AD%D1%EE&gnmkdm=N121501
+
+	    $content=mb_convert_encoding( curl_exec($curl2),'utf-8', array('Unicode','ASCII','GB2312','GBK','UTF-8'));
+
+	    // curl_close($curl2);
+
+		$hdp = new htmlDomParser();	
+		$html=$hdp->str_get_html($content);//创建DOM
+
+		// $e=$html->find('.formbox .formlist',0);
+		// $i=0;
+		// foreach ($e->find('tr') as $value1) {
+		// 	$arr[$i]=$value1->innertext();
+		// 	$i++;
+		// }
+
+		$arr['xh']=$html->find('#xh',0)->innertext();
+		$arr['xm']=$html->find('#xm',0)->innertext();
+		$arr['lbl_mz']=$html->find('#lbl_mz',0)->innertext();
+		$arr['lbl_xb']=$html->find('#lbl_xb',0)->innertext();
+		$arr['lbl_zzmm']=$html->find('#lbl_zzmm',0)->innertext();
+		$arr['lbl_lydq']=$html->find('#lbl_lydq',0)->innertext();
+		$arr['lbl_lys']=$html->find('#lbl_lys',0)->innertext();
+		$arr['lbl_byzx']=$html->find('#lbl_byzx',0)->innertext();
+		$arr['lbl_xy']=$html->find('#lbl_xy',0)->innertext();
+		$arr['lbl_zymc']=$html->find('#lbl_zymc',0)->innertext();
+		$arr['lbl_xzb']=$html->find('#lbl_xzb',0)->innertext();
+		$arr['lbl_xz']=$html->find('#lbl_xz',0)->innertext();
+		$arr['lbl_xjzt']=$html->find('#lbl_xjzt',0)->innertext();
+		$arr['lbl_dqszj']=$html->find('#lbl_dqszj',0)->innertext();
+		$arr['lbl_sfzh']=$html->find('#lbl_sfzh',0)->innertext();
+		$arr['lbl_ksh']=$html->find('#lbl_ksh',0)->innertext();
+		$arr['lbl_lxdh']=$html->find('#lbl_lxdh',0)->innertext();
+		$arr['lbl_ssh']=$html->find('#lbl_ssh',0)->innertext();
+		$arr['lbl_byzx']=$html->find('#lbl_byzx',0)->innertext();
+		$arr['lbl_xszh']=$html->find('#lbl_xszh',0)->innertext();
+		$arr['lbl_RDSJ']=$html->find('#lbl_RDSJ',0)->innertext();
+		$arr['lbl_zkzh']=$html->find('#lbl_zkzh',0)->innertext();
+		$arr['lbl_csrq']=$html->find('#lbl_csrq',0)->innertext();
+		$arr['lbl_CC']=$html->find('#lbl_CC',0)->innertext();
+		$arr['lbl_dqszj']=$html->find('#lbl_dqszj',0)->innertext();
+		$arr['lbl_jtszd']=$html->find('#lbl_jtszd',0)->innertext();
 
 
 
+
+
+		return $arr;
+
+	}
+
+	/**
+	 * 学生等级考试查询
+	 * @return [type] [description]
+	 */
+	function getExaminationInfo(){
+		$curl2=curl_init();
+	    curl_setopt ($curl2,CURLOPT_REFERER,self::XSMAIN.'xh='.$this->user);//.'#a'
+	    curl_setopt($curl2, CURLOPT_COOKIEFILE, $this->cookieFile); 
+	    curl_setopt($curl2, CURLOPT_HEADER, false); 
+	    curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true); 
+	    curl_setopt($curl2, CURLOPT_TIMEOUT, 20); 
+	    curl_setopt($curl2, CURLOPT_AUTOREFERER, true); 
+	    curl_setopt($curl2, CURLOPT_FOLLOWLOCATION, true); 
+
+	    curl_setopt($curl2, CURLOPT_URL, self::XSDJKSCX.'xh='.$this->user.'&xm='.$this->xm.'&gnmkdm=N121606');
+	    //登陆后要从哪个页面获取信息
+
+	    //http://61.139.105.138/xsdjkscx.aspx?xh=14101070203&xm=%BA%D8%D3%EE%C1%FA&gnmkdm=N121606
+
+	    $content=mb_convert_encoding( curl_exec($curl2),'utf-8', array('Unicode','ASCII','GB2312','GBK','UTF-8'));
+
+	    // curl_close($curl2);
+
+		$hdp = new htmlDomParser();	
+		$html=$hdp->str_get_html($content);//创建DOM
+
+		$e=$html->find('#DataGrid1 tr',1);
+
+		$arr['xn']=$e->find('td',0)->innertext();
+		$arr['xq']=$e->find('td',1)->innertext();
+		$arr['name']=$e->find('td',2)->innertext();
+		$arr['zkzh']=$e->find('td',3)->innertext();
+		$arr['ksrq']=$e->find('td',4)->innertext();
+		$arr['cj']=$e->find('td',5)->innertext();
+		$arr['tlcj']=$e->find('td',6)->innertext();
+		$arr['ydcj']=$e->find('td',7)->innertext();
+		$arr['xzcj']=$e->find('td',8)->innertext();
+		$arr['zhcj']=$e->find('td',9)->innertext();
+		
+		return $arr;
+	
+	}
+
+	function getAddress($idnum){
+		// $idnum='17510699121390';
+		$curl2=curl_init();
+	    curl_setopt ($curl2,CURLOPT_REFERER,'http://lqcx.suse.edu.cn/login.asp');
+	    // curl_setopt($curl2, CURLOPT_COOKIEFILE, $this->cookieFile); 
+	    curl_setopt($curl2, CURLOPT_HEADER, false); 
+	    curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true); 
+	    curl_setopt($curl2, CURLOPT_TIMEOUT, 20); 
+	    curl_setopt($curl2, CURLOPT_AUTOREFERER, true); 
+	    curl_setopt($curl2, CURLOPT_FOLLOWLOCATION, true); 
+	    curl_setopt($curl2,CURLOPT_POSTFIELDS, 'idnum='.$idnum.'&bt1=%CC%E1++%BD%BB'); //提交查询信息
+	    curl_setopt($curl2, CURLOPT_URL, 'http://lqcx.suse.edu.cn/showinfo.asp');
+	    //http://lqcx.suse.edu.cn/login.asp
+
+	    $content=mb_convert_encoding( curl_exec($curl2),'utf-8', array('Unicode','ASCII','GB2312','GBK','UTF-8'));
+
+	    // curl_close($curl2);
+
+		$hdp = new htmlDomParser();	
+		$html=$hdp->str_get_html($content);//创建DOM
+
+		$e=$html->find('td[align=center]',1);
+		$arr1=explode('：',$e->innertext());
+		$arr=explode(' ',$arr1['1']);
+		$arr=explode('<',$arr['8']);
+
+		$data['number']=$idnum;
+		$data['address']=$arr[0];
+		return $data;
+	}
 
 }
