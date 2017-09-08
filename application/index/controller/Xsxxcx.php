@@ -58,10 +58,16 @@ class Xsxxcx extends \think\Controller{
 	function getAchievement(){
 		$suse = unserialize(session('suse'));
 		//获取成绩页面信息，返回成绩数组
-		$arr = $suse->getAchievement();
+		$arr1 = $suse->getAchievement1();
+		// var_dump($arr1);exit();
 		//保存成绩信息
-		$achievement=model('Achievement');
-		$achievement->saveAchievement($arr);
+		$achievement1=model('Achievement');
+		$achievement1->saveAchievement($arr1);
+
+		$arr2 = $suse->getAchievement2();
+		//保存成绩信息
+		$achievement2=model('Achievement');
+		$achievement2->updateAchievement($arr2);
 
 		$this->redirect('index/showAchievement');
 	}

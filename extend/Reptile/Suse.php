@@ -12,8 +12,6 @@ class Suse{
 
 	//请求参数
 	private $param;
-	//成绩数组
-	private $ach_info;
 
 	//成绩查询2
 	const XSCJCX='http://61.139.105.138/xscjcx.aspx?';
@@ -219,30 +217,31 @@ class Suse{
 		$html=$hdp->str_get_html($content);//创建DOM
 		$e=$html->find('#DataGrid1 tr');
 		$arr=array();
+		$ach_info=array();
 		array_shift($e);
 		$i=0;
 		foreach ($e as $value1) {
-			$this->ach_info[$i]['student_id']=$this->user;
-			$this->ach_info[$i]['year'] = $value1->find('td',0)->innertext();
-			$this->ach_info[$i]['semester'] = $value1->find('td',1)->innertext();
-			$this->ach_info[$i]['course_id'] = $value1->find('td',2)->innertext();
-			$this->ach_info[$i]['course_name'] = $value1->find('td',3)->innertext();
-			$this->ach_info[$i]['course_type'] = $value1->find('td',4)->innertext();
-			$this->ach_info[$i]['course_ascription'] = $value1->find('td',5)->innertext();
-			$this->ach_info[$i]['credit'] = $value1->find('td',6)->innertext();
-			$this->ach_info[$i]['peacetime_ach'] = $value1->find('td',7)->innertext();
-			$this->ach_info[$i]['midterm_ach'] = $value1->find('td',8)->innertext();
-			$this->ach_info[$i]['final_ach'] = $value1->find('td',9)->innertext();
-			$this->ach_info[$i]['experiment_ach'] = $value1->find('td',10)->innertext();
-			$this->ach_info[$i]['achievement'] = $value1->find('td',11)->innertext();
-			$this->ach_info[$i]['makeup_ach'] = $value1->find('td',12)->innertext();
-			$this->ach_info[$i]['repair_remarks'] = $value1->find('td',13)->innertext();
-			$this->ach_info[$i]['college'] = $value1->find('td',14)->innertext();
-			$this->ach_info[$i]['remarks'] = $value1->find('td',15)->innertext();
-			$this->ach_info[$i]['makeup_remarks'] = $value1->find('td',16)->innertext();
+			$ach_info[$i]['student_id']=$this->user;
+			$ach_info[$i]['year'] = $value1->find('td',0)->innertext();
+			$ach_info[$i]['semester'] = $value1->find('td',1)->innertext();
+			$ach_info[$i]['course_id'] = $value1->find('td',2)->innertext();
+			$ach_info[$i]['course_name'] = $value1->find('td',3)->innertext();
+			$ach_info[$i]['course_type'] = $value1->find('td',4)->innertext();
+			$ach_info[$i]['course_ascription'] = $value1->find('td',5)->innertext();
+			$ach_info[$i]['credit'] = $value1->find('td',6)->innertext();
+			$ach_info[$i]['peacetime_ach'] = $value1->find('td',7)->innertext();
+			$ach_info[$i]['midterm_ach'] = $value1->find('td',8)->innertext();
+			$ach_info[$i]['final_ach'] = $value1->find('td',9)->innertext();
+			$ach_info[$i]['experiment_ach'] = $value1->find('td',10)->innertext();
+			$ach_info[$i]['achievement'] = $value1->find('td',11)->innertext();
+			$ach_info[$i]['makeup_ach'] = $value1->find('td',12)->innertext();
+			$ach_info[$i]['repair_remarks'] = $value1->find('td',13)->innertext();
+			$ach_info[$i]['college'] = $value1->find('td',14)->innertext();
+			$ach_info[$i]['remarks'] = $value1->find('td',15)->innertext();
+			$ach_info[$i]['makeup_remarks'] = $value1->find('td',16)->innertext();
 			$i++;
 		}
-		return $arr;
+		return $ach_info;
 	}
 
 	/**
@@ -312,41 +311,33 @@ class Suse{
 
 		$e=$html->find('#Datagrid1 tr');
 		$arr=array();
+		$ach_info=array();
 		//删除数组第一个元素
 		array_shift($e);
 		$i=0;
 		foreach ($e as $value1) {
-			// $this->ach_info[$i]['student_id']=$this->user;
-			// $this->ach_info[$i]['year'] = $value1->find('td',0)->innertext();
-			// $this->ach_info[$i]['semester'] = $value1->find('td',1)->innertext();
-			// $this->ach_info[$i]['course_id'] = $value1->find('td',2)->innertext();
-			// $this->ach_info[$i]['course_name'] = $value1->find('td',3)->innertext();
-			// $this->ach_info[$i]['course_type'] = $value1->find('td',4)->innertext();
-			// $this->ach_info[$i]['course_ascription'] = $value1->find('td',5)->innertext();
-			// $this->ach_info[$i]['credit'] = $value1->find('td',6)->innertext();
-			$this->ach_info[$i]['point'] = $value1->find('td',7)->innertext();
-			// $this->ach_info[$i]['achievement'] = $value1->find('td',8)->innertext();
-			$this->ach_info[$i]['minor_remarks'] = $value1->find('td',9)->innertext();
-			// $this->ach_info[$i]['makeup_ach'] = $value1->find('td',10)->innertext();
-			$this->ach_info[$i]['repair_ach'] = $value1->find('td',11)->innertext();
-			// $this->ach_info[$i]['college'] = $value1->find('td',12)->innertext();
-			// $this->ach_info[$i]['remarks'] = $value1->find('td',13)->innertext();
-			// $this->ach_info[$i]['repair_remarks'] = $value1->find('td',14)->innertext();
+			$ach_info[$i]['student_id']=$this->user;
+			// $ach_info[$i]['year'] = $value1->find('td',0)->innertext();
+			// $ach_info[$i]['semester'] = $value1->find('td',1)->innertext();
+			$ach_info[$i]['course_id'] = $value1->find('td',2)->innertext();
+			// $ach_info[$i]['course_name'] = $value1->find('td',3)->innertext();
+			// $ach_info[$i]['course_type'] = $value1->find('td',4)->innertext();
+			// $ach_info[$i]['course_ascription'] = $value1->find('td',5)->innertext();
+			// $ach_info[$i]['credit'] = $value1->find('td',6)->innertext();
+			$ach_info[$i]['point'] = $value1->find('td',7)->innertext();
+			// $ach_info[$i]['achievement'] = $value1->find('td',8)->innertext();
+			$ach_info[$i]['minor_remarks'] = $value1->find('td',9)->innertext();
+			// $ach_info[$i]['makeup_ach'] = $value1->find('td',10)->innertext();
+			$ach_info[$i]['repair_ach'] = $value1->find('td',11)->innertext();
+			// $ach_info[$i]['college'] = $value1->find('td',12)->innertext();
+			// $ach_info[$i]['remarks'] = $value1->find('td',13)->innertext();
+			// $ach_info[$i]['repair_remarks'] = $value1->find('td',14)->innertext();
 			$i++;
 		}
 
-	     return $arr;
+	     return $ach_info;
 	}
 
-	/**
-	 * 成绩查询
-	 * @return [type] [description]
-	 */
-	function getAchievement(){
-		$this->getAchievement1();
-		$this->getAchievement2();
-		return $this->ach_info;
-	}
 
 	/**
 	 * 获取成绩统计信息
