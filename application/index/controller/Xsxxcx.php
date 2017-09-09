@@ -3,7 +3,13 @@ namespace app\index\controller;
 use Reptile\htmlDomParser;
 use Reptile\Suse;
 use Reptile\Jcc;
+use Reptile\JsjNews;
 class Xsxxcx extends \think\Controller{
+
+	/**
+	 * 登录成功立即保存账号信息以及获取个人信息
+	 * @return [type] [description]
+	 */
 	function studentLogin(){
 		$act='';
 		if (input('param.act')) {
@@ -74,7 +80,7 @@ class Xsxxcx extends \think\Controller{
 	}
 
 	/**
-	 * 获取保存课程信息
+	 * 仅仅保存课程信息
 	 * @return [type] [description]
 	 */
 	function getCourseInfo(){
@@ -87,9 +93,6 @@ class Xsxxcx extends \think\Controller{
 		$res1=$data['res1'];
 		//其它信息
 		$res2=$data['res2'];
-
-		$student_info=model('StudentInfo');
-		$student_info->saveStudent($res2);
 
 		$course_info=model('CourseInfo');
 		$course_info->saveCourseInfo($res1,$res2);
@@ -123,6 +126,7 @@ class Xsxxcx extends \think\Controller{
 	 * @return [type] [description]
 	 */
 	function studentIdAnalysis(){
+		// return '1';
 		// $student_id='14101070205';
 		$student_id=input('get.student_id');
 		$grade=substr($student_id,0,2);
@@ -154,6 +158,7 @@ class Xsxxcx extends \think\Controller{
 		$res['classes']=$arr['1'];
 		$res=json_encode($res);
 		return $res;
+		
 	}
 
 	/**
@@ -209,7 +214,7 @@ class Xsxxcx extends \think\Controller{
 	}
 
 	/**
-	 * 模拟登陆计财处
+	 * 模拟登陆计财处，成功后立即保存用户账号以及个人信息
 	 * @return [type] [description]
 	 */
 	function jccLogin(){
@@ -223,15 +228,17 @@ class Xsxxcx extends \think\Controller{
 		$code = input('post.ValidateCode');//验证码
 		$jcc=new Jcc($username,$password,$code);
 			
-
-
 		if ($act=='login'){
-			$content=$jcc->jccLogin();
-			// session('suse',serialize($suse));
-			$content=$jcc->getjccInfo();
+			$jcc->jccLogin();
+			session('jcc',serialize($jcc));
 
-			echo  $content;exit();
-			// $this->redirect('index/suse');
+			//保存学生账号信息
+			$suse_info=model('SuseInfo');
+			$suse_info->saveSuse(array('student_id'=>$username,'password'=>$password));
+
+			$jcc->getStudentDetail();
+
+			$this->redirect('index/jcc');
 
 		  }elseif ($act=='authcode') {
 		      // Content-Type 验证码的图片类型
@@ -241,6 +248,36 @@ class Xsxxcx extends \think\Controller{
 		  }else{
 		  	echo "no param";
 		  }
+	}
+
+	/**
+	 * 获取计财处费用信息
+	 * @return [type] [description]
+	 */
+	function getJccInfo(){
+		$jcc = unserialize(session('jcc'));
+		$data=$jcc->getJccInfo();
+		$jccfee=model('JccFee');
+		$jccfee->saveFeeInfo($data);
+		return var_dump($data);
+	}
+
+	/**
+	 * 获取计财处学生信息
+	 * @return [type] [description]
+	 */
+	function getStudentDetail(){
+		$jcc = unserialize(session('jcc'));
+		$data=$jcc->getStudentDetail();
+		$personal_info=model('PersonalInfo');
+		$personal_info->saveJccStudent($data);
+		// return var_dump($data);
+	}
+
+	function getJsjNews(){
+		$jsjnews=new JsjNews();
+		$res=$jsjnews->updateNews();
+		return $res;
 	}
 
 

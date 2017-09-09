@@ -533,7 +533,7 @@ class Suse{
 	}
 
 	/**
-	 * 获取学生地址
+	 * 获取学生地址(一次性函数，已经使用完)
 	 * @param  [type] $idnum [description]
 	 * @return [type]        [description]
 	 */

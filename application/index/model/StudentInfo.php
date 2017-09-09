@@ -2,32 +2,37 @@
 namespace app\index\model;
 
 class StudentInfo extends \think\Model{
+
+	/**
+	 * Reptile爬取新生信息使用，一次性函数，已经使用完毕
+	 * @param  [type] $data [description]
+	 * @return [type]       [description]
+	 */
 	function saveInfo($data){
 		$res=$this->insertAll($data);
 		return $res;
 	}
-	function saveStudent($info){
-		if (!$this->where('name',$info['name'])->find()) {
-			$data['name']=$info['name'];
-			$data['student_id']=$info['student_id'];
-			$data['college']=$info['college'];
-			$data['major']=$info['major'];
-			$data['classes']=$info['classes'];
 
-			$this->insert($data);		
-		}
-	}
 	function show($where){
 		$res=$this->where($where)->select();
 		return $res;
 	}
+
+	/**
+	 * 依据学号查找学生
+	 * @param  [type] $student_id [description]
+	 * @return [type]             [description]
+	 */
 	function showStudent($student_id){
 		$res=$this->where('student_id',$student_id)->find();
 		return $res;
 	}
 
+	/**
+	 * 查询出所有班级
+	 * @return [type] [description]
+	 */
 	function showClasses(){
-		// $res=$this->distinct(true)->field('classes')->count('distinct(classes)');
 		$res=$this->distinct(true)->field('classes')->select();
 		$res=json_decode(json_encode($res),true);
 		foreach ($res as $key => $value) {
@@ -35,8 +40,6 @@ class StudentInfo extends \think\Model{
 
 			$res3[$key]=json_decode(json_encode($res2),true);
 		}
-		// var_dump($res3);
-		// exit();
 		return $res3;
 	}
 
@@ -51,14 +54,24 @@ class StudentInfo extends \think\Model{
 		return $res;
 	}
 
+
+
+
+	/**
+	 * 更新学生地址信息，一次性函数（已经使用完毕）
+	 * @param  [type] $data [description]
+	 * @return [type]       [description]
+	 */
 	function updateStudentInfo($data){
 		$info['address']=$data['address'];
 		$where['number']=$data['number'];
 		$res=$this->where($where)->update($info);
 		return $res;
 	}
-
-
+	/**
+	 * 获取学号，一次性函数（已经使用完毕）
+	 * @return [type] [description]
+	 */
 	function getStudentId(){
 		$res=$this->field('number')->where('address is null')->limit(100)->select();
 		return $res;

@@ -28,7 +28,7 @@
 					if (msg==null) {
 						alert('查询成功，没有相关数据，请联系管理员');
 					}else{
-						// alert(msg);	
+						
 						var arr=JSON.parse(unescape(msg.replace(/\\u/g, "%u")));
 						var str='年级：'+arr.grade+'\n';
 						str+='学院：'+arr.college+'\n';
@@ -57,7 +57,7 @@
 			<input type="text" class="myapp-login-input-text am-form-field" id="account" name="student_id" placeholder="请输入您的学号">
 		</div>
 	  </fieldset>
-	  <button type="submit" onclick="sendMessage()" class="myapp-login-form-submit am-btn am-btn-primary am-btn-block ">查 询</button>
+	  <button type="button" onclick="sendMessage()" class="myapp-login-form-submit am-btn am-btn-primary am-btn-block ">查 询</button>
 	</form>
 	</div>
 	<div class="am-text-center am-u-sm-11 am-u-sm-centered myapp-login-form-shortcut">

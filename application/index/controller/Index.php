@@ -128,6 +128,10 @@ class Index extends \think\Controller
     {       
         return view('index/info',['page'=>'info']);
     }
+    public function jcc()
+    {       
+        return view('index/jcc',['page'=>'jcc']);
+    }
     public function jcclogin()
     {       
         return view('index/jcclogin',['page'=>'jcclogin']);

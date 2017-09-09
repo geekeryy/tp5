@@ -4,10 +4,92 @@ use Reptile\htmlDomParser;
 use Reptile\Suse;
 class Reptile{
 
+
+	/**
+	 * 爬取计算机学院2005两至今所有新闻信息
+	 * @return [type] [description]
+	 */
 	function test(){
-		$session=session('');
-		
-		var_dump($session);
+		// $param['FolderId']='636053899667064406';
+		// $param['IsFullText']='0';
+		// $param['IsImg']='0';
+		// $param['SearchId']='';
+		// $param['PageNum']='1';
+		// $param['TabId']='0';
+		// $param['action']='GetItems';
+		// $param['callback']='fn_id_d693e5de_70ba_4d62_9dec_56dd6747aea1';
+		// $param['kw']='';
+
+		// for ($i=0; $i < 51; $i++) { 
+		// 	$param['PageNum']=($i+1);
+		// 	$url='http://jsj.suse.edu.cn/_rest/st/ajax_st_app_news.ashx';
+		// 	$ch = curl_init($url);
+		// 	curl_setopt($ch,CURLOPT_RETURNTRANSFER, 1);//设定返回的数据是否自动显示
+		//     curl_setopt($ch, CURLOPT_HEADER, 0);//设定是否显示头信 息
+		//     curl_setopt($ch, CURLOPT_NOBODY, false);//设定是否输出页面 内容
+		//     curl_setopt($ch,CURLOPT_POST, 1);
+		//     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+		//     curl_setopt($ch,CURLOPT_POSTFIELDS, $param); //提交查询信息
+		//     $content =curl_exec($ch);
+		//     curl_close($ch);
+		//     $hdp = new htmlDomParser();	
+		// 	$html=$hdp->str_get_html($content);//创建DOM
+		// 	$info=array();
+		// 	$item=$html->find('.div_item');
+		// 	$news_info=model('NewsInfo');
+		// 	foreach ($item as $value) {
+		// 		$e=$value->find('.div_itemtitle',0);
+		// 		$info['time']=$e->find('div',0)->innertext();
+		// 		$info['title']=$e->find('a',0)->innertext();
+		// 		$arr1=explode('?StId=st_app_news_i_x', $e->find('a',0)->href);
+		// 		$info['st_id']=$arr1['1'];
+		// 		$news_info->saveNewsInfoTime($info);
+		// 	}
+				
+				
+				// return var_dump($info);
+
+			
+
+
+
+		// 	$e=$html->find('a');
+		// 	$j=0;
+		// 	foreach ($e as $value) {
+		// 		$arr1=explode('?StId=st_app_news_i_x', $value->href);
+		// 		if (isset($arr1['1'])) {
+		// 			$arr[$j]=$arr1['1'];
+		// 			$j++;
+		// 		}
+		// 	}
+		// 	foreach ($arr as $key => $value) {
+		// 		$st_id = $value;
+		// 		$ch = curl_init('http://jsj.suse.edu.cn/_wx/_wx_home_news_i.aspx?iid='.$st_id);
+		// 		curl_setopt($ch,CURLOPT_RETURNTRANSFER, 1);//设定返回的数据是否自动显示
+		// 	    curl_setopt($ch, CURLOPT_HEADER, 0);//设定是否显示头信 息
+		// 	    curl_setopt($ch, CURLOPT_NOBODY, false);//设定是否输出页面 内容
+		// 	    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+		// 	    $content =curl_exec($ch);
+		// 	    curl_close($ch);
+		// 		$content=htmlspecialchars($content);
+		// 		$data['st_id']=$st_id;
+		// 		$data['html']=$content;
+		// 		$news_info=model('NewsInfo');
+		// 		$news_info->saveNewsInfo($data);
+		// 	}
+		// }
+
+
+
+
+
+		// $news=$news_info->showNewsInfo($st_id);
+		// $news=json_decode(json_encode($news),true);
+		// return $news;
+		// return htmlspecialchars_decode($news['html']);
+	    // var_dump($content); 
+
+
 	}
 
 	function test7(){
