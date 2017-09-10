@@ -274,10 +274,27 @@ class Xsxxcx extends \think\Controller{
 		// return var_dump($data);
 	}
 
-	function getJsjNews(){
+	/**
+	 * 更新计算机学院通知公告
+	 * 通知公告包含了考务信息
+	 * @return [type] [description]
+	 */
+	function updateJsjNews(){
+		$type='tzgg';
 		$jsjnews=new JsjNews();
-		$res=$jsjnews->updateNews();
-		return $res;
+		return $jsjnews->updateNews($type);
+	}
+
+	/**
+	 * 获取通知正文
+	 * @return [type] [description]
+	 */
+	function getNewsHtml(){
+		$st_id=input('get.st_id');
+		$jsjnews = model('NewsInfo');
+        $html=$jsjnews->showHtml($st_id);
+		$html=json_decode(json_encode($html),true);
+		return htmlspecialchars_decode($html['html']);
 	}
 
 

@@ -11,6 +11,13 @@ class NewsInfo extends \think\Model{
 		return $this->where($where)->find();
 	}
 
+	function showList(){
+		return $this->field('st_id,title,time')->order('time desc')->limit(30)->select();
+	}
+	function showHtml($st_id){
+		return $this->field('html')->where('st_id',$st_id)->find();
+	}
+
 	function showNewsInfo($st_id){
 		return $this->where('st_id',$st_id)->find();
 	}

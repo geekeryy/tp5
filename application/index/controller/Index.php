@@ -52,7 +52,7 @@ class Index extends \think\Controller
     public function index()
     {   
         if (!session('student_id')) {
-            $this->error('请先登录','index/info');
+            $this->error('请先登录','index/suselogin');
         }
         //获取访问数
         $count=model('Count');
@@ -124,9 +124,13 @@ class Index extends \think\Controller
     {       
         return view('index/car',['page'=>'car']);
     }
-    public function info()
+    public function suselogin()
     {       
-        return view('index/info',['page'=>'info']);
+        return view('index/suselogin',['page'=>'suselogin']);
+    }
+    public function more()
+    {       
+        return view('index/more',['page'=>'more']);
     }
     public function jcc()
     {       
@@ -172,6 +176,13 @@ class Index extends \think\Controller
         $list1=json_decode(json_encode($list1),true);
 
         return view('index/showCredit',['page'=>'showCredit','list1'=>$list1,'list2'=>$list2]);
+    }
+    public function jsjnews()
+    {   
+        $jsjnews = model('NewsInfo');
+        $list=$jsjnews->showList();
+        $list=json_decode(json_encode($list),true);
+        return view('index/jsjnews',['page'=>'jsjnews','list'=>$list]);
     }
 
     public function suse()

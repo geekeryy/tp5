@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>计算机学院通知公告</title>
+	<style type="text/css">
+		a{text-decoration:none;}
+	</style>
+</head>
+<body>
+<h1>计算机学院通知公告</h1><br>
+{volist id="vo" name="list"}
+<a href="{:url('Xsxxcx/getNewsHtml')}?st_id={$vo.st_id}">{$vo.title}</a><br>{$vo.time}<br><hr>
+{/volist}
+</body>
+</html>
