@@ -280,7 +280,7 @@ class Xsxxcx extends \think\Controller{
 	 * @return [type] [description]
 	 */
 	function updateJsjNews(){
-		$type='tzgg';
+		$type='tmgcxy';
 		$jsjnews=new JsjNews();
 		return $jsjnews->updateNews($type);
 	}

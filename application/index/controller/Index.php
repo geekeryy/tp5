@@ -179,10 +179,16 @@ class Index extends \think\Controller
     }
     public function jsjnews()
     {   
+        if (input('get.op')) {
+            $xy=input('get.op');
+        }else{
+            $xy='jsj';
+        }
         $jsjnews = model('NewsInfo');
-        $list=$jsjnews->showList();
+        $list=$jsjnews->showList($xy);
         $list=json_decode(json_encode($list),true);
-        return view('index/jsjnews',['page'=>'jsjnews','list'=>$list]);
+
+        return view('index/jsjnews',['page'=>'jsjnews','list'=>$list,'xy'=>$xy]);
     }
 
     public function suse()

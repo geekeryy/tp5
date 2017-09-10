@@ -2,6 +2,14 @@
 namespace app\index\model;
 
 class Test extends \think\Model{
+	function saveNum($data){
+		$where['tag']=$data['tag'];
+		$info['page']=$data['page'];
+		$this->where($where)->update($info);
+	}
+	function getNum(){
+		return $this->field('tag,page')->where('page < allpage')->find();
+	}
 	function test($data){
 
 		// $res=$this->save(array('data'=>$data['openid']));
