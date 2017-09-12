@@ -3,7 +3,7 @@ namespace app\index\controller;
 use Reptile\htmlDomParser;
 use Reptile\Suse;
 use Reptile\Jcc;
-use Reptile\JsjNews;
+use Reptile\SuseNews;
 class Xsxxcx extends \think\Controller{
 
 	/**
@@ -36,16 +36,30 @@ class Xsxxcx extends \think\Controller{
 		session('user',$user);
 
 		if ($act=='login'){
-			$suse->curlLogin();
+
+			$res=$suse->curlLogin();
+			if ($res=='error') {
+				$this->error('请检查输入是否有误！','index/suselogin');
+			}
+
 			session('suse',serialize($suse));
 			//保存学生账号信息
 			$suse_info=model('SuseInfo');
-			$suse_info->saveSuse(array('student_id'=>$user,'password'=>$password));
+
+			
+			$info=array(
+				'student_id'=>$user,
+				'password'=>$password,
+				);
+			$suse_info->saveSuse($info);
 
 			//查询用户个人信息
 			action('Xsxxcx/getPersonalInfo');
+			action('Xsxxcx/getAchievement');
+			action('Xsxxcx/getCourseInfo');
+			action('Xsxxcx/achievementCount');
 
-			$this->redirect('index/suse');
+			$this->redirect('index/index');
 
 		  }elseif ($act=='authcode') {
 		      // Content-Type 验证码的图片类型
@@ -76,7 +90,7 @@ class Xsxxcx extends \think\Controller{
 		$achievement2=model('Achievement');
 		$achievement2->updateAchievement($arr2);
 
-		$this->redirect('index/showAchievement');
+		// $this->redirect('index/showAchievement');
 	}
 
 	/**
@@ -97,7 +111,7 @@ class Xsxxcx extends \think\Controller{
 		$course_info=model('CourseInfo');
 		$course_info->saveCourseInfo($res1,$res2);
 					
-		$this->redirect('index/showCourse');
+		// $this->redirect('index/showCourse');
 	}
 
 	/**
@@ -117,7 +131,7 @@ class Xsxxcx extends \think\Controller{
 		$credit_info=model('Credit');
 		$credit_info->saveCreditInfo($credit);
 
-		$this->redirect('index/showCredit');
+		// $this->redirect('index/showCredit');
 	}
 
 	/**
@@ -183,13 +197,9 @@ class Xsxxcx extends \think\Controller{
 	 */
 	function getExaminationInfo(){
 		$suse = unserialize(session('suse'));
-
 		$data=$suse->getExaminationInfo();
-
 		// $personal_info=model('PersonalInfo');
 		// $personal_info->savePersonalInfo($data);
-
-
 		var_dump($data);
 	}
 
@@ -232,13 +242,18 @@ class Xsxxcx extends \think\Controller{
 			$jcc->jccLogin();
 			session('jcc',serialize($jcc));
 
-			//保存学生账号信息
+			//保存学生账号信息			
 			$suse_info=model('SuseInfo');
-			$suse_info->saveSuse(array('student_id'=>$username,'password'=>$password));
+			$info=array(
+				'student_id'=>$username,
+				'jcc_password'=>$password,
+				);
+			$suse_info->saveSuse($info);
 
+			//获取学生信息
 			$jcc->getStudentDetail();
 
-			$this->redirect('index/jcc');
+			$this->redirect('index/index');
 
 		  }elseif ($act=='authcode') {
 		      // Content-Type 验证码的图片类型
@@ -275,14 +290,14 @@ class Xsxxcx extends \think\Controller{
 	}
 
 	/**
-	 * 更新计算机学院通知公告
+	 * 更新各学院通知公告
 	 * 通知公告包含了考务信息
 	 * @return [type] [description]
 	 */
-	function updateJsjNews(){
-		$type='tmgcxy';
-		$jsjnews=new JsjNews();
-		return $jsjnews->updateNews($type);
+	function updateSuseNews(){
+		$typearr=array('jsj','rwxy','tyxy','tmgcxy','hxxy','hgx','mse','jxgcxy','mkszyxy','jjxy','glxy','jxxy','wldzxy','sxtjxy');
+		$susenews=new SuseNews();
+		return $susenews->updateNews($typearr);
 	}
 
 	/**
@@ -291,11 +306,12 @@ class Xsxxcx extends \think\Controller{
 	 */
 	function getNewsHtml(){
 		$st_id=input('get.st_id');
-		$jsjnews = model('NewsInfo');
-        $html=$jsjnews->showHtml($st_id);
+		$newsinfo = model('NewsInfo');
+        $html=$newsinfo->showHtml($st_id);
 		$html=json_decode(json_encode($html),true);
 		return htmlspecialchars_decode($html['html']);
 	}
+
 
 
 }

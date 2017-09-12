@@ -12,17 +12,16 @@ class Index extends \think\Controller
      */
     public function _initialize(){
 
-
             //获取当前链接将要访问的页面
             $params['page']=request()->action();
             //访问计数钩子函数
             if ($res=\think\Hook::listen('statistics',$params)) {
                 if (!$res['0']) {
                     //数据库写入失败，日志记录
-                    //
                     $this->error('写入数据库失败'.var_dump($res));
                 }
             }
+
 
         //如果是微信浏览器，则微信静默登录
         // if (strpos($_SERVER['HTTP_USER_AGENT'],'MicroMessenger')!==false) {
@@ -51,7 +50,7 @@ class Index extends \think\Controller
     
     public function index()
     {   
-        if (!session('student_id')) {
+        if (!session('user_openid')) {
             $this->error('请先登录','index/suselogin');
         }
         //获取访问数
@@ -146,20 +145,38 @@ class Index extends \think\Controller
     }
     public function showCourse()
     {   
+        if (!session('user_openid')) {
+            $this->error('请先登录','index/suselogin');
+        }
+
+        $suse_info=model('SuseInfo');
+        $student_id=$suse_info->getStudentId(session('user_openid'));
+        $student_id=json_decode(json_encode($student_id),true);
+        $student_id=$student_id['student_id'];
+
         $course=model('CourseInfo');
-        $list=$course->showCourse(session('user'));
+        $list=$course->showCourse($student_id);
         $list=json_decode(json_encode($list),true);
 
         $student_info=model('StudentInfo');
-        $student=$student_info->showStudent(session('user'));
+        $student=$student_info->showStudent($student_id);
         $student=json_decode(json_encode($student),true);
 
         return view('index/showCourse',['page'=>'showCourse','list'=>$list,'vo1'=>$student]);
     }
     public function showAchievement()
     {   
+        if (!session('user_openid')) {
+            $this->error('请先登录','index/suselogin');
+        }
+
+        $suse_info=model('SuseInfo');
+        $student_id=$suse_info->getStudentId(session('user_openid'));
+        $student_id=json_decode(json_encode($student_id),true);
+        $student_id=$student_id['student_id'];
+
         $achievement=model('Achievement');
-        $list=$achievement->showAchievement(session('user'));
+        $list=$achievement->showAchievement($student_id);
         $list=json_decode(json_encode($list),true);
 
         return view('index/showAchievement',['page'=>'showAchievement','list'=>$list]);
@@ -167,18 +184,26 @@ class Index extends \think\Controller
 
     public function showCredit()
     {   
+        $suse_info=model('SuseInfo');
+        $student_id=$suse_info->getStudentId(session('user_openid'));
+        $student_id=json_decode(json_encode($student_id),true);
+        $student_id=$student_id['student_id'];
+
         $credit=model('Credit');
-        $list2=$credit->showCredit(session('user'));
+        $list2=$credit->showCredit($student_id);
         $list2=json_decode(json_encode($list2),true);
 
         $credit_info=model('CreditPoints');
-        $list1=$credit_info->showCreditPoints(session('user'));
+        $list1=$credit_info->showCreditPoints($student_id);
         $list1=json_decode(json_encode($list1),true);
 
         return view('index/showCredit',['page'=>'showCredit','list1'=>$list1,'list2'=>$list2]);
     }
-    public function jsjnews()
+    public function xynews()
     {   
+        if (!session('user_openid')) {
+            $this->error('请先登录','index/suselogin');
+        }
         if (input('get.op')) {
             $xy=input('get.op');
         }else{
@@ -188,7 +213,9 @@ class Index extends \think\Controller
         $list=$jsjnews->showList($xy);
         $list=json_decode(json_encode($list),true);
 
-        return view('index/jsjnews',['page'=>'jsjnews','list'=>$list,'xy'=>$xy]);
+        $xy_name=getXyName($xy);
+
+        return view('index/xynews',['page'=>'jsjnews','list'=>$list,'xy_name'=>$xy_name]);
     }
 
     public function suse()

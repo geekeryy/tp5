@@ -1,51 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>计算机学院通知公告</title>
+	<title>{$xy_name}通知公告</title>
 	<style type="text/css">
 		a{text-decoration:none;}
 	</style>
 </head>
 <body>
 
-<h1>
-
-
-
-{if condition="$xy eq 'tyxy'"}
-体育学院
-{elseif condition="$xy eq 'hxxy'"}
-化学学院
-{elseif condition="$xy eq 'mse'"}
-材料科学与工程学院
-{elseif condition="$xy eq 'jxgcxy'"}
-机械工程学院
-{elseif condition="$xy eq 'mkszyxy'"}
-马克思主义学院
-{elseif condition="$xy eq 'rwxy'"}
-人文学院
-{elseif condition="$xy eq 'glxy'"}
-管理学院
-{elseif condition="$xy eq 'jxxy'"}
-教育与心理科学学院
-{elseif condition="$xy eq 'wldzxy'"}
-物理电子学院
-{elseif condition="$xy eq 'jsj'"}
-计算机学院
-{elseif condition="$xy eq 'sxtjxy'"}
-数学统计学院
-{elseif condition="$xy eq 'hgx'"}
-化学工程学院
-{elseif condition="$xy eq 'tmgcxy'"}
-土木工程学院
-
-{else /} 
-other Framework
-{/if}
-
-通知公告
-
-</h1><br>
+<h1>{$xy_name}通知公告</h1><br>
 <form method="get" action="{:url('index/jsjnews')}">
 	<select name="op">
 	  <option value ="tyxy">体育学院</option>

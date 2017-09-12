@@ -187,9 +187,10 @@ class UserInfo extends \think\Model{
 	 * @return [type] [description]
 	 */
 	function bindQQ($data){
-		$user_openid=session('user_openid');
-		$res=$this->where('openid',$user_openid)->update($data);
-		$res=$this->where('openid',$user_openid)->setInc('state',1);
+		$where['openid']=$data['openid'];
+		$info['qq_openid']=$data['qq_openid'];
+		$res=$this->where($where)->update($info);
+		$res=$this->where($where)->setInc('state',1);
 		return $res;
 	}
 

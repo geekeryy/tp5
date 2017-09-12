@@ -187,14 +187,16 @@ class UserInfo extends \think\Model{
 	 * @return [type] [description]
 	 */
 	function bindQQ($data){
-		$user_openid=session('user_openid');
-		$res=$this->where('openid',$user_openid)->update($data);
-		$res=$this->where('openid',$user_openid)->setInc('state',1);
+		$where['openid']=$data['openid'];
+		$info['qq_openid']=$data['qq_openid'];
+		$res=$this->where($where)->update($info);
+		$res=$this->where($where)->setInc('state',1);
 		return $res;
 	}
 
 	/**
-	 * 判断用户是登录还是注册
+	 * 判断用户是登录还是注册还是绑定
+	 * 存user_openid session
 	 * @param  [type] $arr [description]
 	 * @return [type]      [description]
 	 */
@@ -202,33 +204,41 @@ class UserInfo extends \think\Model{
 		$data['ip']=request()->ip();
 		$data['last_time']=date('Y-m-d h:i:s',time());
 
-		//不管登录注册都会存储头像信息
-		session('img_url',$arr['info']['figureurl_qq_2']);
-
 		//如果存在用户，者刷新用户信息，否则注册用户信息
-		if ($res=$this->where('qq_openid',$arr['openid'])->find()) {
-			//QQ登录，刷新用户信息
-			//登录则在数据库取user_openid
-			session('user_openid',$res['openid']);
+		if ($info=$this->where('qq_openid',$arr['openid'])->find()) {
 
-			$res=$this->where('openid',$res['openid'])->update($data);
+			if (!empty(session('user_openid'))) {
+				//之前登录过qq，绑定qq时，更新user_openid
+				$data['openid']=session('user_openid');
+
+			}else{
+				//登录则在数据库取user_openid
+				session('user_openid',$info['openid']);
+				//QQ登录，刷新登录ip以及最后时间，一旦注册，其他信息不再改变
+			}
+			$res=$this->where('openid',$info['openid'])->update($data);
 			return $res;
+
 		}else{
+			if (!empty(session('user_openid'))) {
+				$data['openid']=session('user_openid');
+			}else{
+				$data['openid']=md5(time().rand(1000,9999));
+				//注册则创建user_openid并存储
+				session('user_openid',$data['openid']);
+			}
 			//注册
 			$data['nickname']=$arr['info']['nickname'];
 			$data['sex']=$arr['info']['gender'];
 			$data['province']=$arr['info']['province'];
 			$data['city']=$arr['info']['city'];
 			$data['img_url']=$arr['info']['figureurl_qq_2'];
-			$data['openid']=md5(time().rand(1000,9999));
+			
 			$data['state']=1;
 			$data['qq_openid']=$arr['openid'];
 			$data['reg_time']=date('Y-m-d h:i:s',time());
-			//注册则创建user_openid并存储
-			session('user_openid',$data['openid']);
 
-			//执行save多个的时候，只执行最后一条
-			$res=$this->save($data);
+			$res=$this->insert($data);
 			return $res;
 		}
 	}

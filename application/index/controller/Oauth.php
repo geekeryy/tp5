@@ -91,50 +91,73 @@ class Oauth extends \think\Controller{
 
 	}
 	
-	/*唤起QQ授权*/
+
+
+	/**
+	 * 唤起QQ授权
+	 * @return [type] [description]
+	 */
 	function qqLogin(){
 		$qc=new QC();
 		$login_url=$qc->qq_login();
 		$this->redirect($login_url);
 	}
 
+	/**
+	 * 三套账号绑定qq的接口
+	 * 参数input('param.bindparam')
+	 * @return [type] [description]
+	 */
 	function bindQQ(){
 		$qc=new QC();
 		$login_url=$qc->qq_login();
-		session('bindQQ',1);
+		session('bindQQ',input('param.bindparam'));
 		$this->redirect($login_url);	
 	}
-	/*QQ登录回调函数*/
+
+
+
+	/**
+	 * QQ登录回调函数
+	 * @return function [description]
+	 */
 	function callback(){
 		$qc=new QC();
 		$code=$qc->qq_callback();
 		$openid=$qc->get_openid();
 		$qc=new QC($code,$openid);
-		$user=model('UserInfo');
+		
 		//綁定QQ
 		if (session('bindQQ')) {
+			if (session('bindQQ')=='ptzh') {
+				$info=model('UserInfo');
+			}else{
+				$info=model('SuseInfo');
+			}
+			$qqarr=array(
+				'qq_openid'=>$openid,
+				'openid'=>session('user_openid'),
+				);
 			session('bindQQ',null);
-			//檢查QQ是否被綁定
-			$qqarr=array('qq_openid'=>$openid);
-				if ($user->findUser($qqarr)) {
-				$this->error('此QQ已被綁定','index/index');
-			}
-			if (!session('user_openid')) {
-				$this->error('請先登錄');
-			}
-			if ($user->bindQQ($qqarr)) {
-				session('wxAutoLogin',null);
-				$this->success('QQ綁定成功！','index/index');
+			if ($info->bindQQ($qqarr)) {
+				
+				//绑定成功则获取qq信息
+				// $this->success('QQ綁定成功！','index/index');
 			}else{
 				$this->error('QQ綁定失敗!');
 			}
 		}
-		
 		//获取用户信息
 		$arr=$qc->get_user_info();
 		//将用户信息存入数据库
+		$user=model('UserInfo');
 		$data=array('info'=>$arr,'openid'=>$openid);
+
+		//qqSaveUser函数保存session('user_openid')
 		if ($user->qqSaveUser($data)) {
+			//不管登录注册都会存储头像信息
+			session('img_url',$arr['figureurl_qq_2']);
+
 			$this->success('成功，正在返回首页！','index/index');
 		}else{
 			$this->error('数据写入失败！');

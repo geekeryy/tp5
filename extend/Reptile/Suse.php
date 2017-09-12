@@ -67,11 +67,15 @@ class Suse{
 	    curl_setopt($ch,CURLOPT_POSTFIELDS, $this->loginParams); //提交查询信息
 	    $content=curl_exec($ch);//返回结果
 	    curl_close($ch); //关闭
-	    // xhxm
+
 	    $hdp = new htmlDomParser();	
 		$html=$hdp->str_get_html($content);//创建DOM
 		$e=$html->find('#xhxm',0);
+		if ($e=='') {
+			return 'error';
+		}
 		$name=substr($e->innertext(), 0,-4);
+	    
 		$this->xm=$name;
 	    return $name;
 	}
