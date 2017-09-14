@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>jQuery stady</title>
+	<script src="http://cdn.static.runoob.com/libs/jquery/3.0.0/jquery.min.js">
+</script>
+<script type="">
+	$(document).ready(function(){
+		$(document).ajaxStart(function(){
+		$("#wait").css("display","block");
+	});
+	$(document).ajaxComplete(function(){
+		$("#wait").css("display","none");
+	});
+	// $("button").click(function(){
+	// 	$("#txt").load("demo_ajax_load.php");
+	// });
+
+		$("button").click(function(){
+		  $.get("index.html",function(data,status){
+		    // alert("数据: "  + "\n状态: " + status);
+		  });
+		});
+
+		// $(document).ajaxComplete(function(){
+		// 	$("#wait").css("display","none");
+		// });
+
+	});
+</script>
+</head>
+<body>
+<div id="wait" style="display:none;"><br>Loading..</div>
+
+<p>this is p</p>
+<button>点我</button>
+</body>
+</html>

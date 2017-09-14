@@ -2,14 +2,97 @@
 namespace app\index\controller;
 use Reptile\htmlDomParser;
 use Reptile\Suse;
+use YouZan\lib\YZTokenClient;
 class Reptile{
+	function test(){
+
+		$token = 'e8ccb95e7cf43168b41243975069dc36';//请填入商家授权后获取的access_token
+		$client = new YZTokenClient($token);
+
+		$method = 'youzan.salesman.account.get';//要调用的api名称
+		$api_version = '3.0.0';//要调用的api版本号
+
+		$my_params = [
+		    'mobile' => '13818013664',
+		    'fans_type' => '13818013664',
+		    'fans_id' => '13818013664',
+		];
+
+		echo '<pre>';
+		var_dump(
+		    $client->post($method, $api_version, $my_params)
+		);
+		echo '</pre>';
+
+	}
+	function test10(){
+		$cookieFile=APP_PATH.'../runtime/cookie3.tmp';
+		// header('Content-Type:image/png charset=gb2312');
+		// $res=action('Reptile/test');
+		echo '<img src="'.'http://localhost/thinkphp_5.0.10_full/public/index/reptile/test.html'.'">';
+
+		// $url = 'https://login.youzan.com/sso/index?service=kdt';
+		$url='https://www.youzan.com/v2/dashboard/index';
+		// $url='https://www.youzan.com/v2/shop/list?redirect=https%3A%2F%2Fwww.youzan.com%2Fv2%2Fdashboard%2Findex%3F#/';
+		$url='https://www.youzan.com/v2/account/user/login?code=eb924aec00617573346397131df01c75&gr_user_id=7693d259-3c3f-4cad-8838-dbcffe88bab3&gr_session_id_767813e963734402a8256e1096b88331=756ecda1-a188-4b22-92ce-8a7d3255ad0c';
+		$url='https://www.youzan.com/v2/shop/list#/';
+		$curl = curl_init();
+		curl_setopt($curl, CURLOPT_URL, $url);
+		curl_setopt($curl, CURLOPT_HEADER, 0);
+    	curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);  
+    	curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);  
+    	curl_setopt($curl, CURLOPT_REFERER, 'http://www.baidu.com/');  
+    	curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; GTB6.6; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729)');  
+    	curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 60);  
+
+		
+		curl_setopt($curl,CURLOPT_COOKIEFILE, $cookieFile); //同时发送Cookie
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);//这个是重点。
+		// curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE); // https请求 不验证证书和hosts
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+		$data = curl_exec($curl);
+		curl_close($curl);
+		return $data;
+	}
+ 
+	function test11(){
+		$authcode_url='https://login.youzan.com/sso/index/captcha?t=Wed%20Sep%2013%202017%2020:38:29%20GMT+0800%20(%E4%B8%AD%E5%9B%BD%E6%A0%87%E5%87%86%E6%97%B6%E9%97%B4)';
+		$cookieFile=APP_PATH.'../runtime/cookie3.tmp';
+		$ch = curl_init($authcode_url);
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		// curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);//这个是重点。
+	    curl_setopt($ch,CURLOPT_COOKIEJAR, $cookieFile); // 把返回来的cookie信息保存在文件中
+	    $content = curl_exec($ch);
+	    curl_close($ch);
+	    // return $content;
+	    // return '<img src="'.'http://localhost/thinkphp_5.0.10_full/public/index/reptile/test.html'.'">';
+	    // return $cookieFile;
+	    
+
+		// $url = 'https://login.youzan.com/sso/index';
+		// // $url='https://www.youzan.com/v2/dashboard/index';
+		// // $url='https://www.youzan.com/v2/dashboard/index?https://www.baidu.com/?tn=98012088_5_dg';
+		// $curl = curl_init();
+		// curl_setopt($curl, CURLOPT_URL, $url);
+		// curl_setopt($curl, CURLOPT_HEADER, 0);
+		// curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		// curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);//这个是重点。
+		// // curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE); // https请求 不验证证书和hosts
+		// curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+		// $data = curl_exec($curl);
+		// curl_close($curl);
+		// return $data;
+	}
+
+
 
 
 	/**
 	 * 爬取计算机学院2005两至今所有新闻信息
 	 * @return [type] [description]
 	 */
-	function test(){
+	function test8(){
 		// $param['FolderId']='636053899667064406';
 		// $param['IsFullText']='0';
 		// $param['IsImg']='0';

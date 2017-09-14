@@ -51,7 +51,7 @@ class Index extends \think\Controller
     public function index()
     {   
         if (!session('user_openid')) {
-            $this->error('请先登录','index/suselogin');
+            // $this->error('请先登录','index/suselogin');
         }
         //获取访问数
         $count=model('Count');
@@ -59,6 +59,9 @@ class Index extends \think\Controller
         $ip=request()->ip();
 
     	return view('index/index',['page'=>'index','count'=>$data,'ip'=>$ip]);
+    }
+    public function jquery(){
+        return view('index/jquery',['page'=>'jquery']);
     }
     public function about()
     {    	
@@ -247,6 +250,14 @@ class Index extends \think\Controller
         session('total_fee',null);
         
         return view('index/wxpay',['page'=>'wxpay','total_fee'=>$total_fee,'jsApiParameters'=>$res['jsApiParameters'],'editAddress'=>$res['editAddress']]);
+    }
+
+
+    /******************有赞*****************/
+
+    public function youzan()
+    {   
+        return view('youzan/index',['page'=>'index']);
     }
 
 }
