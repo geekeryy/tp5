@@ -205,7 +205,7 @@ class Index extends \think\Controller
     public function xynews()
     {   
         if (!session('user_openid')) {
-            $this->error('请先登录','index/suselogin');
+            // $this->error('请先登录','index/suselogin');
         }
         if (input('get.op')) {
             $xy=input('get.op');
