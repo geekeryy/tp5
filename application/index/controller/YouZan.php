@@ -199,6 +199,29 @@ class YouZan extends \think\Controller{
 		action('YouZan/getTeamMember',['team_id'=>'1000']);
 	}
 
+
+	function updateProduct(){
+		$token=action('YouZan/getToken');
+		$client = new YZTokenClient($token);
+		$method = 'youzan.items.inventory.get';
+		// $method = 'youzan.items.onsale.get'; //要调用的api名称
+		$api_version = '3.0.0'; //要调用的api版本号
+
+		$my_params = [
+		    'page_no' => '1',
+		    'page_size' => '10',
+		];
+
+		$my_files = [
+		];
+
+		echo '<pre>';
+		var_dump(
+		    $client->post($method, $api_version, $my_params, $my_files)
+		);
+		echo '</pre>';
+	}
+
 	/**
 	 * 更新指定销售员交易信息
 	 * 消息推送时使用，3

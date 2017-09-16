@@ -13,14 +13,14 @@ class Index extends \think\Controller
     public function _initialize(){
 
             //获取当前链接将要访问的页面
-            $params['page']=request()->action();
-            //访问计数钩子函数
-            if ($res=\think\Hook::listen('statistics',$params)) {
-                if (!$res['0']) {
-                    //数据库写入失败，日志记录
-                    $this->error('写入数据库失败'.var_dump($res));
-                }
-            }
+            // $params['page']=request()->action();
+            // //访问计数钩子函数
+            // if ($res=\think\Hook::listen('statistics',$params)) {
+            //     if (!$res['0']) {
+            //         //数据库写入失败，日志记录
+            //         $this->error('写入数据库失败'.var_dump($res));
+            //     }
+            // }
 
 
         //如果是微信浏览器，则微信静默登录
