@@ -197,6 +197,8 @@ class YouZan extends \think\Controller{
 		action('YouZan/getPerSales',['phone'=>'18011600166','time'=>'day']);
 		action('YouZan/getTeamSales',['team_id'=>'1001','time'=>'day']);
 		action('YouZan/getTeamMember',['team_id'=>'1000']);
+		action('YouZan/addSalesman');
+		
 	}
 
 
@@ -310,14 +312,6 @@ class YouZan extends \think\Controller{
 					
 					foreach ($arr['response']['trades'] as $key => $value) {
 
-						// $trades_info['seller']=$value['seller'];
-						// $trades_info['order_no']=$value['order_no'];
-						// $trades_info['phone']=$value['phone'];
-						// $trades_info['cps_money']=$value['cps_money'];
-						// $trades_info['money']=$value['money'];
-						// $trades_info['created_at']=$value['created_at'];
-						// $trades_info['state']=$value['state'];
-
 						$info=model('TradesInfo');
 						$info->saveTradesInfo($value);
 
@@ -371,5 +365,23 @@ class YouZan extends \think\Controller{
 			var_dump($arr['error_response']);
 			echo 'error'.$my_params['mobile'];
 		}
+	}
+
+	function addSalesman(){
+		$token=action('YouZan/getToken');
+		$client = new YZTokenClient($token);
+
+		$method = 'youzan.salesman.account.add'; //要调用的api名称
+		$api_version = '3.0.0'; //要调用的api版本号
+		// $mobile=input('post.mobile');
+		$mobile='13541018166';
+		$my_params = [
+		    'mobile' => $mobile,
+		    'fans_type' => '1',
+		    'fans_id' => $mobile,
+		];
+		$arr=$client->post($method, $api_version, $my_params);
+		var_dump($arr);
+		
 	}
 }

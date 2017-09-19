@@ -62,6 +62,7 @@ class SuseNews{
 				    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 				    $content =curl_exec($ch);
 				    $content=str_replace('"/_db_file/news_x', '"http://'.$type.'.suse.edu.cn/_db_file/news_x', $content);
+				    $content=str_replace('\'/_db_file/news_x', '\'http://'.$type.'.suse.edu.cn/_db_file/news_x', $content);
 				    $content=str_replace('/wx/', 'http://mp.weixin.qq.com/mp/getmasssendmsg?__biz=MzIzNzY0MTk3OA==#wechat_webview_type=1&wechat_redirect', $content);
 				    curl_close($ch);
 
@@ -79,11 +80,10 @@ class SuseNews{
 					$data['time']=$value['time'];
 					$data['title']=$value['title'];
 					$data['type']=$type;
-					// return var_dump($data);
+					// var_dump($data);
 					$news_info->saveNewsInfo($data);
 
 				}
-					
 			}
 		}
 	}
